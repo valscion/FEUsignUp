@@ -31,7 +31,7 @@ if (!isset($gCms)) exit;
             cgcal_event_id I,
             tss_game_id I DEFAULT 0,
             signed_up L,
-			description C
+			description C(255)
 			";
 
 		// create it. This should do error checking, but I'm a lazy sod.
