@@ -16,7 +16,7 @@ if (!isset($gCms)) exit;
 	   and CMS will not consider the module installed.
 	   Successful installs should return FALSE or nothing at all.
 	  ---------------------------------------------------------*/
-		/*
+		
 		// Typical Database Initialization
 		$db =& $gCms->GetDb();
 		
@@ -27,7 +27,11 @@ if (!isset($gCms)) exit;
         // table schema description
         $flds = "
 			id I KEY,
-			description C(80)
+            feu_user_id I,
+            cgcal_event_id I,
+            tss_game_id I DEFAULT 0,
+            signed_up L,
+			description C
 			";
 
 		// create it. This should do error checking, but I'm a lazy sod.
@@ -37,7 +41,7 @@ if (!isset($gCms)) exit;
 
 		// create a sequence
 		$db->CreateSequence(cms_db_prefix()."module_feusignup_seq");
-		*/
+		
 		
 		// permissions
 		

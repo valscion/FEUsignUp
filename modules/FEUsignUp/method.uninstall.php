@@ -12,7 +12,7 @@ if (!isset($gCms)) exit;
 	   This is the method where we do this.
 	  ---------------------------------------------------------*/
 
-		/*
+		
 		// Typical Database Removal
 		$db =& $gCms->GetDb();
 		
@@ -23,7 +23,7 @@ if (!isset($gCms)) exit;
 
 		// remove the sequence
 		$db->DropSequence( cms_db_prefix()."module_feusignup_seq" );
-		*/
+		
 		
 		// remove the permissions
 		
