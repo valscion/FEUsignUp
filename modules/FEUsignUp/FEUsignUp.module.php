@@ -40,292 +40,292 @@
 class FEUsignUp extends CMSModule
 {
 
-	function GetName()
-	{
-		return 'FEUsignUp';
-	}
+    function GetName()
+    {
+        return 'FEUsignUp';
+    }
 
-	/*---------------------------------------------------------
-	   GetFriendlyName()
-	   This can return any string, preferably a localized name
-	   of the module. This is the name that's shown in the
-	   Admin Menus and section pages (if the module has an admin
-	   component).
-	   
-	   See the note on localization at the top of this file.
-	  ---------------------------------------------------------*/
-	function GetFriendlyName()
-	{
-		return $this->Lang('friendlyname');
-	}
+    /*---------------------------------------------------------
+       GetFriendlyName()
+       This can return any string, preferably a localized name
+       of the module. This is the name that's shown in the
+       Admin Menus and section pages (if the module has an admin
+       component).
+       
+       See the note on localization at the top of this file.
+      ---------------------------------------------------------*/
+    function GetFriendlyName()
+    {
+        return $this->Lang('friendlyname');
+    }
 
-	
-	/*---------------------------------------------------------
-	   GetVersion()
-	   This can return any string, preferably a number or
-	   something that makes sense for designating a version.
-	   The CMS will use this to identify whether or not
-	   the installed version of the module is current, and
-	   the module will use it to figure out how to upgrade
-	   itself if requested.	   
-	  ---------------------------------------------------------*/
-	function GetVersion()
-	{
-		return '0.0.1';
-	}
+    
+    /*---------------------------------------------------------
+       GetVersion()
+       This can return any string, preferably a number or
+       something that makes sense for designating a version.
+       The CMS will use this to identify whether or not
+       the installed version of the module is current, and
+       the module will use it to figure out how to upgrade
+       itself if requested.       
+      ---------------------------------------------------------*/
+    function GetVersion()
+    {
+        return '0.0.1';
+    }
 
-	/*---------------------------------------------------------
-	   GetHelp()
-	   This returns HTML information on the module.
-	   Typically, you'll want to include information on how to
-	   use the module.
-	   
-	   See the note on localization at the top of this file.
-	  ---------------------------------------------------------*/
-	function GetHelp()
-	{
-		return $this->Lang('help');
-	}
+    /*---------------------------------------------------------
+       GetHelp()
+       This returns HTML information on the module.
+       Typically, you'll want to include information on how to
+       use the module.
+       
+       See the note on localization at the top of this file.
+      ---------------------------------------------------------*/
+    function GetHelp()
+    {
+        return $this->Lang('help');
+    }
 
-	/*---------------------------------------------------------
-	   GetAuthor()
-	   This returns a string that is presented in the Module
-	   Admin if you click on the "About" link.
-	  ---------------------------------------------------------*/
-	function GetAuthor()
-	{
-		return 'VesQ';
-	}
+    /*---------------------------------------------------------
+       GetAuthor()
+       This returns a string that is presented in the Module
+       Admin if you click on the "About" link.
+      ---------------------------------------------------------*/
+    function GetAuthor()
+    {
+        return 'VesQ';
+    }
 
-	/*---------------------------------------------------------
-	   GetAuthorEmail()
-	   This returns a string that is presented in the Module
-	   Admin if you click on the "About" link. It helps users
-	   of your module get in touch with you to send bug reports,
-	   questions, cases of beer, and/or large sums of money.
-	  ---------------------------------------------------------*/
-	function GetAuthorEmail()
-	{
-		return 'laakso.vesa@gmail.com';
-	}
+    /*---------------------------------------------------------
+       GetAuthorEmail()
+       This returns a string that is presented in the Module
+       Admin if you click on the "About" link. It helps users
+       of your module get in touch with you to send bug reports,
+       questions, cases of beer, and/or large sums of money.
+      ---------------------------------------------------------*/
+    function GetAuthorEmail()
+    {
+        return 'laakso.vesa@gmail.com';
+    }
 
-	/*---------------------------------------------------------
-	   GetChangeLog()
-	   This returns a string that is presented in the module
-	   Admin if you click on the About link. It helps users
-	   figure out what's changed between releases.
-	   See the note on localization at the top of this file.
-	  ---------------------------------------------------------*/
-	function GetChangeLog()
-	{
-		return $this->Lang('changelog');
-	}
+    /*---------------------------------------------------------
+       GetChangeLog()
+       This returns a string that is presented in the module
+       Admin if you click on the About link. It helps users
+       figure out what's changed between releases.
+       See the note on localization at the top of this file.
+      ---------------------------------------------------------*/
+    function GetChangeLog()
+    {
+        return $this->Lang('changelog');
+    }
 
-	/*---------------------------------------------------------
-	   IsPluginModule()
-	   This function returns true or false, depending upon
-	   whether users can include the module in a page or
-	   template using a smarty tag of the form
-	   {cms_module module='FEUsignUp' param1=val param2=val...}
-	   
-	   If your module does not get included in pages or
-	   templates, return "false" here.
-	  ---------------------------------------------------------*/
-	function IsPluginModule()
-	{
-		return false;
-	}
+    /*---------------------------------------------------------
+       IsPluginModule()
+       This function returns true or false, depending upon
+       whether users can include the module in a page or
+       template using a smarty tag of the form
+       {cms_module module='FEUsignUp' param1=val param2=val...}
+       
+       If your module does not get included in pages or
+       templates, return "false" here.
+      ---------------------------------------------------------*/
+    function IsPluginModule()
+    {
+        return false;
+    }
 
-	/*---------------------------------------------------------
-	   HasAdmin()
-	   This function returns a boolean value, depending on
-	   whether your module adds anything to the Admin area of
-	   the site. For the rest of these comments, I'll be calling
-	   the admin part of your module the "Admin Panel" for
-	   want of a better term.
-	  ---------------------------------------------------------*/
-	function HasAdmin()
-	{
-		return true;
-	}
-
-
-	/*---------------------------------------------------------
-	   GetAdminSection()
-	   If your module has an Admin Panel, you can specify
-	   which Admin Section (or top-level Admin Menu) it shows
-	   up in. This method returns a string to specify that
-	   section. Valid return values are:
-
-	   main        - the Main menu tab.
-	   content     - the Content menu
-	   layout      - the Layout menu
-	   usersgroups - the Users and Groups menu
-	   extensions  - the Extensions menu (this is the default)
-	   siteadmin   - the Site Admin menu
-	   viewsite    - the View Site menu tab
-	   logout      - the Logout menu tab
-	   
-	   Note that if you place your module in the main,
-	   viewsite, or logout sections, it will show up in the
-	   menus, but will not be visible in any top-level
-	   section pages.
-	  ---------------------------------------------------------*/
-	function GetAdminSection()
-	{
-		return 'extensions';
-	}
-
-
-	/*---------------------------------------------------------
-	   GetAdminDescription()
-	   If your module does have an Admin Panel, you
-	   can have it return a description string that gets shown
-	   in the Admin Section page that contains the module.
-	  ---------------------------------------------------------*/
-	function GetAdminDescription()
-	{
-		return $this->Lang('admindescription');
-	}
-
-
-	/*---------------------------------------------------------
-	   VisibleToAdminUser()
-	   If your module does have an Admin Panel, you
-	   can control whether or not it's displayed by the boolean
-	   that is returned by this method. This is primarily used
-	   to hide modules from admins who lack permission to use
-	   them.
-	   
-	   Typically, you'll use some permission to set this
-	   (e.g., $this->CheckPermission('Some Permission'); )
-	  ---------------------------------------------------------*/
-	function VisibleToAdminUser()
-	{
+    /*---------------------------------------------------------
+       HasAdmin()
+       This function returns a boolean value, depending on
+       whether your module adds anything to the Admin area of
+       the site. For the rest of these comments, I'll be calling
+       the admin part of your module the "Admin Panel" for
+       want of a better term.
+      ---------------------------------------------------------*/
+    function HasAdmin()
+    {
         return true;
-	}
-	
+    }
 
-	/*---------------------------------------------------------
-	   CheckAccess()
-	   This wrapper function will check against the specified permission,
-	   and display an error page if the user doesn't have adequate permissions.
-	  ---------------------------------------------------------*/
-	function CheckAccess($perm = '')
-		{
-		return $this->CheckPermission($perm);
-		}
-	
-	/*---------------------------------------------------------
-	   DisplayErrorPage()
-	   This is a simple function for generating error pages.
-	  ---------------------------------------------------------*/
+
+    /*---------------------------------------------------------
+       GetAdminSection()
+       If your module has an Admin Panel, you can specify
+       which Admin Section (or top-level Admin Menu) it shows
+       up in. This method returns a string to specify that
+       section. Valid return values are:
+
+       main        - the Main menu tab.
+       content     - the Content menu
+       layout      - the Layout menu
+       usersgroups - the Users and Groups menu
+       extensions  - the Extensions menu (this is the default)
+       siteadmin   - the Site Admin menu
+       viewsite    - the View Site menu tab
+       logout      - the Logout menu tab
+       
+       Note that if you place your module in the main,
+       viewsite, or logout sections, it will show up in the
+       menus, but will not be visible in any top-level
+       section pages.
+      ---------------------------------------------------------*/
+    function GetAdminSection()
+    {
+        return 'extensions';
+    }
+
+
+    /*---------------------------------------------------------
+       GetAdminDescription()
+       If your module does have an Admin Panel, you
+       can have it return a description string that gets shown
+       in the Admin Section page that contains the module.
+      ---------------------------------------------------------*/
+    function GetAdminDescription()
+    {
+        return $this->Lang('admindescription');
+    }
+
+
+    /*---------------------------------------------------------
+       VisibleToAdminUser()
+       If your module does have an Admin Panel, you
+       can control whether or not it's displayed by the boolean
+       that is returned by this method. This is primarily used
+       to hide modules from admins who lack permission to use
+       them.
+       
+       Typically, you'll use some permission to set this
+       (e.g., $this->CheckPermission('Some Permission'); )
+      ---------------------------------------------------------*/
+    function VisibleToAdminUser()
+    {
+        return true;
+    }
+    
+
+    /*---------------------------------------------------------
+       CheckAccess()
+       This wrapper function will check against the specified permission,
+       and display an error page if the user doesn't have adequate permissions.
+      ---------------------------------------------------------*/
+    function CheckAccess($perm = '')
+        {
+        return $this->CheckPermission($perm);
+        }
+    
+    /*---------------------------------------------------------
+       DisplayErrorPage()
+       This is a simple function for generating error pages.
+      ---------------------------------------------------------*/
     function DisplayErrorPage($id, &$params, $return_id, $message='')
     {
-		$this->smarty->assign('title_error', $this->Lang('error'));
-		$this->smarty->assign_by_ref('message', $message);
+        $this->smarty->assign('title_error', $this->Lang('error'));
+        $this->smarty->assign_by_ref('message', $message);
 
         // Display the populated template
         echo $this->ProcessTemplate('error.tpl');
     }
-	
+    
 
 
-	/*---------------------------------------------------------
-	   GetDependencies()
-	   Your module may need another module to already be installed
-	   before you can install it.
-	   This method returns a list of those dependencies and
-	   minimum version numbers that this module requires.
-	   
-	   It should return an hash, eg.
-	   return array('somemodule'=>'1.0', 'othermodule'=>'1.1');
-	  ---------------------------------------------------------*/
-	function GetDependencies()
-	{
-		return array('CGCalendar'=>'1.5.7','FrontEndUsers'=>'1.12.13');
-	}
+    /*---------------------------------------------------------
+       GetDependencies()
+       Your module may need another module to already be installed
+       before you can install it.
+       This method returns a list of those dependencies and
+       minimum version numbers that this module requires.
+       
+       It should return an hash, eg.
+       return array('somemodule'=>'1.0', 'othermodule'=>'1.1');
+      ---------------------------------------------------------*/
+    function GetDependencies()
+    {
+        return array('CGCalendar'=>'1.5.7','FrontEndUsers'=>'1.12.13');
+    }
 
-	/*---------------------------------------------------------
-	   MinimumCMSVersion()
-	   Your module may require functions or objects from
-	   a specific version of CMS Made Simple.
-	   Ever since version 0.11, you can specify which minimum
-	   CMS MS version is required for your module, which will
-	   prevent it from being installed by a version of CMS that
-	   can't run it.
-	   
-	   This method returns a string representing the
-	   minimum version that this module requires.
-	   ---------------------------------------------------------*/
-	function MinimumCMSVersion()
-	{
-		return "1.8.2";
-	}
-
-
-	/*---------------------------------------------------------
-	   MaximumCMSVersion()
-	   You may want to prevent people from using your module in
-	   future versions of CMS Made Simple, especially if you
-	   think API features you use may change -- after all, you
-	   never really know how the CMS MS API could evolve.
-	   
-	   So, to prevent people from flooding you with bug reports
-	   when a new version of CMS MS is released, you can simply
-	   restrict the version. Then, of course, the onus is on you
-	   to release a new version of your module when a new version
-	   of the CMS is released...
-	   
-	   This method returns a string representing the
-	   maximum version that this module supports.
-	   ---------------------------------------------------------*/
-	function MaximumCMSVersion()
-	{
-		return "1.9.3";
-	}
+    /*---------------------------------------------------------
+       MinimumCMSVersion()
+       Your module may require functions or objects from
+       a specific version of CMS Made Simple.
+       Ever since version 0.11, you can specify which minimum
+       CMS MS version is required for your module, which will
+       prevent it from being installed by a version of CMS that
+       can't run it.
+       
+       This method returns a string representing the
+       minimum version that this module requires.
+       ---------------------------------------------------------*/
+    function MinimumCMSVersion()
+    {
+        return "1.8.2";
+    }
 
 
-	/*---------------------------------------------------------
-	   InstallPostMessage()
-	   After installation, there may be things you want to
-	   communicate to your admin. This function returns a
-	   string which will be displayed.
-	  ---------------------------------------------------------*/
-	function InstallPostMessage()
-	{
-		return $this->Lang('postinstall');
-	}
-
-	/*---------------------------------------------------------
-	   UninstallPostMessage()
-	   After removing a module, there may be things you want to
-	   communicate to your admin. This function returns a
-	   string which will be displayed.
-	  ---------------------------------------------------------*/
-	function UninstallPostMessage()
-	{
-		return $this->Lang('postuninstall');
-	}
-
+    /*---------------------------------------------------------
+       MaximumCMSVersion()
+       You may want to prevent people from using your module in
+       future versions of CMS Made Simple, especially if you
+       think API features you use may change -- after all, you
+       never really know how the CMS MS API could evolve.
+       
+       So, to prevent people from flooding you with bug reports
+       when a new version of CMS MS is released, you can simply
+       restrict the version. Then, of course, the onus is on you
+       to release a new version of your module when a new version
+       of the CMS is released...
+       
+       This method returns a string representing the
+       maximum version that this module supports.
+       ---------------------------------------------------------*/
+    function MaximumCMSVersion()
+    {
+        return "1.9.3";
+    }
 
 
+    /*---------------------------------------------------------
+       InstallPostMessage()
+       After installation, there may be things you want to
+       communicate to your admin. This function returns a
+       string which will be displayed.
+      ---------------------------------------------------------*/
+    function InstallPostMessage()
+    {
+        return $this->Lang('postinstall');
+    }
 
-	/**
-	 * UninstallPreMessage()
-	 * This allows you to display a message along with a Yes/No dialog box. If the user responds
-	 * in the affirmative to your message, the uninstall will proceed. If they respond in the
-	 * negative, the uninstall will be canceled. Thus, your message should be of the form
-	 * "All module data will be deleted. Are you sure you want to uninstall this module?"
-	 *
-	 * If you don't want the dialog, have this method return a FALSE, which will cause the
-	 * module to uninstall immediately if the user clicks the "uninstall" link.
-	 */
-	function UninstallPreMessage()
-	{
-		return $this->Lang('really_uninstall');
-	}
-	
+    /*---------------------------------------------------------
+       UninstallPostMessage()
+       After removing a module, there may be things you want to
+       communicate to your admin. This function returns a
+       string which will be displayed.
+      ---------------------------------------------------------*/
+    function UninstallPostMessage()
+    {
+        return $this->Lang('postuninstall');
+    }
+
+
+
+
+    /**
+     * UninstallPreMessage()
+     * This allows you to display a message along with a Yes/No dialog box. If the user responds
+     * in the affirmative to your message, the uninstall will proceed. If they respond in the
+     * negative, the uninstall will be canceled. Thus, your message should be of the form
+     * "All module data will be deleted. Are you sure you want to uninstall this module?"
+     *
+     * If you don't want the dialog, have this method return a FALSE, which will cause the
+     * module to uninstall immediately if the user clicks the "uninstall" link.
+     */
+    function UninstallPreMessage()
+    {
+        return $this->Lang('really_uninstall');
+    }
+    
 }
 
 ?>

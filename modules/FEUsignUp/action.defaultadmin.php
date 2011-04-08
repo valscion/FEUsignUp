@@ -2,9 +2,9 @@
 if (!isset($gCms)) exit;
 
 if (! $this->CheckAccess())
-	{
-	return $this->DisplayErrorPage($id, $params, $returnid,$this->Lang('accessdenied'));
-	}
+    {
+    return $this->DisplayErrorPage($id, $params, $returnid,$this->Lang('accessdenied'));
+    }
 
 /* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -18,8 +18,8 @@ if (! $this->CheckAccess())
 */
 
 $this->smarty->assign('tab_headers',$this->StartTabHeaders().
-	$this->SetTabHeader('overview',$this->Lang('title_overview')).
-	$this->EndTabHeaders().$this->StartTabContent());
+    $this->SetTabHeader('overview',$this->Lang('title_overview')).
+    $this->EndTabHeaders().$this->StartTabContent());
 $this->smarty->assign('end_tab',$this->EndTab());
 $this->smarty->assign('tab_footers',$this->EndTabContent());
 $this->smarty->assign('start_overview_tab',$this->StartTab('overview'));
