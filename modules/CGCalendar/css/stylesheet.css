@@ -1,0 +1,112 @@
+/*
+Example stylesheet for Calendar module
+
+For using this "big"-class insert something like this in your page
+or template;
+
+{cms_module module='Calendar'}
+
+*/
+
+
+
+/* make all links red */
+.calendar tr td a
+{
+  color: red;
+}
+
+/* highlight "today" for the small calendar */
+.calendar-today
+{
+  font-weight: bold;
+}
+
+/* display the "upcominglist" as one line per entry (assuming default class and id names) */
+#cal-upcominglist .calendar-date-title
+,#cal-upcominglist .calendar-summary-title
+{
+  display: none;
+}
+
+#cal-upcominglist h2
+,#cal-upcominglist .calendar-date
+,#cal-upcominglist .calendar-summary
+{
+  display: inline;
+  margin-right: 5px;
+}
+
+/* tidy up text sizes for lists */
+#cal-list h1, #cal-upcominglist h1
+{
+  color: red;
+  font-size: 120%;
+}
+#cal-list h2, cal-upcominglist h2
+{
+  font-size: 110%;
+}
+
+/** large calendar rules (assuming default class and id names) **/
+/* border on for #cal-calendar */
+#cal-calendar{
+  margin: 0px;
+  border-collapse:    collapse;
+  border: 1px solid black;
+}
+
+/* nice squares for the #cal-calendar table */
+#cal-calendar th
+{
+  border: 1px solid black;
+  padding: 3px;
+  width: 75px;
+}
+
+#cal-calendar td {
+  border: 1px solid black;
+  vertical-align: top;
+  padding: 3px;
+  height: 75px;
+  width: 75px;
+}
+
+/* format summaries nicely in #cal-calendar */
+#cal-calendar ul
+{
+  margin: 0px;
+  padding: 0px;
+  padding-left: 5px;
+}
+
+#cal-calendar li
+{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* background colours for #cal-calendar */
+#cal-calendar td
+{
+  background-color: silver;
+}
+
+#cal-calendar .calendar-day
+{
+  background-color: #80ff80;
+}
+
+#cal-calendar .calendar-today
+{
+  font-weight: normal;
+  background-color: #8080ff;
+}
+
+.calendar-event .calendar-date-title,
+.calendar-event .calendar-summary-title,
+.calendar-event .calendar-details-title
+{
+  display: none;
+}
