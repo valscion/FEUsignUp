@@ -25,15 +25,29 @@ if( !$feu->LoggedIn() ) {
     echo $feu->LoggedInName();
 }
 
+
+$categories = $cgcal->GetCategories();
 echo '<pre>';
 if( isset($params['cal_id']) ) {
     $event = $cgcal->GetEvent((int) $params['cal_id']);
     print_r( $event );
     echo "\n--------\n";
+    
     foreach( $event['categories'] as $catId ) {
         echo $catId . ": ";
-        echo $cgcal->GetCategoryName( 2 ) . "\n";
+        // The method below is broken in CGCalendar... Stupid.
+        // echo $cgcal->GetCategoryName( $catId ) . "\n";
+        $catName = '';
+        foreach( $categories as $arr )
+        {
+            if( $arr['category_id'] == $catId ) {
+                $catName = $arr['category_name'];
+                break;
+            }
+        }
+        echo $catName . "\n";
     }
+    
 } else {
     print_r( $cgcal->GetCategories() );
 }
