@@ -1,6 +1,7 @@
 <?php
 #-------------------------------------------------------------------------
-# Module: FEUsignUp - Gives the ability to put together a sign-up for events to CGCalendar and Team Sport Scores
+# Module: FEUsignUp - Gives the ability to put together a sign-up for 
+# events to CGCalendar and Team Sport Scores
 # Version: 0.0.1, VesQ
 #
 #-------------------------------------------------------------------------
@@ -133,7 +134,7 @@ class FEUsignUp extends CMSModule
       ---------------------------------------------------------*/
     function IsPluginModule()
     {
-        return false;
+        return true;
     }
 
     /*---------------------------------------------------------
@@ -282,7 +283,7 @@ class FEUsignUp extends CMSModule
        ---------------------------------------------------------*/
     function MaximumCMSVersion()
     {
-        return "1.9.3";
+        return "1.9.4.1";
     }
 
 

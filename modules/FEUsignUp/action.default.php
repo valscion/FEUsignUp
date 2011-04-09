@@ -12,6 +12,6 @@ if (!isset($gCms)) exit;
    
 */
 
-
+echo cgcalendar_utils::get_username(1);
 
 ?>
