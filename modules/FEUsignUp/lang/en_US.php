@@ -2,8 +2,7 @@
 $lang['friendlyname'] = 'FEUsignUp';
 $lang['postinstall'] = 'Post Install Message.';
 $lang['postuninstall'] = 'Post Uninstall Message, e.g., "Curses! Foiled Again!"';
-$lang['really_uninstall'] = 'Really? Are you sure
-you want to uninstall this fine module?';
+$lang['really_uninstall'] = 'Really? Are you sure you want to uninstall this fine module?';
 $lang['uninstalled'] = 'Module Uninstalled.';
 $lang['installed'] = 'Module version %s installed.';
 $lang['upgraded'] = 'Module upgraded to version %s.';
