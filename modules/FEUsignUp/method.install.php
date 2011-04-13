@@ -27,10 +27,11 @@ if (!isset($gCms)) exit;
         // table schema description
         $flds = "
             id I KEY,
-            feu_user_id I,
-            cgcal_event_id I,
-            tss_game_id I DEFAULT 0,
-            signed_up L,
+            feu_user_id I NOTNULL,
+            cgcal_event_id I DEFAULT -1,
+            tss_game_id I DEFAULT -1,
+            group_id I DEFAULT -1,
+            signed_up L DEFAULT 0,
             description C(255)
             ";
 
@@ -41,6 +42,24 @@ if (!isset($gCms)) exit;
 
         // create a sequence
         $db->CreateSequence($this->events_table_name.'_seq');
+        
+        
+        // table schema description
+        $flds = "
+            group_id I KEY,
+            feusers_group_id I NOTNULL,
+            cgcal_category_id I DEFAULT -1,
+            tss_team_id I DEFAULT -1,
+            description C(255)
+            ";
+
+        // create it. This should do error checking, but I'm a lazy sod.
+        $sqlarray = $dict->CreateTableSQL($this->groups_table_name,
+                $flds, $taboptarray);
+        $dict->ExecuteSQLArray($sqlarray);
+
+        // create a sequence
+        $db->CreateSequence($this->groups_table_name.'_seq');
         
         
         // permissions

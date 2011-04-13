@@ -41,12 +41,14 @@
 class FEUsignUp extends CMSModule
 {
     var $events_table_name;
+    var $groups_table_name;
     
     function __construct()
     {
         parent::__construct();
         
-        $this->events_table_name = cms_db_prefix().'module_feusignup';
+        $this->events_table_name = cms_db_prefix().'module_feusignup_events';
+        $this->groups_table_name = cms_db_prefix().'module_feusignup_groups';
     }
     
     function GetName()
@@ -516,7 +518,29 @@ class FEUsignUp extends CMSModule
      */
     function GetEventUsers( $id, $from = 'calendar' )
     {
-        $query = "SELECT * FROM "
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $id = (int)$id;
+        $events_table_name = $this->events_table_name;
+        switch($from) {
+            case 'calendar':
+            case 'cgcalendar':
+                $search_field = 'cgcal_event_id';
+                break;
+            case 'tss':
+            case 'teamsportscores':
+                $search_field = 'tss_game_id';
+            default:
+                return array();
+        }
+        
+        $query = "SELECT * FROM $events_table_name WHERE $search_field = $id";
+        $result = array();
+        $rs = $db->Execute($query);
+        if($rs && $rs->RecordCount() > 0) {
+            $result = $rs->GetArray();
+        }
+        return $result;
     }
     
 }

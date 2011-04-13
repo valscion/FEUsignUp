@@ -26,32 +26,6 @@ if( !$feu->LoggedIn() ) {
 }
 
 echo '<p class="pickable">'.$params['description'].'</p>';
-
-$categories = $cgcal->GetCategories();
-echo '<pre>';
-if( isset($params['cal_id']) ) {
-    $event = $cgcal->GetEvent((int) $params['cal_id']);
-    print_r( $event );
-    echo "\n--------\n";
-    
-    foreach( $event['categories'] as $catId ) {
-        echo $catId . ": ";
-        // The method below is broken in CGCalendar... Stupid.
-        // echo $cgcal->GetCategoryName( $catId ) . "\n";
-        $catName = '';
-        foreach( $categories as $arr )
-        {
-            if( $arr['category_id'] == $catId ) {
-                $catName = $arr['category_name'];
-                break;
-            }
-        }
-        echo $catName . "\n";
-    }
-    
-} else {
-    print_r( $cgcal->GetCategories() );
-}
-echo '</pre>';
+echo "\n<pre>" . $this->GetEventUsers( $params['cal_id'] ). '</pre>';
 
 ?>

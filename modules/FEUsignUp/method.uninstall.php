@@ -24,6 +24,14 @@ if (!isset($gCms)) exit;
         // remove the sequence
         $db->DropSequence( $this->events_table_name.'_seq' );
         
+        // remove the database table
+        $dict = NewDataDictionary( $db );
+        $sqlarray = $dict->DropTableSQL( $this->groups_table_name );
+        $dict->ExecuteSQLArray($sqlarray);
+
+        // remove the sequence
+        $db->DropSequence( $this->groups_table_name.'_seq' );
+        
         
         // remove the permissions
         
