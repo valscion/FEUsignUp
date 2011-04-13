@@ -40,7 +40,15 @@
 #-------------------------------------------------------------------------
 class FEUsignUp extends CMSModule
 {
-
+    var $events_table_name;
+    
+    function __construct()
+    {
+        parent::__construct();
+        
+        $this->events_table_name = cms_db_prefix().'module_feusignup';
+    }
+    
     function GetName()
     {
         return 'FEUsignUp';
@@ -500,6 +508,15 @@ class FEUsignUp extends CMSModule
     function UninstallPreMessage()
     {
         return $this->Lang('really_uninstall');
+    }
+    
+    /**
+     * GetEventUsers()
+     * Retrieves an array of users from those who are set to the group of the event.
+     */
+    function GetEventUsers( $id, $from = 'calendar' )
+    {
+        $query = "SELECT * FROM "
     }
     
 }

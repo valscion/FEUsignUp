@@ -18,11 +18,11 @@ if (!isset($gCms)) exit;
         
         // remove the database table
         $dict = NewDataDictionary( $db );
-        $sqlarray = $dict->DropTableSQL( cms_db_prefix()."module_feusignup" );
+        $sqlarray = $dict->DropTableSQL( $this->events_table_name );
         $dict->ExecuteSQLArray($sqlarray);
 
         // remove the sequence
-        $db->DropSequence( cms_db_prefix()."module_feusignup_seq" );
+        $db->DropSequence( $this->events_table_name.'_seq' );
         
         
         // remove the permissions

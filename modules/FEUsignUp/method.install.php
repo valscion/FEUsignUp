@@ -35,12 +35,12 @@ if (!isset($gCms)) exit;
             ";
 
         // create it. This should do error checking, but I'm a lazy sod.
-        $sqlarray = $dict->CreateTableSQL(cms_db_prefix()."module_feusignup",
+        $sqlarray = $dict->CreateTableSQL($this->events_table_name,
                 $flds, $taboptarray);
         $dict->ExecuteSQLArray($sqlarray);
 
         // create a sequence
-        $db->CreateSequence(cms_db_prefix()."module_feusignup_seq");
+        $db->CreateSequence($this->events_table_name.'_seq');
         
         
         // permissions
