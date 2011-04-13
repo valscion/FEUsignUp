@@ -405,9 +405,13 @@ class FEUsignUp extends CMSModule
    $this->CreateParameter('tss_id',-1,$this->Lang('help_tss_id'));
    $this->SetParameterType('tss_id',CLEAN_INT);
    
-   // cal_category must be a string
-   $this->CreateParameter('cal_category','',$this->Lang('help_cal_category'));
-   $this->SetParameterType('cal_category',CLEAN_STRING);
+   // from must be a string
+   $this->CreateParameter('from','',$this->Lang('help_from'));
+   $this->SetParameterType('from',CLEAN_STRING);
+   
+   // category must be a string
+   $this->CreateParameter('category','',$this->Lang('help_category'));
+   $this->SetParameterType('category',CLEAN_STRING);
    
    // limit must be an integer
    $this->CreateParameter('limit',-1,$this->Lang('help_limit'));

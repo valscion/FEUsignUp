@@ -8,7 +8,7 @@ if (!isset($gCms)) exit;
    -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
    
    Lists events according to template templates/list.tpl.
-   Uses parameters "limit" and "cal_category" for now.
+   Uses parameters "from", "category", "limit"
    
 */
 
