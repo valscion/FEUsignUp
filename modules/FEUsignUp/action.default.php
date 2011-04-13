@@ -19,12 +19,13 @@ $cgcal =& cge_utils::get_module('CGCalendar');
 if( $cgcal === null ) die('CGCalendar module is not installed!');
 
 if( !$feu->LoggedIn() ) { 
-    echo('You\'re not logged in!'); 
+    //echo('You\'re not logged in!'); 
     //return; 
 } else {
-    echo $feu->LoggedInName();
+    //echo $feu->LoggedInName();
 }
 
+echo '<p class="pickable">'.$params['description'].'</p>';
 
 $categories = $cgcal->GetCategories();
 echo '<pre>';
