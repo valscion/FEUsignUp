@@ -13,8 +13,14 @@ $land['admin_title'] = 'FEUsignUp Admin Panel';
 $lang['admindescription'] = 'A dull admin description';
 $lang['accessdenied'] = 'Access Denied. Please check your permissions.';
 $lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissions to use this module!)';
-$lang['Overview'] = 'Overview';
+
+$lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
+$lang['content_overview'] = '<p>Overview content is here!</p>';
+
+$lang['groups'] = 'Groups';
+$lang['title_groups'] = 'Groups';
+$lang['content_groups'] = '<p>Groups content is here, baby!';
 
 
 $lang['changelog'] = '<ul>

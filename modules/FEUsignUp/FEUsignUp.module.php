@@ -35,7 +35,7 @@
 #   http://dev.cmsmadesimple.org/
 # - Check out the Skeleton Module for a commented example
 # - Look at other modules, and learn from the source
-# - Check out the forums at http://forums.cmsmadesimple.org
+# - Check out the forums at http://forum.cmsmadesimple.org
 # - Chat with developers on the #cms IRC channel
 #-------------------------------------------------------------------------
 class FEUsignUp extends CMSModule
