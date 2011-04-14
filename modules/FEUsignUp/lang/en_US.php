@@ -16,11 +16,9 @@ $lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissio
 
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
-$lang['content_overview'] = '<p>Overview content is here!</p>';
 
 $lang['groups'] = 'Groups';
 $lang['title_groups'] = 'Groups';
-$lang['content_groups'] = '<p>Groups content is here, baby!';
 
 
 $lang['changelog'] = '<ul>

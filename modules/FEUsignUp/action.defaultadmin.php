@@ -42,9 +42,14 @@ $this->smarty->assign('tabs_end',$this->EndTabContent());
 $this->smarty->assign('title_section','defaultadmin');
 
 
-// Adding some content to the tabs
-$this->smarty->assign('content_overview',$this->Lang('content_overview'));
-$this->smarty->assign('content_groups',$this->Lang('content_groups'));
+// Adding some content to the tabs. I just love output buffering.
+ob_start();
+require_once(dirname(__FILE__).'/function.admin_overviewtab.php');
+$this->smarty->assign('content_overview',ob_get_clean());
+
+ob_start();
+require_once(dirname(__FILE__).'/function.admin_groupstab.php');
+$this->smarty->assign('content_groups',ob_get_clean());
 
 echo $this->ProcessTemplate('adminpanel.tpl');
 
