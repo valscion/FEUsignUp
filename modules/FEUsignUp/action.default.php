@@ -25,7 +25,12 @@ if( !$feu->LoggedIn() ) {
     //echo $feu->LoggedInName();
 }
 
-echo '<p class="pickable">'.$params['description'].'</p>';
-echo "\n<pre>" . $this->GetEventUsers( $params['cal_id'] ). '</pre>';
+// create attributes for rendering "view" links for the object.
+// $id and $returnid are predefined for us by the module API
+// that last parameter is the Pretty URL link
+$link = $this->CreateFrontendLink($id, $returnid, 'view',
+      $params['description'],array('class'=>'pickable'),'',false,true,'',true,'feusignup/view/-1/');
+      
+echo '<p>'.$link.'</p>';
 
 ?>
