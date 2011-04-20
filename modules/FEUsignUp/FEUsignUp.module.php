@@ -368,8 +368,14 @@ class FEUsignUp extends CMSModule
 	URLs, but also takes a string parameter which is a fully-assembled Pretty URL. Just registering the routes
 	is not enough; you module's links need to create the URLs on their side as well.
     */
-	$this->RegisterRoute('/feusignup\/view\/(?P<feusu_id>-?[0-9]+)$/',array('action'=>'view', 'showtemplate'=>'false'));
-	$this->RegisterRoute('/feusignup\/do_(<?P<in_or_out>(in)|(out))\/(?P<feusu_id>[0-9]+)\/(?P<returnid>[0-9]+)$/',array('action'=>'toggle'));
+	$this->RegisterRoute(
+        '/feusignup\/view\/(?P<from>(cgcal)|(tss))\/(?P<feusu_id>-?[0-9]+)$/',
+        array('action'=>'displayevent', 'showtemplate'=>'false')
+    );
+	$this->RegisterRoute(
+        '/feusignup\/do_(<?P<in_or_out>(in)|(out))(?P<feusu_id>[0-9]+)\/(?P<returnid>[0-9]+)$/',
+        array('action'=>'toggle')
+    );
 
    /*
 	* 2a. Custom URLs for Specific Content
@@ -429,6 +435,10 @@ class FEUsignUp extends CMSModule
    // signed_up must be an integer
    $this->CreateParameter('signed_up',-1,$this->Lang('help_signed_up'));
    $this->SetParameterType('signed_up',CLEAN_INT);
+   
+   // in_or_out must be a string
+   $this->CreateParameter('in_or_out','',$this->Lang('help_in_or_out'));
+   $this->SetParameterType('in_or_out',CLEAN_STRING);
 
    // description must be a string
    $this->CreateParameter('description','',$this->Lang('help_description'));
