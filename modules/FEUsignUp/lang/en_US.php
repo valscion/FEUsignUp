@@ -24,7 +24,7 @@ $lang['title_groups'] = 'Groups';
 $lang['groups_updated'] = 'Groups have been updated.';
 $lang['link_feugroup'] = 'Link Front End Users -group';
 $lang['to_cgcal_category'] = 'to CGCalendar category';
-$lang['or_tss_team'] = 'or TSS team';
+$lang['or_tss_team'] = 'or TeamSportScores team';
 $lang['submit_groups'] = 'Submit new link';
 
 
