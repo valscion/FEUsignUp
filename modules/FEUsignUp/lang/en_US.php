@@ -14,13 +14,20 @@ $lang['admindescription'] = 'A dull admin description';
 $lang['accessdenied'] = 'Access Denied. Please check your permissions.';
 $lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissions to use this module!)';
 
-$lang['groups_updated'] = 'Groups have been updated.';
-
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
 
 $lang['groups'] = 'Groups';
 $lang['title_groups'] = 'Groups';
+
+## Groups-tab stuff
+$lang['groups_updated'] = 'Groups have been updated.';
+$lang['link_feugroup'] = 'Link Front End Users -group';
+$lang['to_cgcal_category'] = 'to CGCalendar category';
+$lang['or_tss_team'] = 'or TSS team';
+$lang['submit_groups'] = 'Submit new link';
+
+
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
 

@@ -1,9 +1,10 @@
-Hello world! This is groups-tab.
+<p>Hello world! This is the groups-tab.</p>
 {$start_form}
-  <pre>{$feu_groups|print_r}
-
-  ----
-
-  {$tss_teams|print_r}</pre>
+  {$link_feugroup}
+    {$feug_dropdown}
+  {$to_cgcal_category}
+    {$cgcc_dropdown}
+  {$or_tss_team}
+    {$tsst_dropdown}
   {$submit}
 </form>
