@@ -23,7 +23,7 @@ $db =& $this->GetDb(); /* @var $db ADOConnection */
 
 // Assign FrontEndUsers groups to $feu_groups
 $feu_groups = array();
-$q = "SELECT id,groupname,groupdesc FROM ".cms_db_prefix()."module_feusers_groups";
+$q = 'SELECT id,groupname,groupdesc FROM '.cms_db_prefix().'module_feusers_groups';
 $dbresult = $db->Execute( $q );
 if( $dbresult ) {
     while( $row = $dbresult->FetchRow() ) {
@@ -38,7 +38,7 @@ if( $dbresult ) {
 // Assign TSS teams to $tss_teams
 $tss_teams = array();
 // Ignore the NONE-team.
-$q = "SELECT team_id,team_name,team_code FROM ".cms_db_prefix()."module_tss_team WHERE team_id != 0";
+$q = 'SELECT team_id,team_name,team_code FROM '.cms_db_prefix().'module_tss_team WHERE team_id != 0';
 $dbresult = $db->Execute( $q );
 if( $dbresult ) {
     while( $row = $dbresult->FetchRow() ) {
@@ -54,8 +54,11 @@ if( $dbresult ) {
 $this->smarty->assign('feu_groups',$feu_groups);
 $this->smarty->assign('tss_teams',$tss_teams);
 
-// Run the template
+// Assign form elements
+$smarty->assign('start_form', $this->CreateFormStart($id, 'adminsave_groups', $returnid));
+$smarty->assign('submit', $this->CreateInputSubmit($id, 'submit', lang('submit')));
 
+// Run the template
 echo $this->ProcessTemplate('admin_groupstab.tpl');
 
-?>
+## EOF

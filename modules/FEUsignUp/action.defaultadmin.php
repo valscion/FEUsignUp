@@ -23,7 +23,7 @@ if (FALSE == empty($params['active_tab']))
   {
     $tab = $params['active_tab'];
   } else {
-  $tab = 'overview';
+  $tab = '';
  }
 
 $tab_header = $this->StartTabHeaders();
@@ -54,4 +54,4 @@ $this->smarty->assign('content_groups',ob_get_clean());
 echo $this->ProcessTemplate('adminpanel.tpl');
 
 
-?>
+## EOF

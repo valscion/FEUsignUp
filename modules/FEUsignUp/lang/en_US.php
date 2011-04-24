@@ -14,6 +14,8 @@ $lang['admindescription'] = 'A dull admin description';
 $lang['accessdenied'] = 'Access Denied. Please check your permissions.';
 $lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissions to use this module!)';
 
+$lang['groups_updated'] = 'Groups have been updated.';
+
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
 
@@ -37,4 +39,6 @@ $lang['help'] = '<h3>What Does This Do?</h3>
 <h3>Copyright and License</h3>
 <p>Copyright &copy; 2011, VesQ <a href="mailto:laakso.vesa@gmail.com">&lt;laakso.vesa@gmail.com&gt;</a>. All Rights Are Reserved.</p>
 <p>This module has been released under the <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU Public License</a>. You must agree to this license before using the module.</p>';
-?>
+
+
+## EOF

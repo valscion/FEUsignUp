@@ -9,4 +9,6 @@ if (!isset($gCms)) exit;
    
 */
 
-echo 'Hello world! Here\'s the "overview" tab ;)';
+echo '<p>Hello world! Here\'s the "overview" tab ;)</p>';
+
+## EOF
