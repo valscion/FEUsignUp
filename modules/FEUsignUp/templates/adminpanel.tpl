@@ -1,8 +1,10 @@
 {$tabs_start}
     {$start_overview_tab}
+        {if isset($error)}{$error}{/if}
         {$content_overview}
     {$tab_end}
     {$start_linkings_tab}
+        {if isset($error)}{$error}{/if}
         {$content_linkings}
     {$tab_end}
 {$tabs_end}

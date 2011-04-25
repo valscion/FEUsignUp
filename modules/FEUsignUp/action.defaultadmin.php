@@ -25,6 +25,12 @@ if (FALSE == empty($params['active_tab']))
   } else {
   $tab = '';
  }
+ 
+// If there's errors, assign 'em to smarty
+if($params['tab_error']) {
+    $this->smarty->assign('error', $this->ShowErrors($params['tab_error']));
+}
+
 
 $tab_header = $this->StartTabHeaders();
 
