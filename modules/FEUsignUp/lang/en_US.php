@@ -29,6 +29,13 @@ $lang['prompt_tss_team'] = 'or TeamSportScores team';
 $lang['prompt_description'] = 'Description for this linking:';
 $lang['submit_link'] = 'Submit a new link';
 
+## List in linkings-tab
+$lang['th_id'] = 'ID';
+$lang['th_feug'] = 'FEU-group';
+$lang['th_cgcc'] = 'CGCalendar category';
+$lang['th_tsst'] = 'TSS-team';
+$lang['th_desc'] = 'Description';
+$lang['edit'] = 'Edit';
 
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';

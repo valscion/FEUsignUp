@@ -79,9 +79,19 @@ foreach( $linkings as $link )
 }
 
 /*
-// Assign fetched groups and teams to smarty
-$this->smarty->assign('feu_groups',$feu_groups);
-$this->smarty->assign('tss_teams',$tss_teams);
+// Just a TEST
+$onerow = new stdClass();
+$onerow->id = 1337;
+$onerow->feu_group = "Paras A-ryhmä";
+$onerow->cgcal_category = 'Testikalenterikategoria';
+$onerow->tss_team = 'DreamTeam';
+$onerow->desc = 'A simple test';
+$onerow->editlink = 
+    $this->CreateLink ($id, 'editlinking', $returnid,
+               $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
+                                    $this->Lang ('edit'), '', '', 'systemicon'),
+               array ('linking_id' => 1337 ));
+array_push( $linkings_objs, $onerow );
 */
 
 // Assign form elements

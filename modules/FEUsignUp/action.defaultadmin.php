@@ -27,7 +27,7 @@ if (FALSE == empty($params['active_tab']))
  }
  
 // If there's errors, assign 'em to smarty
-if($params['tab_error']) {
+if( isset($params['tab_error']) && !empty($params['tab_error']) ) {
     $this->smarty->assign('error', $this->ShowErrors($params['tab_error']));
 }
 
