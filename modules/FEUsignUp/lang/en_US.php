@@ -26,6 +26,7 @@ $lang['prompt_addlink'] = 'Add a new link';
 $lang['prompt_feugroup'] = 'Link Front End Users -group';
 $lang['prompt_cgcal_category'] = 'to CGCalendar category';
 $lang['prompt_tss_team'] = 'or TeamSportScores team';
+$lang['prompt_description'] = 'Description for this linking:';
 $lang['submit_link'] = 'Submit a new link';
 
 

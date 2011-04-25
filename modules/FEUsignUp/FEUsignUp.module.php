@@ -552,6 +552,56 @@ class FEUsignUp extends CMSModule
         return $result;
     }
     
+    /**
+     * AddLinking()
+     * Adds a link that links FEU-group to CGCalendar categories and/or TSS teams.
+     */
+    function AddLinking($feug_id, $cgcc_id, $tsst_id, $desc = '')
+    {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $linkings_table_name = $this->linkings_table_name;
+        
+        $feug_id = (int)$feug_id;
+        $cgcc_id = (int)$cgcc_id;
+        $tsst_id = (int)$tsst_id;
+        
+        if( $cgcc_id < 0 ) $cgcc_id = -1;
+        if( $tsst_id < 0 ) $tsst_id = -1;
+        
+        if( ( $tsst_id == -1 && $cgcc_id == -1 ) || $feug_id < 0 ) {
+            return false;
+        }
+        
+        $q = "INSERT INTO $linkings_table_name " .
+             "(feusers_group_id, cgcal_category_id, tss_team_id, description) " . 
+             "VALUES (?, ?, ?, ?)";
+        
+        $rs = $db->Execute($q,array($feug_id,$cgcc_id,$tsst_id,$desc));
+        
+        if( $rs ) return true;
+        
+        return false;
+    }
+    
+    /**
+     * GetLinkings()
+     * Fetches all linkings from database and returns a two-dimensional 
+     * associative array containing all rows.
+     */
+    function GetLinkings()
+    {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $q = 'SELECT * FROM ' . $this->linkings_table_name;
+        
+        $result = array();
+        $rs = $db->Execute($q);
+        if($rs && $rs->RecordCount() > 0) {
+            $result = $rs->GetArray();
+        }
+        return $result;
+    }
 }
 
 ?>

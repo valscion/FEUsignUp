@@ -46,7 +46,7 @@ if (!isset($gCms)) exit;
         
         // table schema description
         $flds = "
-            group_id I KEY,
+            linking_id I KEY,
             feusers_group_id I NOTNULL,
             cgcal_category_id I DEFAULT -1,
             tss_team_id I DEFAULT -1,
