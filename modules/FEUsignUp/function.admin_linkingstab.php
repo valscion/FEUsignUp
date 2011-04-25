@@ -3,7 +3,7 @@ if (!isset($gCms)) exit;
 
 /* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-   Output for FEUsignUp adminpanel tab "groups"
+   Output for FEUsignUp adminpanel tab "linkings"
 
    -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
    
@@ -56,18 +56,19 @@ $this->smarty->assign('tss_teams',$tss_teams);
 */
 
 // Assign form elements
-$smarty->assign('start_form', $this->CreateFormStart($id, 'adminsave_groups', $returnid));
-$smarty->assign('feug_dropdown', $this->CreateInputDropdown($id, 'feu_group', $feug_dropdown));
-$smarty->assign('cgcc_dropdown', $this->CreateInputDropdown($id, 'cgc_category', $cgcc_dropdown));
-$smarty->assign('tsst_dropdown', $this->CreateInputDropdown($id, 'tss_team', $tsst_dropdown));
+$smarty->assign('start_form', $this->CreateFormStart($id, 'adminsave_link', $returnid));
+$smarty->assign('input_feugroup', $this->CreateInputDropdown($id, 'feu_group', $feug_dropdown));
+$smarty->assign('input_cgcal_category', $this->CreateInputDropdown($id, 'cgc_category', $cgcc_dropdown));
+$smarty->assign('input_tss_team', $this->CreateInputDropdown($id, 'tss_team', $tsst_dropdown));
 
 // Assign forms language-specific strings
-$smarty->assign('link_feugroup', $this->Lang('link_feugroup'));
-$smarty->assign('to_cgcal_category', $this->Lang('to_cgcal_category'));
-$smarty->assign('or_tss_team', $this->Lang('or_tss_team'));
-$smarty->assign('submit', $this->CreateInputSubmit($id, 'submit', $this->Lang('submit_groups')));
+$smarty->assign('prompt_addlink', $this->Lang('prompt_addlink'));
+$smarty->assign('prompt_feugroup', $this->Lang('prompt_feugroup'));
+$smarty->assign('prompt_cgcal_category', $this->Lang('prompt_cgcal_category'));
+$smarty->assign('prompt_tss_team', $this->Lang('prompt_tss_team'));
+$smarty->assign('submit', $this->CreateInputSubmit($id, 'submit', $this->Lang('submit_link')));
 
 // Run the template
-echo $this->ProcessTemplate('admin_groupstab.tpl');
+echo $this->ProcessTemplate('admin_linkingstab.tpl');
 
 ## EOF

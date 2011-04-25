@@ -32,9 +32,9 @@ $tab_header .= $this->SetTabHeader('overview',$this->Lang('title_overview'),
     ('overview' == $tab)?true:false);
     $this->smarty->assign('start_overview_tab',$this->StartTab('overview', $params));
 
-$tab_header .= $this->SetTabHeader('groups',$this->Lang('title_groups'),
-    ('groups' == $tab)?true:false);
-    $this->smarty->assign('start_groups_tab',$this->StartTab('groups', $params));
+$tab_header .= $this->SetTabHeader('linkings',$this->Lang('title_linkings'),
+    ('linkings' == $tab)?true:false);
+    $this->smarty->assign('start_linkings_tab',$this->StartTab('linkings', $params));
     
 $this->smarty->assign('tabs_start',$tab_header.$this->EndTabHeaders().$this->StartTabContent());
 $this->smarty->assign('tab_end',$this->EndTab());
@@ -48,8 +48,8 @@ require_once(dirname(__FILE__).'/function.admin_overviewtab.php');
 $this->smarty->assign('content_overview',ob_get_clean());
 
 ob_start();
-require_once(dirname(__FILE__).'/function.admin_groupstab.php');
-$this->smarty->assign('content_groups',ob_get_clean());
+require_once(dirname(__FILE__).'/function.admin_linkingstab.php');
+$this->smarty->assign('content_linkings',ob_get_clean());
 
 echo $this->ProcessTemplate('adminpanel.tpl');
 

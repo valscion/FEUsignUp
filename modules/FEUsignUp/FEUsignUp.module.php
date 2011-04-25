@@ -41,14 +41,14 @@
 class FEUsignUp extends CMSModule
 {
     var $events_table_name;
-    var $groups_table_name;
+    var $linkings_table_name;
     
     function __construct()
     {
         parent::__construct();
         
         $this->events_table_name = cms_db_prefix().'module_feusignup_events';
-        $this->groups_table_name = cms_db_prefix().'module_feusignup_groups';
+        $this->linkings_table_name = cms_db_prefix().'module_feusignup_linkings';
     }
     
     function GetName()

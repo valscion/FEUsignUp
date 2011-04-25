@@ -4,8 +4,8 @@
     {$start_overview_tab}
         {$content_overview}
     {$tab_end}
-    {$start_groups_tab}
-        {$content_groups}
+    {$start_linkings_tab}
+        {$content_linkings}
     {$tab_end}
 {$tabs_end}
 

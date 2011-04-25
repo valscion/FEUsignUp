@@ -17,15 +17,16 @@ $lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissio
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
 
-$lang['groups'] = 'Groups';
-$lang['title_groups'] = 'Groups';
+$lang['linkings'] = 'Linkings';
+$lang['title_linkings'] = 'Linkings to Frontend User -groups';
 
-## Groups-tab stuff
-$lang['groups_updated'] = 'Groups have been updated.';
-$lang['link_feugroup'] = 'Link Front End Users -group';
-$lang['to_cgcal_category'] = 'to CGCalendar category';
-$lang['or_tss_team'] = 'or TeamSportScores team';
-$lang['submit_groups'] = 'Submit new link';
+## Linkings-tab stuff
+$lang['linkings_updated'] = 'Linkings have been updated.';
+$lang['prompt_addlink'] = 'Add a new link';
+$lang['prompt_feugroup'] = 'Link Front End Users -group';
+$lang['prompt_cgcal_category'] = 'to CGCalendar category';
+$lang['prompt_tss_team'] = 'or TeamSportScores team';
+$lang['submit_link'] = 'Submit a new link';
 
 
 

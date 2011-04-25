@@ -2,7 +2,7 @@
 // TODO: Save a new group
 
 // set the active tab, and a message to display
-$params = array('tab_message'=> 'groups_updated', 'active_tab' => 'groups');
+$params = array('tab_message'=> 'linkings_updated', 'active_tab' => 'linkings');
 
 // redirect back to default admin page
 $this->Redirect($id, 'defaultadmin', $returnid, $params);

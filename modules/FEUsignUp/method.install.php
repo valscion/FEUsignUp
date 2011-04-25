@@ -54,12 +54,12 @@ if (!isset($gCms)) exit;
             ";
 
         // create it. This should do error checking, but I'm a lazy sod.
-        $sqlarray = $dict->CreateTableSQL($this->groups_table_name,
+        $sqlarray = $dict->CreateTableSQL($this->linkings_table_name,
                 $flds, $taboptarray);
         $dict->ExecuteSQLArray($sqlarray);
 
         // create a sequence
-        $db->CreateSequence($this->groups_table_name.'_seq');
+        $db->CreateSequence($this->linkings_table_name.'_seq');
         
         
         // permissions

@@ -26,11 +26,11 @@ if (!isset($gCms)) exit;
         
         // remove the database table
         $dict = NewDataDictionary( $db );
-        $sqlarray = $dict->DropTableSQL( $this->groups_table_name );
+        $sqlarray = $dict->DropTableSQL( $this->linkings_table_name );
         $dict->ExecuteSQLArray($sqlarray);
 
         // remove the sequence
-        $db->DropSequence( $this->groups_table_name.'_seq' );
+        $db->DropSequence( $this->linkings_table_name.'_seq' );
         
         
         // remove the permissions
