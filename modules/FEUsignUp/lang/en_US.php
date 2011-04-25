@@ -30,7 +30,7 @@ $lang['submit_groups'] = 'Submit new link';
 
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
-
+$lang['db_error'] = 'Database error!';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>
