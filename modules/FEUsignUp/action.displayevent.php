@@ -42,25 +42,33 @@ if( $params['from'] == 'cgcal' ) {
             $feug_ids[$name] = $row['feusers_group_id'];
         }
     }
-    
-    $groups = array();
-    foreach( $feug_ids as $name => $id ) {
-        $fullUsers = $feu->GetFullUsersInGroup( $id );
-        if( $fullUsers )
-            $groups[$name] = $fullUsers;
-    }
-    
-    $users = array();
-    foreach( $groups as $name => $group ) {
-        foreach( $group as $user ) {
-            $onerow = new stdClass();
-            $onerow->username = $user['username'];
-            $onerow->id = $user['id'];
-            $onerow->props = $user['props'];
-            $onerow->cal_link = $name;
-            
-            array_push( $users, $onerow );
-        }
+} elseif( $params['from'] == 'tss' ) {
+    // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
+    // taulukkoon $feug_ids.
+    echo $params['feusu_id'];
+    $feug_ids = array();
+} else {
+    echo '<p class="error">ERROR</p>';
+    return;
+}
+
+$groups = array();
+foreach( $feug_ids as $name => $id ) {
+    $fullUsers = $feu->GetFullUsersInGroup( $id );
+    if( $fullUsers )
+        $groups[$name] = $fullUsers;
+}
+
+$users = array();
+foreach( $groups as $name => $group ) {
+    foreach( $group as $user ) {
+        $onerow = new stdClass();
+        $onerow->username = $user['username'];
+        $onerow->id = $user['id'];
+        $onerow->props = $user['props'];
+        $onerow->cal_link = $name;
+        
+        array_push( $users, $onerow );
     }
 }
 
