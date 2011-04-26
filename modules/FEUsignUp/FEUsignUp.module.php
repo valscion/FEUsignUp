@@ -424,9 +424,9 @@ class FEUsignUp extends CMSModule
    $this->CreateParameter('from','',$this->Lang('help_from'));
    $this->SetParameterType('from',CLEAN_STRING);
    
-   // category must be a string
-   $this->CreateParameter('category','',$this->Lang('help_category'));
-   $this->SetParameterType('category',CLEAN_STRING);
+   // group must be a string
+   $this->CreateParameter('group','',$this->Lang('help_group'));
+   $this->SetParameterType('group',CLEAN_STRING);
    
    // limit must be an integer
    $this->CreateParameter('limit',-1,$this->Lang('help_limit'));
