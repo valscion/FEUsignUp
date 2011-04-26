@@ -1,4 +1,5 @@
 <?php
+if (!isset($gCms)) exit;
 /*
 $extracontent = '';
 
