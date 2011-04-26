@@ -1,3 +1,4 @@
+{if isset($message)}<p>{$message}</p>{/if}
 {$tabs_start}
     {$start_overview_tab}
         {if isset($error)}{$error}{/if}

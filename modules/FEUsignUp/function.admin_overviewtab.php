@@ -9,15 +9,8 @@ if (!isset($gCms)) exit;
    
 */
 
-echo '<p>Hello world! Here\'s the "overview" tab ;)</p>';
+// Basic info first.
+$smarty->assign('tab_info', $this->Lang('info_overview') );
 
-if( isset( $params['extracontent'] ) && !empty( $params['extracontent'] ) ) {
-  $extra_arr = explode( '|', $params['extracontent'] );
-  echo '<ul>';
-  foreach( $extra_arr as $p ) {
-    echo "<li>$p</li>";
-  }
-  echo '</ul>';
-}
-
+echo $this->ProcessTemplate('admin_overviewtab.tpl');
 ## EOF

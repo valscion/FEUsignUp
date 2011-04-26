@@ -1,4 +1,4 @@
-<p>Hello world! This is the linkings-tab.</p>
+{$tab_info}
 {$start_form}
   <fieldset>
     <legend>{$prompt_addlink}</legend>
@@ -34,7 +34,8 @@
 			<th>{$th_cgcc}</th>
             <th>{$th_tsst}</th>
             <th>{$th_desc}</th>
-            <th>&nbsp;</th>
+            <th class="pageicon">&nbsp;</th>
+            <th class="pageicon">&nbsp;</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -47,6 +48,7 @@
         <td>{$link->tss_team}</td>
         <td>{$link->desc}</td>
         <td>{$link->editlink}</td>
+        <td>{if isset($link->deletelink)}{$link->deletelink}{/if}</td>
     </tr>
 {/foreach}
     </tbody>

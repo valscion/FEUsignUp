@@ -522,6 +522,67 @@ class FEUsignUp extends CMSModule
     }
     
     /**
+     * _GetFEUgroups()
+     * Retrieves Front End User -groups directly from the database.
+     */
+     function _GetFEUgroups()
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $ret = array();
+        $q = 'SELECT id,groupname,groupdesc FROM '.cms_db_prefix().'module_feusers_groups';
+        $dbresult = $db->Execute( $q );
+        if( $dbresult ) {
+            while( $row = $dbresult->FetchRow() ) {
+                $ret[ $row['id'] ] = $row['groupdesc'];
+            }
+        }
+        return $ret;
+     }
+    
+    /**
+     * _GetCGCalendarCategories()
+     * Retrieves CGCalendar categories directly from the database.
+     */
+     function _GetCGCalendarCategories()
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $cgcal =& cge_utils::get_module('CGCalendar');
+        if( $cgcal === null ) die('CGCalendar module is not installed!');
+        
+        $ret = array();
+        $q = 'SELECT category_id,category_name FROM ' . $cgcal->categories_table_name . ' ORDER BY category_order, category_name';
+        $dbresult = $db->Execute( $q );
+        if( $dbresult ) {
+            while( $row = $dbresult->FetchRow() ) {
+                $ret[ $row['category_id'] ] = $row['category_name'];
+            }
+        }
+        return $ret;
+     }
+     
+    /**
+     * _GetTSSteams()
+     * Retrieves TSS teams directly from the database.
+     */
+     function _GetTSSteams()
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $ret = array();
+        // Ignore the NONE-team.
+        $q = 'SELECT team_id,team_name,team_code FROM '.cms_db_prefix().'module_tss_team WHERE team_id != 0 ORDER BY team_id ASC';
+        $dbresult = $db->Execute( $q );
+        if( $dbresult ) {
+            while( $row = $dbresult->FetchRow() ) {
+                $ret[ $row['team_id'] ] = $row['team_code'];
+            }
+        }
+        return $ret;
+     }
+    
+    /**
      * GetEventUsers()
      * Retrieves an array of users from those who are set to the group of the event.
      */
@@ -570,7 +631,7 @@ class FEUsignUp extends CMSModule
         if( $tsst_id < 0 ) $tsst_id = -1;
         
         if( ( $tsst_id == -1 && $cgcc_id == -1 ) || $feug_id < 0 ) {
-            return false;
+            return array( false, $this->Lang('error') );
         }
         
         // Get a fresh ID from sequence.
@@ -582,9 +643,11 @@ class FEUsignUp extends CMSModule
         
         $rs = $db->Execute($q,array($lid,$feug_id,$cgcc_id,$tsst_id,$desc));
         
-        if( $rs ) return true;
-        
-        return false;
+        if( $rs ) { 
+            return array( true, $this->Lang('linking_added') );
+        } else {
+            return array( false, $this->Lang('db_error') );
+        }
     }
     
     /**
@@ -607,6 +670,26 @@ class FEUsignUp extends CMSModule
     }
     
     /**
+     * GetLinkingById()
+     * Fetches information array from database by linking-ID.
+     */
+    function GetLinkingById( $lid )
+    {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $lid = (int)$lid;
+        $q = 'SELECT * FROM ' . $this->linkings_table_name . ' WHERE linking_id = ' . $lid;
+        $q .= ' LIMIT 1';
+        
+        $result = array();
+        $rs = $db->Execute($q);
+        if($rs && $rs->RecordCount() > 0) {
+            $result = $rs->FetchRow();
+        }
+        return $result;
+    }
+    
+    /**
      * UpdateLinking()
      * Updates an existing linking.
      */
@@ -618,34 +701,42 @@ class FEUsignUp extends CMSModule
         $pr_arr = array(); // Prepared statement array containing ?-values
         
         if( $feug_id >= 0 ) {
-            $q .= 'feusers_group_id=? ';
+            $q .= 'feusers_group_id=?, ';
             $pr_arr[] = $feug_id;
         }
         if( $cgcc_id >= 0 ) {
-            $q .= 'cgcal_category_id=? ';
+            $q .= 'cgcal_category_id=?, ';
             $pr_arr[] = $cgcc_id;
         }
         if( $tsst_id >= 0 ) {
-            $q .= 'tss_team_id=? ';
+            $q .= 'tss_team_id=?, ';
             $pr_arr[] = $tsst_id;
         }
         if( $desc !== '-noupdate-' ) {
-            $q .= 'description=? ';
+            $q .= 'description=?, ';
             $pr_arr[] = $desc;
         }
         
-        if( count($pr_arr) == 0 ) return false;
+        // Check to see whether we are even going to update anything
+        if( count($pr_arr) == 0 ) 
+            return array( false, $this->Lang('nothing_updated') );
         
-        $q .= 'WHERE linking_id = ?';
+        // Remove the last comma and space
+        $q = substr( $q, 0, -2 );
+        
+        $q .= ' WHERE linking_id = ?';
         $pr_arr[] = $lid;
         
         // Run the query
         $ret = $db->Execute( $q, $pr_arr );
         
-        if( !$ret ) return false;
+        if( !$ret ) return array( false, $this->Lang('db_error') );
         
-        // Return true/false if rows affected or not.
-        return ( $db->Affected_Rows() > 0 );
+        if( $db->Affected_Rows() > 0 ) {
+            return array( true, $this->Lang('linking_updated') );
+        } else {
+            return array( false, $this->Lang('nothing_updated') );
+        }
      }
      
     /**
@@ -657,6 +748,14 @@ class FEUsignUp extends CMSModule
         return $this->UpdateLinking( $lid, -1, -1, -1, $desc );
      }
      
+    /**
+     * DeleteLinking()
+     * Removes a linking from the database.
+     */
+     function DeleteLinking( $lid )
+     {
+        return array( false, 'Not implemented' );
+     }
 }
 
 ?>

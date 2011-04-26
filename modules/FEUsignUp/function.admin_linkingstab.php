@@ -9,48 +9,35 @@ if (!isset($gCms)) exit;
    
 */
 
+// Basic info first.
+$smarty->assign('tab_info', $this->Lang('info_linkings') );
+
 $feu =& cge_utils::get_module('FrontEndUsers');
-if( $feu === null ) die('Front End Users module is not installed!');
-
+if( $feu === null ) {
+    echo 'Front End Users module is not installed!';
+    return;
+}
 $cgcal =& cge_utils::get_module('CGCalendar');
-if( $cgcal === null ) die('CGCalendar module is not installed!');
-
+if( $cgcal === null ) {
+    echo 'CGCalendar module is not installed!';
+    return;
+}
 $tss =& cge_utils::get_module('TeamSportScores');
-if( $tss === null ) die('TeamSportScores module is not installed!');
-
-// Let's hack the DB directly to get all the possible information with only one query.
-$db =& $this->GetDb(); /* @var $db ADOConnection */
-
-// Assign FrontEndUsers groups
-$q = 'SELECT id,groupname,groupdesc FROM '.cms_db_prefix().'module_feusers_groups';
-$dbresult = $db->Execute( $q );
-if( $dbresult ) {
-    while( $row = $dbresult->FetchRow() ) {
-        $feug_dropdown[ $row['groupdesc'] ] = $row['id'];
-    }
+if( $tss === null ) {
+    echo 'TeamSportScores module is not installed!';
+    return;
 }
-$feug_array = array_flip( $feug_dropdown );
 
-// Assign CGCalendar categories
-$q = 'SELECT category_id,category_name FROM ' . $cgcal->categories_table_name . ' ORDER BY category_order, category_name';
-$dbresult = $db->Execute( $q );
-if( $dbresult ) {
-    while( $row = $dbresult->FetchRow() ) {
-        $cgcc_dropdown[ $row['category_name'] ] = $row['category_id'];
-    }
-}
-$cgcc_array = array_flip( $cgcc_dropdown );
 
-// Assign TSS teams
-// Ignore the NONE-team.
-$q = 'SELECT team_id,team_name,team_code FROM '.cms_db_prefix().'module_tss_team WHERE team_id != 0 ORDER BY team_id ASC';
-$dbresult = $db->Execute( $q );
-if( $dbresult ) {
-    while( $row = $dbresult->FetchRow() ) {
-        $tsst_dropdown[ $row['team_code'] ] = $row['team_id'];
-    }
-}
-$tsst_array = array_flip( $tsst_dropdown );
+// Fetch FEU groups, CGCalendar categories and TSS teams directly from db.
+$feug_array = $this->_GetFEUgroups();
+$feug_dropdown = array_flip( $feug_array );
+
+$cgcc_array = $this->_GetCGCalendarCategories();
+$cgcc_dropdown = array_flip( $cgcc_array );
+
+$tsst_array = $this->_GetTSSteams();
+$tsst_dropdown = array_flip( $tsst_array );
 
 // Fetch all existing linkings
 $linkings = array();
@@ -71,8 +58,16 @@ foreach( $linkings as $link )
     $onerow->editlink = 
 		    $this->CreateLink ($id, 'admin_editlinking', $returnid,
 				       $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
-										    $this->Lang ('edit'), '', '', 'systemicon'),
+										    $this->Lang('edit'), '', '', 'systemicon'),
 				       array ('linking_id' => $link['linking_id'] ));
+    
+    // Add delete-links.
+    $onerow->deletelink = 
+            $this->CreateLink ($id,'admin_savelink',$returnid,
+                       $gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif',
+                                            $this->Lang('delete'), '', '', 'systemicon'),
+                       array ('linking_id' => $link['linking_id'], 'delete' => 1),
+                       $this->Lang ('areyousure'));
     
     // Add all fetched info to array $linkings_objs
     array_push( $linkings_objs, $onerow );
@@ -96,6 +91,7 @@ array_push( $linkings_objs, $onerow );
 
 // Assign form elements
 $smarty->assign('start_form', $this->CreateFormStart($id, 'admin_savelink', $returnid));
+$smarty->assign('hidden', $this->CreateInputHidden($id, 'linking_id', -1));
 $smarty->assign('input_feugroup', $this->CreateInputDropdown($id, 'feu_group', $feug_dropdown));
 $smarty->assign('input_cgcal_category', $this->CreateInputDropdown($id, 'cgc_category', $cgcc_dropdown));
 $smarty->assign('input_tss_team', $this->CreateInputDropdown($id, 'tss_team', $tsst_dropdown));
@@ -107,7 +103,7 @@ $smarty->assign('prompt_feugroup', $this->Lang('prompt_feugroup'));
 $smarty->assign('prompt_cgcal_category', $this->Lang('prompt_cgcal_category'));
 $smarty->assign('prompt_tss_team', $this->Lang('prompt_tss_team'));
 $smarty->assign('prompt_description', $this->Lang('prompt_description'));
-$smarty->assign('submit', $this->CreateInputSubmit($id, 'submit', $this->Lang('submit_link')));
+$smarty->assign('submit', $this->CreateInputSubmit($id, 'submit', $this->Lang('submit_new_link')));
 
 // Assign linkings list to smarty
 $smarty->assign('itemcount', $linkings_amount);

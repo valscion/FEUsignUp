@@ -16,18 +16,22 @@ $lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissio
 
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
+$lang['info_overview'] = '<p>Manage all your sign-up events from here. The list below shows only those events where someone has already signed up for.</p>';
 
 $lang['linkings'] = 'Linkings';
 $lang['title_linkings'] = 'Linkings to Frontend User -groups';
+$lang['info_linkings'] = '<p>Manage linkings between Front End User -groups, CGCalendar categories and TeamSportScores teams.</p>';
 
 ## Linkings-tab stuff
-$lang['linkings_updated'] = 'Linkings have been updated.';
+$lang['linking_updated'] = 'Linking has been updated.';
+$lang['linking_added'] = 'A new linking has been added.';
 $lang['prompt_addlink'] = 'Add a new link';
 $lang['prompt_feugroup'] = 'Link Front End Users -group';
 $lang['prompt_cgcal_category'] = 'to CGCalendar category';
 $lang['prompt_tss_team'] = 'or TeamSportScores team';
 $lang['prompt_description'] = 'Description for this linking:';
-$lang['submit_link'] = 'Submit a new link';
+$lang['submit_new_link'] = 'Submit a new link';
+$lang['submit_existing_link'] = 'Update the link';
 
 ## List in linkings-tab
 $lang['th_id'] = 'ID';
@@ -37,6 +41,13 @@ $lang['th_tsst'] = 'TSS-team';
 $lang['th_desc'] = 'Description';
 $lang['edit'] = 'Edit';
 
+## Editing an existing link
+$lang['prompt_editlink'] = 'Update linking';
+$lang['cancel'] = 'Cancel';
+$lang['delete'] = 'Delete';
+$lang['areyousure'] = 'Are you sure you want to delete this linking?';
+
+$lang['nothing_updated'] = 'Nothing was updated.';
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
 $lang['db_error'] = 'Database error!';

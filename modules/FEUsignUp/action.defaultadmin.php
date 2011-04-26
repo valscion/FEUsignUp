@@ -26,9 +26,15 @@ if (FALSE == empty($params['active_tab']))
   $tab = '';
  }
  
-// If there's errors, assign 'em to smarty
-if( isset($params['tab_error']) && !empty($params['tab_error']) ) {
-    $this->smarty->assign('error', $this->ShowErrors($params['tab_error']));
+// If there's messages, assign 'em to smarty
+if( isset($params['message']) && !empty($params['message']) ) {
+    if( isset($params['error']) && !empty($params['error']) ) {
+        // If the message is an error, apply it.
+        $this->smarty->assign('message', $this->ShowErrors($params['message']));
+    } else {
+        // Otherwise, display a normal message.
+        $this->smarty->assign('message', $this->ShowMessage($params['message']));
+    }
 }
 
 
