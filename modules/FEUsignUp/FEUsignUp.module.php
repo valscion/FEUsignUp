@@ -443,6 +443,10 @@ class FEUsignUp extends CMSModule
    // description must be a string
    $this->CreateParameter('description','',$this->Lang('help_description'));
    $this->SetParameterType('description',CLEAN_STRING);
+   
+   // rel must be a string
+   $this->CreateParameter('rel','',$this->Lang('help_rel'));
+   $this->SetParameterType('rel',CLEAN_STRING);
 
    /*
     * 4. Event Handling

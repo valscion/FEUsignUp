@@ -68,13 +68,18 @@ else {
   $linkId = $params['tss_id'];
 }
 
+$rel = '';
+if( isset($params['rel']) || !empty($params['rel']) ) {
+    $rel = ' rel="' . $params['rel'] . '"';
+}
+
 // create attributes for rendering "view" links for the object.
 // $id and $returnid are predefined for us by the module API
 // that last parameter is the Pretty URL link
 $link = $this->CreateFrontendLink($id, $returnid, 'view',
-      $linkdescription,array('class'=>'pickable'),'',false,true,'',true,
+      '',array(),'',true,true,'',false,
       "feusignup/view/$linktarget/$linkId/");
       
-echo '<p>'.$link.'</p>';
+echo '<p><a href="'.$link.'" class="pickable"'.$rel.'>'.$linkdescription.'</a></p>';
 
 ?>
