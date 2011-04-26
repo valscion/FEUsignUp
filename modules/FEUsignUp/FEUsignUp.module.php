@@ -573,11 +573,14 @@ class FEUsignUp extends CMSModule
             return false;
         }
         
-        $q = "INSERT INTO $linkings_table_name " .
-             "(feusers_group_id, cgcal_category_id, tss_team_id, description) " . 
-             "VALUES (?, ?, ?, ?)";
+        // Get a fresh ID from sequence.
+        $lid = $db->GenID($linkings_table_name . '_seq');
         
-        $rs = $db->Execute($q,array($feug_id,$cgcc_id,$tsst_id,$desc));
+        $q = "INSERT INTO $linkings_table_name " .
+             "(linking_id, feusers_group_id, cgcal_category_id, tss_team_id, description) " . 
+             "VALUES (?, ?, ?, ?, ?)";
+        
+        $rs = $db->Execute($q,array($lid,$feug_id,$cgcc_id,$tsst_id,$desc));
         
         if( $rs ) return true;
         
@@ -602,6 +605,58 @@ class FEUsignUp extends CMSModule
         }
         return $result;
     }
+    
+    /**
+     * UpdateLinking()
+     * Updates an existing linking.
+     */
+     function UpdateLinking( $lid, $feug_id = -1, $cgcc_id = -1, $tsst_id = -1, $desc = '-noupdate-' )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $q = 'UPDATE ' . $this->linkings_table_name . ' SET ';
+        $pr_arr = array(); // Prepared statement array containing ?-values
+        
+        if( $feug_id >= 0 ) {
+            $q .= 'feusers_group_id=? ';
+            $pr_arr[] = $feug_id;
+        }
+        if( $cgcc_id >= 0 ) {
+            $q .= 'cgcal_category_id=? ';
+            $pr_arr[] = $cgcc_id;
+        }
+        if( $tsst_id >= 0 ) {
+            $q .= 'tss_team_id=? ';
+            $pr_arr[] = $tsst_id;
+        }
+        if( $desc !== '-noupdate-' ) {
+            $q .= 'description=? ';
+            $pr_arr[] = $desc;
+        }
+        
+        if( count($pr_arr) == 0 ) return false;
+        
+        $q .= 'WHERE linking_id = ?';
+        $pr_arr[] = $lid;
+        
+        // Run the query
+        $ret = $db->Execute( $q, $pr_arr );
+        
+        if( !$ret ) return false;
+        
+        // Return true/false if rows affected or not.
+        return ( $db->Affected_Rows() > 0 );
+     }
+     
+    /**
+     * UpdateLinkingDescription()
+     * Updates description of an existing linking.
+     */
+     function UpdateLinkingDescription( $lid, $desc )
+     {
+        return $this->UpdateLinking( $lid, -1, -1, -1, $desc );
+     }
+     
 }
 
 ?>
