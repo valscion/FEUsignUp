@@ -595,6 +595,7 @@ class FEUsignUp extends CMSModule
         switch($from) {
             case 'calendar':
             case 'cgcalendar':
+            case 'cgcal':
                 $search_field = 'cgcal_event_id';
                 break;
             case 'tss':
