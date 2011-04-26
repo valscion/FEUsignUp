@@ -754,7 +754,19 @@ class FEUsignUp extends CMSModule
      */
      function DeleteLinking( $lid )
      {
-        return array( false, 'Not implemented' );
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        // Query
+        $q = 'DELETE FROM ' . $this->linkings_table_name . ' WHERE linking_id = ? LIMIT 1';
+        
+        // Run the query
+        $ret = $db->Execute( $q, array( (int)$lid ) );
+        
+        if( $db->Affected_Rows() == 1 ) {
+            return array( true, $this->Lang('linking_deleted') );
+        } else {
+            return array( false, $this->Lang('db_error') );
+        }
      }
 }
 

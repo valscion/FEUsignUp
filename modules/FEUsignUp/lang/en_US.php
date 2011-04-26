@@ -25,6 +25,7 @@ $lang['info_linkings'] = '<p>Manage linkings between Front End User -groups, CGC
 ## Linkings-tab stuff
 $lang['linking_updated'] = 'Linking has been updated.';
 $lang['linking_added'] = 'A new linking has been added.';
+$lang['linking_deleted'] = 'The linking was deleted.';
 $lang['prompt_addlink'] = 'Add a new link';
 $lang['prompt_feugroup'] = 'Link Front End Users -group';
 $lang['prompt_cgcal_category'] = 'to CGCalendar category';
