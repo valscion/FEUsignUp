@@ -69,7 +69,7 @@ foreach( $linkings as $link )
     
     // Add edit-links
     $onerow->editlink = 
-		    $this->CreateLink ($id, 'editlinking', $returnid,
+		    $this->CreateLink ($id, 'admin_editlinking', $returnid,
 				       $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
 										    $this->Lang ('edit'), '', '', 'systemicon'),
 				       array ('linking_id' => $link['linking_id'] ));
@@ -95,7 +95,7 @@ array_push( $linkings_objs, $onerow );
 */
 
 // Assign form elements
-$smarty->assign('start_form', $this->CreateFormStart($id, 'adminsave_link', $returnid));
+$smarty->assign('start_form', $this->CreateFormStart($id, 'admin_savelink', $returnid));
 $smarty->assign('input_feugroup', $this->CreateInputDropdown($id, 'feu_group', $feug_dropdown));
 $smarty->assign('input_cgcal_category', $this->CreateInputDropdown($id, 'cgc_category', $cgcc_dropdown));
 $smarty->assign('input_tss_team', $this->CreateInputDropdown($id, 'tss_team', $tsst_dropdown));
