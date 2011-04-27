@@ -1,13 +1,14 @@
 <?php
 if (!isset($gCms)) exit;
-/*
-$extracontent = '';
 
-$extracontent .= 'feu_group: ' . $params['feu_group'] . '|';
-$extracontent .= 'cgc_category: ' . $params['cgc_category'] . '|';
-$extracontent .= 'tss_team: ' . $params['tss_team'];
-#$extracontent[] = ': ' . $params[''];
-*/
+/** 
+ * For separated methods, you won't be able to do permission checks in
+ * the DoAction method, so you'll need to do them as needed in your
+ * method:
+*/ 
+if (! $this->CheckAccess()) {
+  return $this->DisplayErrorPage($id, $params, $returnid,$this->Lang('accessdenied'));
+}
 
 // Return message as an array with two cells. First cell
 // specifies whether all is successful or not and the second

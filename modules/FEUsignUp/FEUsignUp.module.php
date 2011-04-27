@@ -213,7 +213,7 @@ class FEUsignUp extends CMSModule
       ---------------------------------------------------------*/
     function VisibleToAdminUser()
     {
-        return true;
+        return $this->CheckAccess();
     }
     
 
@@ -222,7 +222,7 @@ class FEUsignUp extends CMSModule
        This wrapper function will check against the specified permission,
        and display an error page if the user doesn't have adequate permissions.
       ---------------------------------------------------------*/
-    function CheckAccess($perm = '')
+    function CheckAccess($perm = 'Use FEUsignUp')
         {
         return $this->CheckPermission($perm);
         }
@@ -373,7 +373,7 @@ class FEUsignUp extends CMSModule
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
 	$this->RegisterRoute(
-        '/feusignup\/do_(<?P<in_or_out>(in)|(out))(?P<feusu_id>[0-9]+)\/(?P<returnid>[0-9]+)$/',
+        '/feusignup\/do_(<?P<in_or_out>(in)|(out))\/(?P<feusu_id>[0-9]+)\/(?P<returnid>[0-9]+)$/',
         array('action'=>'toggle')
     );
 

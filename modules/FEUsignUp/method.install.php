@@ -63,6 +63,7 @@ if (!isset($gCms)) exit;
         
         
         // permissions
+        $this->CreatePermission('Use FEUsignUp', 'Use FEUsignUp');
         
 
         // put mention into the admin log

@@ -1,7 +1,6 @@
 <?php
 $lang['friendlyname'] = 'FEUsignUp';
-$lang['postinstall'] = 'Post Install Message.';
-$lang['postuninstall'] = 'Post Uninstall Message, e.g., "Curses! Foiled Again!"';
+$lang['postuninstall'] = 'FEUsignUp module uninstalled successfully.';
 $lang['really_uninstall'] = 'Really? Are you sure you want to uninstall this fine module?';
 $lang['uninstalled'] = 'Module Uninstalled.';
 $lang['installed'] = 'Module version %s installed.';
@@ -12,7 +11,7 @@ $lang['error'] = 'Error!';
 $land['admin_title'] = 'FEUsignUp Admin Panel';
 $lang['admindescription'] = 'A dull admin description';
 $lang['accessdenied'] = 'Access Denied. Please check your permissions.';
-$lang['postinstall'] = 'Post Install Message, (e.g., Be sure to set "" permissions to use this module!)';
+$lang['postinstall'] = 'Be sure to set "Use FEUsignUp" permissions to use this module!';
 
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';

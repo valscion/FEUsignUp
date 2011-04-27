@@ -34,6 +34,7 @@ if (!isset($gCms)) exit;
         
         
         // remove the permissions
+        $this->RemovePermission('Use FEUsignUp');
         
         
         // put mention into the admin log
