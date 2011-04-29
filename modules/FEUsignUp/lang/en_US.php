@@ -1,7 +1,7 @@
 <?php
 $lang['friendlyname'] = 'FEUsignUp';
 $lang['postuninstall'] = 'FEUsignUp module uninstalled successfully.';
-$lang['really_uninstall'] = 'Really? Are you sure you want to uninstall this fine module?';
+$lang['really_uninstall'] = 'Really? Are you sure you want to \nuninstall this fine module?';
 $lang['uninstalled'] = 'Module Uninstalled.';
 $lang['installed'] = 'Module version %s installed.';
 $lang['upgraded'] = 'Module upgraded to version %s.';

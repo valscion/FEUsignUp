@@ -26,7 +26,7 @@ if( $params['from'] == 'cgcal' ) {
     $cat_ids = array();
     
     $q = 'SELECT C.category_id,C.category_name FROM ' . $categories_table . ' C
-            LEFT JOIN '.$events_to_categories_table.' E
+            INNER JOIN '.$events_to_categories_table.' E
               ON C.category_id = E.category_id
             WHERE E.event_id = ?';
     $data = $db->GetArray($q,array($cgcal_id));
