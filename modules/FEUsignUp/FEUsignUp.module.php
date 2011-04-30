@@ -373,8 +373,8 @@ class FEUsignUp extends CMSModule
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
 	$this->RegisterRoute(
-        '/feusignup\/do_(<?P<in_or_out>(in)|(out))\/(?P<feusu_id>[0-9]+)\/(?P<returnid>[0-9]+)$/',
-        array('action'=>'toggle')
+        '/feusignup\/(?P<in_or_out>(in)|(out))\/(?P<feusu_id>[0-9]+)$/',
+        array('action'=>'toggle', 'showtemplate'=>'false')
     );
 
    /*
