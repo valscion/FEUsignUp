@@ -11,7 +11,7 @@ if (!isset($gCms)) exit;
 
 if( $params['from'] == 'cgcal' ) {
     // Fetch CGCalendar info
-    $cgcal_id = (int)$params['feusu_id'];
+    $cgcal_id = (int)$params['from_id'];
     
     $cgcal =& cge_utils::get_module('CGCalendar');
     if( $cgcal === null ) die('CGCalendar module is not installed!');
@@ -45,7 +45,7 @@ if( $params['from'] == 'cgcal' ) {
 } elseif( $params['from'] == 'tss' ) {
     // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
     // taulukkoon $feug_ids.
-    echo $params['feusu_id'];
+    echo $params['from_id'];
     $feug_ids = array();
 } else {
     echo '<p class="error">ERROR</p>';

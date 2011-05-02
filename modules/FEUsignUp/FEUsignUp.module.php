@@ -369,11 +369,11 @@ class FEUsignUp extends CMSModule
 	is not enough; you module's links need to create the URLs on their side as well.
     */
 	$this->RegisterRoute(
-        '/feusignup\/view\/(?P<from>(cgcal)|(tss))\/(?P<feusu_id>-?[0-9]+)$/',
+        '/feusignup\/view\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)$/',
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
 	$this->RegisterRoute(
-        '/feusignup\/(?P<in_or_out>(in)|(out))\/(?P<feusu_id>[0-9]+)$/',
+        '/feusignup\/(?P<in_or_out>(in)|(out))\/(?P<from_id>[0-9]+)$/',
         array('action'=>'toggle', 'showtemplate'=>'false')
     );
 
@@ -420,10 +420,6 @@ class FEUsignUp extends CMSModule
    $this->CreateParameter('tss_id',-1,$this->Lang('help_tss_id'));
    $this->SetParameterType('tss_id',CLEAN_INT);
    
-   // from must be a string
-   $this->CreateParameter('from','',$this->Lang('help_from'));
-   $this->SetParameterType('from',CLEAN_STRING);
-   
    // group must be a string
    $this->CreateParameter('group','',$this->Lang('help_group'));
    $this->SetParameterType('group',CLEAN_STRING);
@@ -431,15 +427,7 @@ class FEUsignUp extends CMSModule
    // limit must be an integer
    $this->CreateParameter('limit',-1,$this->Lang('help_limit'));
    $this->SetParameterType('limit',CLEAN_INT);
-   
-   // signed_up must be an integer
-   $this->CreateParameter('signed_up',-1,$this->Lang('help_signed_up'));
-   $this->SetParameterType('signed_up',CLEAN_INT);
-   
-   // in_or_out must be a string
-   $this->CreateParameter('in_or_out','',$this->Lang('help_in_or_out'));
-   $this->SetParameterType('in_or_out',CLEAN_STRING);
-
+    
    // description must be a string
    $this->CreateParameter('description','',$this->Lang('help_description'));
    $this->SetParameterType('description',CLEAN_STRING);

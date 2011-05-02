@@ -48,7 +48,9 @@ $linkdescription = '';
 if( isset( $params['cal_id'] ) && !empty( $params['cal_id'] ) ) {
 	$event = $cgcal->GetEvent( $params['cal_id'] );
   $this->smarty->assign('event', $event);
-  $linkdescription = $this->ProcessTemplate('cal_link.tpl');
+  $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
+                                $params['description'] : 
+                                $this->ProcessTemplate('cal_link.tpl');
   $linktarget = 'cgcal';
   $linkId = $params['cal_id'];
 }
@@ -63,7 +65,9 @@ else {
 		echo '<p class="error">' . $this->Lang('db_error') . '</p>';
 	}
   $this->smarty->assign('match',$matchInfo);
-  $linkdescription = $this->ProcessTemplate('tss_link.tpl');
+  $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
+                                $params['description'] : 
+                                $this->ProcessTemplate('tss_link.tpl');
   $linktarget = 'tss';
   $linkId = $params['tss_id'];
 }
