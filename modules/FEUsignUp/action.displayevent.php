@@ -68,10 +68,10 @@ foreach( $groups as $name => $group ) {
         $onerow->props = $user['props'];
         $onerow->cal_link = $name;
         $onerow->toggle_in = $this->CreateFrontendLink($id, $returnid, 'view',
-                                'IN',array('class'=>'jslink'),'',false,true,'',false,
+                                'IN',array('class'=>'jslink'),'',true,true,'',false,
                                 "feusignup/in/{$user['id']}/");
         $onerow->toggle_out = $this->CreateFrontendLink($id, $returnid, 'view',
-                                'OUT',array('class'=>'jslink'),'',false,true,'',false,
+                                'OUT',array('class'=>'jslink'),'',true,true,'',false,
                                 "feusignup/out/{$user['id']}/");
         
         array_push( $users, $onerow );
