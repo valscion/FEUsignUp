@@ -66,6 +66,10 @@ div#displayevent_info {
 {/literal}
 <div class="displayevent_test">
 <div id="displayevent_info"></div>
+{if !$ccuser->loggedin()}
+  {* Ei sisäänkirjautunut *}
+  <p>Sinun täytyy olla kirjautunut sisään nähdäksesi ilmoittautuneet pelaajat!</p>
+{else}
 <table>
 
   <thead>
@@ -103,4 +107,5 @@ div#displayevent_info {
   </tbody>
 </table>
 
+{/if}
 </div>
