@@ -17,7 +17,7 @@ if( $params['from'] == 'cgcal' ) {
     if( $cgcal === null ) die('CGCalendar module is not installed!');
     
     $feu =& cge_utils::get_module('FrontEndUsers');
-    if( $cgcal === null ) die('FrontEndUsers module is not installed!');
+    if( $feu === null ) die('FrontEndUsers module is not installed!');
 
     
     $events_to_categories_table = $cgcal->events_to_categories_table_name;
