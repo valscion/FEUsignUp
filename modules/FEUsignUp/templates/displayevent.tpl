@@ -44,17 +44,23 @@ div.displayevent_test td input[type=text] {
 div.displayevent_test td input[type=text]:focus {
   border:1px solid #666;
 }
-div.displayevent_test td.feu_in, div.displayevent_test td.feu_out {
+div.displayevent_test td.feusu_in, div.displayevent_test td.feusu_out {
   padding: 0 10px;
   text-align: center;
+  vertical-align: middle;
 }
 
-div.displayevent_test .feu_in {
+div.displayevent_test .feusu_in {
   background-color: green;
 }
-div.displayevent_test .feu_out {
+div.displayevent_test .feusu_out {
   background-color: red;
 }
+
+div.displayevent_test td.feusu_submit {
+  vertical-align: middle;
+}
+
 
 div#displayevent_info {
   display: none;
@@ -92,15 +98,15 @@ div#displayevent_info {
   <tr>
     {* $startform *}
     <td>{$user->username}</td>
-        <td class="feu_in"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if !$allow_edit} disabled="disabled"{/if} /></td>
-    <td class="feu_out"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if !$allow_edit} disabled="disabled"{/if} /></td>
+        <td class="feusu_in"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if !$allow_edit} disabled="disabled"{/if} /></td>
+    <td class="feusu_out"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if !$allow_edit} disabled="disabled"{/if} /></td>
     <td>
     {if $allow_edit}
       <input type="text" value="Kirjoita selityksesi..." />
     {else}
       Tämä oli selitykseni.
     {/if}</td>
-    <td>{if $allow_edit}<a class="jslink" href="#" id="user_{$user->id}"><img src="/images/famfamfam_mini/action_forward.gif" alt="-&gt;" title="Tallenna osallistumisesi" /></a>{else}&nbsp;{/if}</td>
+    <td class="feusu_submit">{if $allow_edit}<a class="jslink" href="#" id="user_{$user->id}"><img src="/images/famfamfam_mini/action_forward.gif" alt="-&gt;" title="Tallenna osallistumisesi" /></a>{else}&nbsp;{/if}</td>
     {* $endform *}
     </tr>
 {/foreach}
