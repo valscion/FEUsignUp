@@ -21,8 +21,8 @@ if (! $this->CheckAccess()) {
    
 */
 
-// Tab Infrastructure for Admin Area -- create two tabs, (one of which
-// is only accessible if permissions are right)
+// Tab Infrastructure for Admin Area -- create three tabs, (two of which
+// are only accessible if permissions are met)
 if (FALSE == empty($params['active_tab']))
   {
     $tab = $params['active_tab'];
@@ -51,7 +51,12 @@ $tab_header .= $this->SetTabHeader('overview',$this->Lang('title_overview'),
 $tab_header .= $this->SetTabHeader('linkings',$this->Lang('title_linkings'),
     ('linkings' == $tab)?true:false);
     $this->smarty->assign('start_linkings_tab',$this->StartTab('linkings', $params));
-    
+
+$tab_header .= $this->SetTabHeader('template_displayevent',$this->Lang('title_template_displayevent'),
+    ('template_displayevent' == $tab)?true:false);
+    $this->smarty->assign('start_template_displayevent_tab',$this->StartTab('template_displayevent', $params));
+
+
 $this->smarty->assign('tabs_start',$tab_header.$this->EndTabHeaders().$this->StartTabContent());
 $this->smarty->assign('tab_end',$this->EndTab());
 $this->smarty->assign('tabs_end',$this->EndTabContent());
@@ -66,6 +71,10 @@ $this->smarty->assign('content_overview',ob_get_clean());
 ob_start();
 require_once(dirname(__FILE__).'/function.admin_linkingstab.php');
 $this->smarty->assign('content_linkings',ob_get_clean());
+
+ob_start();
+require_once(dirname(__FILE__).'/function.admin_template_displayeventtab.php');
+$this->smarty->assign('content_template_displayevent',ob_get_clean());
 
 echo $this->ProcessTemplate('adminpanel.tpl');
 

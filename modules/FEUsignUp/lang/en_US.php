@@ -21,6 +21,11 @@ $lang['linkings'] = 'Linkings';
 $lang['title_linkings'] = 'Linkings to Frontend User -groups';
 $lang['info_linkings'] = '<p>Manage linkings between Front End User -groups, CGCalendar categories and TeamSportScores teams.</p>';
 
+$lang['template_displayevent'] = 'Templates';
+$lang['title_template_displayevent'] = 'Templates';
+$lang['info_template_displayevent'] = '<p>Manage templates used to display your events on the front end.</p>';
+
+
 ## Linkings-tab stuff
 $lang['linking_updated'] = 'Linking has been updated.';
 $lang['linking_added'] = 'A new linking has been added.';
@@ -48,6 +53,11 @@ $lang['delete'] = 'Delete';
 $lang['areyousure'] = 'Are you sure you want to delete this linking?';
 
 $lang['nothing_updated'] = 'Nothing was updated.';
+
+## Templates
+$lang['template_cal'] = 'Template for displaying CGCalendar events';
+$lang['template_tss'] = 'Template for displaying Team Sport Scores matches';
+$lang['submit'] = 'Submit';
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
 $lang['db_error'] = 'Database error!';
