@@ -66,6 +66,15 @@ $db->CreateSequence($this->linkings_table_name.'_seq');
 $this->CreatePermission('Use FEUsignUp', 'Use FEUsignUp');
 
 
+// templates
+$fn = cms_join_path(dirname(__FILE__),'templates','displayevent.tpl');
+if( file_exists( $fn ) )
+  {
+    $template = @file_get_contents($fn);
+    $this->SetTemplate('feusignup_displayevent',$template);
+  }
+
+
 // put mention into the admin log
 $this->Audit( 0, $this->Lang('friendlyname'), $this->Lang('installed',$this->GetVersion()));
         
