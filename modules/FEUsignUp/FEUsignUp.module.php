@@ -293,7 +293,7 @@ class FEUsignUp extends CMSModule
        ---------------------------------------------------------*/
     function MaximumCMSVersion()
     {
-        return "1.9.4.1";
+        return "1.9.4.2";
     }
 
     /**
