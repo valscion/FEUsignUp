@@ -593,6 +593,7 @@ class FEUsignUp extends CMSModule
             case 'tss':
             case 'teamsportscores':
                 $search_field = 'tss_game_id';
+                break;
             default:
                 return array();
         }
