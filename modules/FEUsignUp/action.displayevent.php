@@ -45,7 +45,7 @@ if( $params['from'] == 'cgcal' ) {
 } elseif( $params['from'] == 'tss' ) {
     // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
     // taulukkoon $feug_ids.
-    echo $params['from_id'];
+    #echo $params['from_id'];
     $feug_ids = array();
 } else {
     echo '<p class="error">ERROR</p>';
