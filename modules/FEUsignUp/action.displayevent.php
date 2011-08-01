@@ -42,6 +42,13 @@ if( $params['from'] == 'cgcal' ) {
             $feug_ids[$name] = $row['feusers_group_id'];
         }
     }
+    
+    // Fetch all the previous sign-ups from the database
+    $signups = $this->GetEventUsers( $cgcal_id, 'cgcal' );
+    #echo '<div class="hidden">';
+    #print_r( $signups );
+    #echo '</div>';
+    
 } elseif( $params['from'] == 'tss' ) {
     // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
     // taulukkoon $feug_ids.
@@ -73,6 +80,17 @@ foreach( $groups as $name => $group ) {
         $onerow->toggle_out = $this->CreateFrontendLink($id, $returnid, 'view',
                                 'OUT',array('class'=>'jslink'),'',true,true,'',false,
                                 "feusignup/out/{$user['id']}/");
+        // Fetch old signup informations
+        foreach( $signups as $signup ) {
+            if( $signup['feu_user_id'] == $user['id'] ) {
+                $onerow->exists = 1;
+                $onerow->signed_up = $signup['signed_up'];
+                $onerow->description = $signup['description'];
+                // No need for more loops, we found what we wanted
+                break;
+            }
+        }
+        
         
         array_push( $users, $onerow );
     }

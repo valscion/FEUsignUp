@@ -1,5 +1,5 @@
 {literal}
-<script>
+<script type="text/javascript">
 $("a.jslink").click( function(clickEvent) {
     clickEvent.preventDefault();
     var href = $(this).attr("href");
@@ -74,8 +74,12 @@ div#displayevent_info {
 <div id="displayevent_info"></div>
 {if !$ccuser->loggedin()}
   {* Ei sisäänkirjautunut *}
-  <p>Sinun täytyy olla kirjautunut sisään nähdäksesi ilmoittautuneet pelaajat!</p>
+  <p>Sinun täytyy olla kirjautunut sisään nähdäksesi ilmoittautuneet pelaajat</p>
+{elseif $ccuser->memberof('pending')}
+  {* Ei vahvistettu tunnusta *}
+  <p>Tunnustasi ei ole vielä vahvistettu, joten et ikävä kyllä voi katsella ilmoittautuneita pelaajia.</p>
 {else}
+<p><em>Ilmoittautumisten sovellusta kehitetään tällä hetkellä, ole kiltti äläkä kokeile tätä keskeneräistä systeemiä vielä.</em></p>
 <table>
 
   <thead>
@@ -90,7 +94,7 @@ div#displayevent_info {
 
   <tbody>
 {foreach from=$users item=user}
-  {if $ccuser->loggedin() == $user->id}
+  {if $ccuser->loggedin() == $user->id || $ccuser->memberof('admin')}
     {assign var=allow_edit value=1}
   {else}
     {assign var=allow_edit value=0}
@@ -98,13 +102,13 @@ div#displayevent_info {
   <tr>
     {* $startform *}
     <td>{$user->username}</td>
-        <td class="feusu_in"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if !$allow_edit} disabled="disabled"{/if} /></td>
-    <td class="feusu_out"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if !$allow_edit} disabled="disabled"{/if} /></td>
+        <td class="feusu_in"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if $user->exists && $user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
+    <td class="feusu_out"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if $user->exists && !$user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
     <td>
     {if $allow_edit}
-      <input type="text" value="Kirjoita selityksesi..." />
+      <input type="text" value="{if $user->exists}{$user->description}{/if}" />
     {else}
-      Tämä oli selitykseni.
+      {if $user->exists}{$user->description}{/if}
     {/if}</td>
     <td class="feusu_submit">{if $allow_edit}<a class="jslink" href="#" id="user_{$user->id}"><img src="/images/famfamfam_mini/action_forward.gif" alt="-&gt;" title="Tallenna osallistumisesi" /></a>{else}&nbsp;{/if}</td>
     {* $endform *}
