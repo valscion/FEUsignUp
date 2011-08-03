@@ -762,6 +762,20 @@ class FEUsignUp extends CMSModule
             return array( false, $this->Lang('db_error') );
         }
      }
+     
+    /**
+     * GetSignups()
+     * Fetches signups from the database and returns an array containing them.
+     */
+     function GetSignups( $page = 0 )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        // Query
+        $q = 'SELECT * FROM ' . $this->events_table_name . ' LIMIT ?,?'
+        
+        return array();
+     }
 }
 
 ?>
