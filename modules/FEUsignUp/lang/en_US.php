@@ -16,7 +16,7 @@ $lang['postinstall'] = 'Be sure to set "Use FEUsignUp" permissions to use this m
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
 $lang['info_overview'] = '<p>Manage all your sign-up events from here. The list below shows only those events where someone has already signed up for.</p>';
-$lang['no_signups'] = 'There was no sign ups!';
+$lang['no_signups'] = 'There are no signups!';
 
 $lang['linkings'] = 'Linkings';
 $lang['title_linkings'] = 'Linkings to Frontend User -groups';
