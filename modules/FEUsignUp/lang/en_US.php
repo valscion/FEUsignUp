@@ -16,6 +16,7 @@ $lang['postinstall'] = 'Be sure to set "Use FEUsignUp" permissions to use this m
 $lang['overview'] = 'Overview';
 $lang['title_overview'] = 'Overview';
 $lang['info_overview'] = '<p>Manage all your sign-up events from here. The list below shows only those events where someone has already signed up for.</p>';
+$lang['no_signups'] = 'There was no sign ups!';
 
 $lang['linkings'] = 'Linkings';
 $lang['title_linkings'] = 'Linkings to Frontend User -groups';
@@ -38,12 +39,17 @@ $lang['prompt_description'] = 'Description for this linking:';
 $lang['submit_new_link'] = 'Submit a new link';
 $lang['submit_existing_link'] = 'Update the link';
 
-## List in linkings-tab
+## Lists in admin-area
 $lang['th_id'] = 'ID';
 $lang['th_feug'] = 'FEU-group';
 $lang['th_cgcc'] = 'CGCalendar category';
 $lang['th_tsst'] = 'TSS-team';
 $lang['th_desc'] = 'Description';
+$lang['th_feu'] = 'Username';
+$lang['th_cgc_event'] = 'CGCalendar event';
+$lang['th_tss_game'] = 'TSS game';
+$lang['th_group'] = 'FEU-group';
+$lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Edit';
 
 ## Editing an existing link
@@ -53,6 +59,7 @@ $lang['delete'] = 'Delete';
 $lang['areyousure'] = 'Are you sure you want to delete this linking?';
 
 $lang['nothing_updated'] = 'Nothing was updated.';
+
 
 ## Templates
 $lang['defaults'] = 'Reset defaults';
