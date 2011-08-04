@@ -572,6 +572,21 @@ class FEUsignUp extends CMSModule
             }
         }
         return $ret;
+    }
+    
+    /**
+     * _GetCGCalendarEventTitle()
+     * Retrieves the title of a single event from CGCalendar directly from the database.
+     */
+     function _GetCGCalendarEventTitle( $eid )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $q = 'SELECT event_title FROM '.cms_db_prefix().'module_cgcalendar_events WHERE event_id = ?';
+        $row = $db->GetRow( $q, array( (int)$eid ) );
+        if( !$row ) return FALSE;
+        
+        return $row['event_title'];
      }
     
     /**
@@ -772,9 +787,16 @@ class FEUsignUp extends CMSModule
         $db =& $this->GetDb(); /* @var $db ADOConnection */
         
         // Query
-        $q = 'SELECT * FROM ' . $this->events_table_name . ' LIMIT ?,?'
+        $q = 'SELECT * FROM ' . $this->events_table_name . ' LIMIT ?,?';
         
-        return array();
+        // Run it and return the results
+        $result = array();
+        $ret = $db->Execute( $q, array( $page*30, ($page+1)*30 ) );
+        if($ret && $ret->RecordCount() > 0) {
+            $result = $ret->GetArray();
+        }
+
+        return $result;
      }
 }
 

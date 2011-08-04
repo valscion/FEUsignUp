@@ -60,6 +60,9 @@ $lang['areyousure'] = 'Are you sure you want to delete this linking?';
 
 $lang['nothing_updated'] = 'Nothing was updated.';
 
+## Empty values
+$lang['no_tss_game'] = '-NO GAME-';
+$lang['no_cgc_event'] = '-NO EVENT-';
 
 ## Templates
 $lang['defaults'] = 'Reset defaults';

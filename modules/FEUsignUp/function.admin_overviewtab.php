@@ -9,6 +9,12 @@ if (!isset($gCms)) exit;
    
 */
 
+$cgcal =& cge_utils::get_module('CGCalendar');
+if( $cgcal === null ) die('CGCalendar module is not installed!');
+
+$feu =& cge_utils::get_module('FrontEndUsers');
+if( $feu === null ) die('FrontEndUsers module is not installed!');
+
 // Basic info first.
 $smarty->assign('tab_info', $this->Lang('info_overview') );
 
@@ -21,25 +27,35 @@ $smarty->assign('th_group', $this->Lang('th_group') );
 $smarty->assign('th_signed_up', $this->Lang('th_signed_up') );
 $smarty->assign('th_desc', $this->Lang('th_desc') );
 
-// "No signups" -translation
-$smarty->assign('no_signups', $this->Lang('no_signups') );
 
 // Fetch all signups into an array containing objects
+$fetchedSignups = $this->GetSignups();
 $signups = array();
 
-$onerow = new stdClass();
-$onerow->id = 1337;
-$onerow->feu = 'Testiuser';
-$onerow->cgc_event = 'testievent';
-$onerow->tss_game = 'testigame';
-$onerow->group = 'testigroup';
-$onerow->signed_up = 'IN';
-$onerow->description = 'testidesc';
-$onerow->editlink = 'editlink';
+foreach( $fetchedSignups as $signup ) {
+  $onerow = new stdClass();
+  $onerow->id = $signup['id'];
+  $onerow->feu = $feu->GetUsername( $signup['feu_user_id'] );
+  if( $signup['cgcal_event_id'] == -1 )
+    $onerow->cgc_event = $this->Lang('no_cgc_event');
+  else
+    $onerow->cgc_event = $this->_GetCGCalendarEventTitle( $signup['cgcal_event_id'] );
+  
+  if( $signup['tss_game_id'] == -1 )
+    $onerow->tss_game = $this->Lang('no_tss_game');
+  else
+    $onerow->tss_game = $signup['tss_game_id'];
+  
+  $onerow->group = $feu->GetGroupName( $signup['group_id'] );
+  $onerow->signed_up = $signup['signed_up'] ? 'IN' : 'OUT';
+  $onerow->description = $signup['description'];
+  $onerow->editlink = '';
+  
+  array_push( $signups, $onerow );
+}
 
-
-array_push( $signups, $onerow );
-
+// "No signups" -translation
+$smarty->assign('no_signups', $this->Lang('no_signups') );
 
 // Assign the number of signups to smarty
 $smarty->assign('signup_count', count($signups) );
