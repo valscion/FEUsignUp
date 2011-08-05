@@ -100,18 +100,16 @@ div#displayevent_info {
     {assign var=allow_edit value=0}
   {/if}
   <tr>
-    {* $startform *}
-    <td>{$user->username}</td>
-        <td class="feusu_in"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if $user->exists && $user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
-    <td class="feusu_out"><input type="radio" name="radio_{$user->id}" id="radio_{$user->id}"{if $user->exists && !$user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
-    <td>
-    {if $allow_edit}
-      <input type="text" value="{if $user->exists}{$user->description}{/if}" />
-    {else}
-      {if $user->exists}{$user->description}{/if}
-    {/if}</td>
-    <td class="feusu_submit">{if $allow_edit}<a class="jslink" href="#" id="user_{$user->id}"><img src="/images/famfamfam_mini/action_forward.gif" alt="-&gt;" title="Tallenna osallistumisesi" /></a>{else}&nbsp;{/if}</td>
-    {* $endform *}
+      <td>{$user->username}</td>
+          <td class="feusu_in"><input type="radio" value="in" name="radio_{$user->id}" id="radio_{$user->id}"{if $user->exists && $user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
+      <td class="feusu_out"><input type="radio" value="out" name="radio_{$user->id}" id="radio_{$user->id}"{if $user->exists && !$user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
+      <td>
+      {if $allow_edit}
+        <input type="text" name="desc_{$user->id}" id="desc_{$user->id}" value="{if $user->exists}{$user->description}{/if}" />
+      {else}
+        {if $user->exists}{$user->description}{/if}
+      {/if}</td>
+      <td class="feusu_submit">{if $allow_edit}<a class="jslink" href="#" id="user_{$user->id}"><img src="/images/famfamfam_mini/action_forward.gif" alt="-&gt;" title="Tallenna osallistumisesi" /></a>{else}&nbsp;{/if}</td>
     </tr>
 {/foreach}
   </tbody>
