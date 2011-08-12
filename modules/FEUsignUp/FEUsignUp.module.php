@@ -588,7 +588,23 @@ class FEUsignUp extends CMSModule
         
         return $row['event_title'];
      }
-    
+     
+    /**
+     * _CGCalendarEventExists()
+     * Checks whether an event exists in CGCalendars database.
+     */
+     function _CGCalendarEventExists( $eid )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $q = 'SELECT event_id FROM '.cms_db_prefix().'module_cgcalendar_events WHERE event_id = ?';
+        $row = $db->GetRow( $q, array( (int)$eid ) );
+        if( !$row )
+          return FALSE;
+        else
+          return TRUE;
+      }
+      
     /**
      * GetEventUsers()
      * Retrieves an array of users from those who are set to the group of the event.

@@ -1,5 +1,7 @@
-{literal}
 <script type="text/javascript">
+
+var signup_event_id = {$event_id};
+{literal}
 $("a.jslink").click( function(clickEvent) {
     clickEvent.preventDefault();
     var userId = $(this).parent().parent().find('input[name="user_id"]').val();
@@ -9,6 +11,7 @@ $("a.jslink").click( function(clickEvent) {
     // Let's fade out the text there already is.
     msgObj.fadeOut( 100, function() {
         msgObj.load( href,{ 
+          event_id: signup_event_id,
           user_id: userId, 
           username: $('#username_'+userId).text(),
           signup: $('input[name="radio_'+userId+'"]:checked').val(),

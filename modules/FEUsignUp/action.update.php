@@ -10,10 +10,15 @@ if (!isset($gCms)) exit;
 */
 
 // Let's check whether all necessary information is submitted
-if( !isset($_POST) || empty($_POST) || !isset( $_POST['user_id'], $_POST['username'], $_POST['signup'], $_POST['description'] ) ) {
+if( !isset($_POST) || empty($_POST) || !isset( $_POST['event_id'], $_POST['user_id'], $_POST['username'], $_POST['signup'], $_POST['description'] ) ) {
   die( $this->Lang('update_failed') );
 } elseif( $_POST['signup'] !== 'in' && $_POST['signup'] !== 'out' ) {
   die( $this->Lang('update_failed_no_in_or_out') );
+}
+
+// Let's check whether we have a solid event
+if( !$this->_CGCalendarEventExists( $_POST['event_id'] ) ) {
+  die( $this->Lang('event_not_found') );
 }
 
 $feu =& cge_utils::get_module('FrontEndUsers');

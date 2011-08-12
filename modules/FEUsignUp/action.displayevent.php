@@ -82,7 +82,7 @@ foreach( $groups as $name => $group ) {
     $onerow->id = $user['id'];
     $onerow->props = $user['props'];
     $onerow->cal_link = $name;
-    $onerow->submit_href = "feusignup/update/{$user['id']}/";
+    $onerow->submit_href = "/feusignup/update/{$user['id']}/";
     // Fetch old signup informations
     foreach( $signups as $signup ) {
         if( $signup['feu_user_id'] == $user['id'] ) {
