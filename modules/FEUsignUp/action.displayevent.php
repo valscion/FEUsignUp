@@ -12,6 +12,7 @@ if (!isset($gCms)) exit;
 if( $params['from'] == 'cgcal' ) {
     // Fetch CGCalendar info
     $cgcal_id = (int)$params['from_id'];
+    $this->smarty->assign('event_id', $cgcal_id);
     
     $cgcal =& cge_utils::get_module('CGCalendar');
     if( $cgcal === null ) die('CGCalendar module is not installed!');
@@ -45,14 +46,12 @@ if( $params['from'] == 'cgcal' ) {
     
     // Fetch all the previous sign-ups from the database
     $signups = $this->GetEventUsers( $cgcal_id, 'cgcal' );
-    #echo '<div class="hidden">';
-    #print_r( $signups );
-    #echo '</div>';
     
 } elseif( $params['from'] == 'tss' ) {
     // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
     // taulukkoon $feug_ids.
-    #echo $params['from_id'];
+    $tss_id = (int)$params['from_id'];
+    $this->smarty->assign('event_id', $tss_id);
     $feug_ids = array();
 } else {
     echo '<p class="error">ERROR</p>';
@@ -67,28 +66,35 @@ foreach( $feug_ids as $name => $id ) {
 }
 
 $users = array();
+
+// Array to hold only user ID's to ensure we won't get the same user twice or more often
+$users_only_once = array(); 
+
 foreach( $groups as $name => $group ) {
-    foreach( $group as $user ) {
-        $onerow = new stdClass();
-        $onerow->username = $user['username'];
-        $onerow->id = $user['id'];
-        $onerow->props = $user['props'];
-        $onerow->cal_link = $name;
-        $onerow->submit_href = "feusignup/update/{$user['id']}/";
-        // Fetch old signup informations
-        foreach( $signups as $signup ) {
-            if( $signup['feu_user_id'] == $user['id'] ) {
-                $onerow->exists = 1;
-                $onerow->signed_up = $signup['signed_up'];
-                $onerow->description = $signup['description'];
-                // No need for more loops, we found what we wanted
-                break;
-            }
+  foreach( $group as $user ) {
+    if( in_array( $user['id'], $users_only_once ) ) 
+      continue;
+    
+    $users_only_once[] = $user['id'];
+    
+    $onerow = new stdClass();
+    $onerow->username = $user['username'];
+    $onerow->id = $user['id'];
+    $onerow->props = $user['props'];
+    $onerow->cal_link = $name;
+    $onerow->submit_href = "feusignup/update/{$user['id']}/";
+    // Fetch old signup informations
+    foreach( $signups as $signup ) {
+        if( $signup['feu_user_id'] == $user['id'] ) {
+            $onerow->exists = 1;
+            $onerow->signed_up = $signup['signed_up'];
+            $onerow->description = $signup['description'];
+            // No need for more loops, we found what we wanted
+            break;
         }
-        
-        
-        array_push( $users, $onerow );
     }
+    array_push( $users, $onerow );
+  }
 }
 
 
