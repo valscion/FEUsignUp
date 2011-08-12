@@ -30,7 +30,6 @@ $flds = "
     feu_user_id I NOTNULL,
     cgcal_event_id I DEFAULT -1,
     tss_game_id I DEFAULT -1,
-    group_id I DEFAULT -1,
     signed_up L DEFAULT 0,
     description C(255)
     ";

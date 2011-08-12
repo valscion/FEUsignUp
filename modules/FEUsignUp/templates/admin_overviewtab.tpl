@@ -8,7 +8,6 @@
             <th>{$th_feu}</th>
             <th>{$th_cgc_event}</th>
             <th>{$th_tss_game}</th>
-            <th>{$th_group}</th>
             <th>{$th_signed_up}</th>
             <th>{$th_desc}</th>
             <th class="pageicon">&nbsp;</th>
@@ -23,7 +22,6 @@
         <td>{$signup->feu}</td>
         <td>{$signup->cgc_event}</td>
         <td>{$signup->tss_game}</td>
-        <td>{$signup->group}</td>
         <td>{$signup->signed_up}</td>
         <td>{$signup->description}</td>
         <td>{$signup->editlink}</td>

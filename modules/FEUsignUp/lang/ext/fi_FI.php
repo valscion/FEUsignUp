@@ -48,7 +48,6 @@ $lang['th_desc'] = 'Selitys';
 $lang['th_feu'] = 'Käyttäjänimi';
 $lang['th_cgc_event'] = 'CGCalendarin tapahtuma';
 $lang['th_tss_game'] = 'TSS-peli';
-$lang['th_group'] = 'FEU-ryhmä';
 $lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Muokkaa';
 

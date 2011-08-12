@@ -46,7 +46,6 @@ foreach( $fetchedSignups as $signup ) {
   else
     $onerow->tss_game = $signup['tss_game_id'];
   
-  $onerow->group = $feu->GetGroupName( $signup['group_id'] );
   $onerow->signed_up = $signup['signed_up'] ? 'IN' : 'OUT';
   $onerow->description = $signup['description'];
   $onerow->editlink = '';

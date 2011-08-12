@@ -48,7 +48,6 @@ $lang['th_desc'] = 'Description';
 $lang['th_feu'] = 'Username';
 $lang['th_cgc_event'] = 'CGCalendar event';
 $lang['th_tss_game'] = 'TSS game';
-$lang['th_group'] = 'FEU-group';
 $lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Edit';
 
