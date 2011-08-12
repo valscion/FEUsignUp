@@ -20,7 +20,7 @@ $lang['no_signups'] = 'There are no signups!';
 
 $lang['linkings'] = 'Linkings';
 $lang['title_linkings'] = 'Linkings to Frontend User -groups';
-$lang['info_linkings'] = '<p>Manage linkings between Front End User -groups, CGCalendar categories and TeamSportScores teams.</p>';
+$lang['info_linkings'] = '<p>Manage linkings between Frontend User -groups, CGCalendar categories and TeamSportScores teams.</p>';
 
 $lang['template_displayevent'] = 'Template: Display events';
 $lang['title_template_displayevent'] = 'Template: Display events';
@@ -32,7 +32,7 @@ $lang['linking_updated'] = 'Linking has been updated.';
 $lang['linking_added'] = 'A new linking has been added.';
 $lang['linking_deleted'] = 'The linking was deleted.';
 $lang['prompt_addlink'] = 'Add a new link';
-$lang['prompt_feugroup'] = 'Link Front End Users -group';
+$lang['prompt_feugroup'] = 'Link Frontend Users -group';
 $lang['prompt_cgcal_category'] = 'to CGCalendar category';
 $lang['prompt_tss_team'] = 'or TeamSportScores team';
 $lang['prompt_description'] = 'Description for this linking:';
@@ -72,6 +72,12 @@ $lang['success_template'] = 'Template saved successfully';
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
 $lang['db_error'] = 'Database error!';
+
+## Update-action
+$lang['update_failed'] = '<p class="error">Signing up failed!</p>';
+$lang['update_failed_no_in_or_out'] = '<p class="error">Signing up failed! One needs to be either IN or OUT.</p>';
+$lang['not_admin'] = '<p class="error">You have no rights to modify this!</p>';
+$lang['user_not_found_by_id'] = '<p class="error">Username with ID %s was not found from the database!</p>';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>

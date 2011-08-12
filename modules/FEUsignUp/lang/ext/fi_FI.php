@@ -1,83 +1,89 @@
 <?php
 $lang['friendlyname'] = 'FEUsignUp';
-$lang['postuninstall'] = 'FEUsignUp module uninstalled successfully.';
-$lang['really_uninstall'] = 'Really? Are you sure you want to \nuninstall this fine module?';
-$lang['uninstalled'] = 'Module Uninstalled.';
-$lang['installed'] = 'Module version %s installed.';
-$lang['upgraded'] = 'Module upgraded to version %s.';
-$lang['moddescription'] = 'Gives the ability to put together a sign-up for events to CGCalendar and Team Sport Scores';
+$lang['postuninstall'] = 'FEUsignUp moduuli on poistettu onnistuneesti.';
+$lang['really_uninstall'] = 'Oikeastiko? Oletko varma että haluat\npoistaa tämän upean moduulin?';
+$lang['uninstalled'] = 'Moduuli poistettu.';
+$lang['installed'] = 'Moduulin versio %s asennettu.';
+$lang['upgraded'] = 'Moduuli päivitetty versioon %s.';
+$lang['moddescription'] = 'Mahdollistaa ilmoittautumisten lisäämisen suoraan CGCalendar ja Team Sport Scores -moduulien tapahtumiin.';
 
-$lang['error'] = 'Error!';
-$land['admin_title'] = 'FEUsignUp Admin Panel';
+$lang['error'] = 'Virhe!';
+$land['admin_title'] = 'FEUsignUp hallintapaneeli';
 $lang['admindescription'] = 'A dull admin description';
-$lang['accessdenied'] = 'Access Denied. Please check your permissions.';
-$lang['postinstall'] = 'Be sure to set "Use FEUsignUp" permissions to use this module!';
+$lang['accessdenied'] = 'Pääsy kielletty. Ole hyvä ja tarkista oikeutesi.';
+$lang['postinstall'] = 'Muista asettaa "Use FEUsignUp" -oikeudet käyttääksesi tätä moduulia!';
 
-$lang['overview'] = 'Overview';
-$lang['title_overview'] = 'Overview';
-$lang['info_overview'] = '<p>Manage all your sign-up events from here. The list below shows only those events where someone has already signed up for.</p>';
-$lang['no_signups'] = 'There are no signups!';
+$lang['overview'] = 'Yleisnäkymä';
+$lang['title_overview'] = 'Yleisnäkymä';
+$lang['info_overview'] = '<p>Hallitse kaikkia ilmoittautumisiasi täältä. Alla olevassa listassa on kaikki tietokannassa olevat ilmoittautumiset.</p>';
+$lang['no_signups'] = 'Yhtään ilmoittautumista ei löytynyt!';
 
-$lang['linkings'] = 'Linkings';
-$lang['title_linkings'] = 'Linkings to Frontend User -groups';
-$lang['info_linkings'] = '<p>Manage linkings between Front End User -groups, CGCalendar categories and TeamSportScores teams.</p>';
+$lang['linkings'] = 'Linkitykset';
+$lang['title_linkings'] = 'Linkitykset Frontend User -ryhmiin';
+$lang['info_linkings'] = '<p>Hallitse linkityksiä Frontend User -ryhmien, CGCalendar:n kategorioiden ja Team Sport Scores -moduulin joukkueiden välillä.</p>';
 
-$lang['template_displayevent'] = 'Template: Display events';
-$lang['title_template_displayevent'] = 'Template: Display events';
-$lang['info_template_displayevent'] = '<p>Manage the template used to display your events on the front end.</p>';
+$lang['template_displayevent'] = 'Pohja: Näytä tapahtuma';
+$lang['title_template_displayevent'] = 'Pohja: Näytä tapahtuma';
+$lang['info_template_displayevent'] = '<p>Muokkaa sivustolla näytettävien tapahtumien pohjaa.</p>';
 
 
 ## Linkings-tab stuff
-$lang['linking_updated'] = 'Linking has been updated.';
-$lang['linking_added'] = 'A new linking has been added.';
-$lang['linking_deleted'] = 'The linking was deleted.';
-$lang['prompt_addlink'] = 'Add a new link';
-$lang['prompt_feugroup'] = 'Link Front End Users -group';
-$lang['prompt_cgcal_category'] = 'to CGCalendar category';
-$lang['prompt_tss_team'] = 'or TeamSportScores team';
-$lang['prompt_description'] = 'Description for this linking:';
-$lang['submit_new_link'] = 'Submit a new link';
-$lang['submit_existing_link'] = 'Update the link';
+$lang['linking_updated'] = 'Linkitys on päivitetty.';
+$lang['linking_added'] = 'Uusi linkitys on lisätty.';
+$lang['linking_deleted'] = 'Linkitys poistettiin.';
+$lang['prompt_addlink'] = 'Lisää linkitys';
+$lang['prompt_feugroup'] = 'Linkitä Frontend Users -ryhmä';
+$lang['prompt_cgcal_category'] = 'CGCalendarin kategoriaan';
+$lang['prompt_tss_team'] = 'tai TeamSportScoresin joukkueeseen';
+$lang['prompt_description'] = 'Tämän linkityksen selitys:';
+$lang['submit_new_link'] = 'Lähetä uusi linkitys';
+$lang['submit_existing_link'] = 'Päivitä linkitys';
 
 ## Lists in admin-area
 $lang['th_id'] = 'ID';
-$lang['th_feug'] = 'FEU-group';
-$lang['th_cgcc'] = 'CGCalendar category';
-$lang['th_tsst'] = 'TSS-team';
-$lang['th_desc'] = 'Description';
-$lang['th_feu'] = 'Username';
-$lang['th_cgc_event'] = 'CGCalendar event';
-$lang['th_tss_game'] = 'TSS game';
-$lang['th_group'] = 'FEU-group';
+$lang['th_feug'] = 'FEU-ryhmä';
+$lang['th_cgcc'] = 'CGCalendar-kategoria';
+$lang['th_tsst'] = 'TSS-joukkue';
+$lang['th_desc'] = 'Selitys';
+$lang['th_feu'] = 'Käyttäjänimi';
+$lang['th_cgc_event'] = 'CGCalendarin tapahtuma';
+$lang['th_tss_game'] = 'TSS-peli';
+$lang['th_group'] = 'FEU-ryhmä';
 $lang['th_signed_up'] = 'IN/OUT';
-$lang['edit'] = 'Edit';
+$lang['edit'] = 'Muokkaa';
 
 ## Editing an existing link
-$lang['prompt_editlink'] = 'Update linking';
-$lang['cancel'] = 'Cancel';
-$lang['delete'] = 'Delete';
-$lang['areyousure'] = 'Are you sure you want to delete this linking?';
+$lang['prompt_editlink'] = 'Linkityksen päivitys';
+$lang['cancel'] = 'Peruuta';
+$lang['delete'] = 'Poista';
+$lang['areyousure'] = 'Haluatko varmasti poistaa tämän linkityksen?';
 
-$lang['nothing_updated'] = 'Nothing was updated.';
+$lang['nothing_updated'] = 'Mitään ei päivitetty.';
 
 ## Empty values
-$lang['no_tss_game'] = '-NO GAME-';
-$lang['no_cgc_event'] = '-NO EVENT-';
+$lang['no_tss_game'] = '-EI PELIÄ-';
+$lang['no_cgc_event'] = '-EI TAPAHTUMAA-';
 
 ## Templates
-$lang['defaults'] = 'Reset defaults';
-$lang['submit'] = 'Submit';
-$lang['success_defaults'] = 'Defaults reset successfully';
-$lang['success_template'] = 'Template saved successfully';
+$lang['defaults'] = 'Resetoi oletukset';
+$lang['submit'] = 'Lähetä';
+$lang['success_defaults'] = 'Oletukset palautettu onnistuneesti';
+$lang['success_template'] = 'Pohja tallennettu onnistuneesti';
 
-$lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
-$lang['db_error'] = 'Database error!';
+$lang['error-no_id_given'] = 'Et antanut ID:tä CGCalendarille tai Team Sport Scoresille!';
+$lang['db_error'] = 'Virhe tietokannassa!';
+
+## Update-action
+$lang['update_failed'] = 'Ilmoittautuminen epäonnistui!';
+$lang['update_failed_no_in_or_out'] = 'Ilmoittautuminen epäonnistui! Sinun täytyy valita IN tai OUT.';
+$lang['not_admin'] = 'Sinulla ei ole oikeuksia muokata tämän käyttäjän ilmoittautumista!';
+$lang['user_not_found_by_id'] = 'Käyttäjää ID:llä %s ei löydy tietokannasta!';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>
 </ul>';
-$lang['help'] = '<h3>What Does This Do?</h3>
-<p>Gives the ability to put together a sign-up for events to CGCalendar and Team Sport Scores</p>
+$lang['help'] = '<h3>Mitä tämä tekee?</h3>
+<p>Mahdollistaa ilmoittautumisten lisäämisen suoraan CGCalendar ja Team Sport Scores -moduulien tapahtumiin</p>
 <h3>How Do I Use It</h3>
 <p>[FIX-ME!]</p>
 <h3>What Parameters Does It Take</h3>
