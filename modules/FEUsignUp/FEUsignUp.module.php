@@ -798,6 +798,15 @@ class FEUsignUp extends CMSModule
 
         return $result;
      }
+     
+     /**
+       * ModifySignup()
+       * Modifies an existing signup or adds a new one if there aren't any.
+       */
+       function ModifySignup( $uid, $signup, $description )
+       {
+       
+       }
 }
 
 ?>
