@@ -74,12 +74,7 @@ foreach( $groups as $name => $group ) {
         $onerow->id = $user['id'];
         $onerow->props = $user['props'];
         $onerow->cal_link = $name;
-        $onerow->toggle_in = $this->CreateFrontendLink($id, $returnid, 'view',
-                                'IN',array('class'=>'jslink'),'',true,true,'',false,
-                                "feusignup/in/{$user['id']}/");
-        $onerow->toggle_out = $this->CreateFrontendLink($id, $returnid, 'view',
-                                'OUT',array('class'=>'jslink'),'',true,true,'',false,
-                                "feusignup/out/{$user['id']}/");
+        $onerow->submit_href = "feusignup/update/{$user['id']}/";
         // Fetch old signup informations
         foreach( $signups as $signup ) {
             if( $signup['feu_user_id'] == $user['id'] ) {
