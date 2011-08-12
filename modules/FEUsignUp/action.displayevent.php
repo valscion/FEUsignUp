@@ -100,6 +100,6 @@ foreach( $groups as $name => $group ) {
 
 $this->smarty->assign('users', $users);
 
-echo $this->ProcessTemplate('displayevent.tpl');
+echo $this->ProcessTemplateFromDatabase('feusignup_displayevent');
 
 ## EOF

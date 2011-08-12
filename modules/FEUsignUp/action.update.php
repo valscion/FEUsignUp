@@ -16,18 +16,19 @@ if( !isset($_POST) || empty($_POST) || !isset( $_POST['event_id'], $_POST['user_
   die( $this->Lang('update_failed_no_in_or_out') );
 }
 
-// Let's check whether we have a solid event
-if( !$this->_CGCalendarEventExists( $_POST['event_id'] ) ) {
-  die( $this->Lang('event_not_found') );
-}
-
 $feu =& cge_utils::get_module('FrontEndUsers');
 if( $feu === null ) die('<p class="error">FrontEndUsers module is not installed!</p>');
 
+$eventid = (int)$_POST['event_id'];
 $userid = (int)$_POST['user_id'];
 $username = $_POST['username'];
 $signup = ( $_POST['signup'] === 'in' ) ? 1 : 0;
 $description = $_POST['description'];
+
+// Let's check whether we have a solid event
+if( !$this->_CGCalendarEventExists( $eventid ) ) {
+  die( $this->Lang('event_not_found') );
+}
 
 // Let's check whether we have rights to modify this users sign-up.
 $logged_in_user = (int)$feu->LoggedInId();
@@ -40,8 +41,11 @@ if( !$feu->UserExistsByID( $userid ) ) {
   die( $this->Lang('user_not_found_by_id', $userid) );
 }
 
-echo '<p>Request complete</p><pre>';
-print_r( $_POST );
-echo '</pre>';
+// Let's do it!
+if( $this->ModifySignup( $eventid, $userid, $signup, $description, 'cgcalendar' ) ) {
+  die( 'Jes, ilmoittautumisesi on tallennettu!' );
+} else {
+  die( 'Viime metreillä meni jotain pieleen... :(' );
+}
 
 ## EOF

@@ -815,14 +815,83 @@ class FEUsignUp extends CMSModule
         return $result;
      }
      
-     /**
-       * ModifySignup()
-       * Modifies an existing signup or adds a new one if there aren't any.
-       */
-       function ModifySignup( $uid, $signup, $description )
-       {
+    /**
+     * ModifySignup()
+     * Modifies an existing signup or adds a new one if there aren't any.
+     */
+     function ModifySignup( $event_id, $user_id, $signup, $description, $from = 'cgcalendar' )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        if( $from = 'cgcalendar' ) {
+          $q = 'SELECT id FROM ' . $this->events_table_name . ' WHERE cgcal_event_id = ? AND feu_user_id = ?';
+        } else {
+          $q = 'SELECT id FROM ' . $this->events_table_name . ' WHERE tss_game_id = ? AND feu_user_id = ?';
+        }
+        $row = $db->GetRow( $q, array( (int)$event_id, (int)$user_id ) );
+        if( !$row )
+          return $this->_AddSignup( $event_id, $user_id, $signup, $description, $from );
+        else
+          return $this->_UpdateSignup( $event_id, $user_id, $signup, $description, $from );
+     }
        
-       }
+    /**
+     * _AddSignup()
+     * Private function for handling the adding of a new signup to the database.
+     */
+     private function _AddSignup( $event_id, $user_id, $signup, $description, $from )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        // generate the sequence
+        $sid = $db->GenID( $this->events_table_name . '_seq' );
+        
+        if( $from = 'cgcalendar' ) {
+          $q = 'INSERT INTO ' . $this->events_table_name . ' (id,feu_user_id,cgcal_event_id,signed_up,description)
+                VALUES (?,?,?,?,?)';
+        } elseif( $from = 'tss' ) {
+          $q = 'INSERT INTO ' . $this->events_table_name . ' (id,feu_user_id,tss_game_id,signed_up,description)
+                VALUES (?,?,?,?,?)';
+        } else {
+          return FALSE;
+        }
+        
+        $rs = $db->Execute($q,array($sid,$user_id,$event_id,($signup == true),$description));
+        
+        if( $rs ) {
+          return true;
+        } else {
+          return false;
+        }
+     }
+       
+    /**
+     * _UpdateSignup()
+     * Private function for handling the updating of an existing signup.
+     */
+     private function _UpdateSignup( $event_id, $user_id, $signup, $description, $from )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        if( $from = 'cgcalendar' ) {
+          $q = 'UPDATE ' . $this->events_table_name . ' SET feu_user_id = ?, cgcal_event_id = ?, signed_up = ?, description = ?
+                WHERE cgcal_event_id = ? AND feu_user_id = ?';
+        } elseif( $from = 'tss' ) {
+          $q = 'UPDATE ' . $this->events_table_name . ' SET feu_user_id = ?, tss_game_id = ?, signed_up = ?, description = ?
+                WHERE tss_game_id = ? AND feu_user_id = ?';
+        } else {
+          return FALSE;
+        }
+        
+        $rs = $db->Execute($q,array($user_id,$event_id,($signup == true),$description,$event_id,$user_id));
+        
+        if( $db->Affected_Rows() > 0 ) {
+          return true;
+        } else {
+          return false;
+        }
+     }
+        
 }
 
 ?>
