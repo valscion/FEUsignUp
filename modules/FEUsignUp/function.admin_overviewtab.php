@@ -36,10 +36,14 @@ foreach( $fetchedSignups as $signup ) {
   $onerow = new stdClass();
   $onerow->id = $signup['id'];
   $onerow->feu = $feu->GetUsername( $signup['feu_user_id'] );
-  if( $signup['cgcal_event_id'] == -1 )
+  if( $signup['cgcal_event_id'] == -1 ) {
     $onerow->cgc_event = $this->Lang('no_cgc_event');
-  else
-    $onerow->cgc_event = $this->_GetCGCalendarEventTitle( $signup['cgcal_event_id'] );
+  } else {
+    $cgcal_event = $cgcal->GetEvent( $signup['cgcal_event_id'] );
+    $onerow->cgc_event = ' [' . $signup['cgcal_event_id'] . '] ' .
+              $cgcal_event['event_title'] .
+              ' @ ' . strftime('%d.%m.%y klo %H:%M',$cgcal_event['event_date_start_ut']);
+  }
   
   if( $signup['tss_game_id'] == -1 )
     $onerow->tss_game = $this->Lang('no_tss_game');
@@ -48,7 +52,10 @@ foreach( $fetchedSignups as $signup ) {
   
   $onerow->signed_up = $signup['signed_up'] ? 'IN' : 'OUT';
   $onerow->description = $signup['description'];
-  $onerow->editlink = '';
+  $onerow->editlink = $this->CreateLink ($id, 'admin_editsignup', $returnid,
+                $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
+                        $this->Lang('edit'), '', '', 'systemicon'),
+                array ('signup_id' => $signup['id'] ));
   
   array_push( $signups, $onerow );
 }

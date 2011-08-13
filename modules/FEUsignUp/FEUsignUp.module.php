@@ -816,6 +816,27 @@ class FEUsignUp extends CMSModule
      }
      
     /**
+     * GetSignup()
+     * Fetches one signup from the database and returns an array containing its fields.
+     */
+     function GetSignup( $sid )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        // Query
+        $q = 'SELECT * FROM ' . $this->events_table_name . ' WHERE id = ?';
+        
+        // Run it and return the results
+        $result = array();
+        $ret = $db->Execute( $q, array( $sid ) );
+        if($ret && $ret->RecordCount() > 0) {
+            $result = $ret->GetArray();
+        }
+
+        return $result;
+     }
+     
+    /**
      * ModifySignup()
      * Modifies an existing signup or adds a new one if there aren't any.
      */

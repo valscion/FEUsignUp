@@ -56,10 +56,10 @@ foreach( $linkings as $link )
     
     // Add edit-links
     $onerow->editlink = 
-		    $this->CreateLink ($id, 'admin_editlinking', $returnid,
-				       $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
-										    $this->Lang('edit'), '', '', 'systemicon'),
-				       array ('linking_id' => $link['linking_id'] ));
+        $this->CreateLink ($id, 'admin_editlinking', $returnid,
+                $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
+                        $this->Lang('edit'), '', '', 'systemicon'),
+                array ('linking_id' => $link['linking_id'] ));
     
     // Add delete-links.
     $onerow->deletelink = 

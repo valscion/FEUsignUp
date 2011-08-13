@@ -4,7 +4,7 @@ if (!isset($gCms)) exit;
 if( !isset( $params['linking_id'] ) )
 {
     // set the active tab and an error
-    $params = array('active_tab' => 'linkings', 'tab_error' => $this->Lang('error'));
+    $params = array('active_tab' => 'linkings', 'error' => true, 'message' => $this->Lang('error'));
     // redirect back to default admin page
     $this->Redirect($id, 'defaultadmin', $returnid, $params);
 }
@@ -14,7 +14,7 @@ $oldinfo = $this->GetLinkingById( $params['linking_id'] );
 
 if( empty( $oldinfo ) ) {
     // set the active tab and an error
-    $params = array('active_tab' => 'linkings', 'tab_error' => $this->Lang('error'));
+    $params = array('active_tab' => 'linkings', 'error' => true, 'message' => $this->Lang('error'));
     // redirect back to default admin page
     $this->Redirect($id, 'defaultadmin', $returnid, $params);
 }
