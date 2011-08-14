@@ -40,10 +40,7 @@ if( $params['from'] == 'cgcal' ) {
     $q = 'SELECT feusers_group_id FROM ' . $this->linkings_table_name . " WHERE cgcal_category_id = $id";
     $rs = $db->Execute($q);
     while( $row = $rs->FetchRow() ) {
-      // Let's ensure that we don't get duplicates of the same ID
-      if( !in_array( $row['feusers_group_id'], $feug_ids ) ) {
-        $feug_ids[$name] = $row['feusers_group_id'];
-      }
+      $feug_ids[$name] = $row['feusers_group_id'];
     }
   }
   
@@ -70,25 +67,32 @@ foreach( $feug_ids as $name => $id ) {
 
 $users = array();
 
+// Array to hold only user ID's to ensure we won't get the same user twice or more often
+$users_only_once = array(); 
+
 foreach( $groups as $name => $group ) {
   foreach( $group as $user ) {
-  $onerow = new stdClass();
-  $onerow->username = $user['username'];
-  $onerow->id = $user['id'];
-  $onerow->props = $user['props'];
-  $onerow->cal_link = $name;
-  $onerow->submit_href = "/feusignup/update/{$user['id']}/";
-  // Fetch old signup informations
-  foreach( $signups as $signup ) {
-    if( $signup['feu_user_id'] == $user['id'] ) {
-      $onerow->exists = 1;
-      $onerow->signed_up = $signup['signed_up'];
-      $onerow->description = $signup['description'];
-      // No need for more loops, we found what we wanted
-      break;
+    if( in_array( $user['id'], $users_only_once ) ) 
+      continue;
+    
+    $users_only_once[] = $user['id'];
+    $onerow = new stdClass();
+    $onerow->username = $user['username'];
+    $onerow->id = $user['id'];
+    $onerow->props = $user['props'];
+    $onerow->cal_link = $name;
+    $onerow->submit_href = "/feusignup/update/{$user['id']}/";
+    // Fetch old signup informations
+    foreach( $signups as $signup ) {
+      if( $signup['feu_user_id'] == $user['id'] ) {
+        $onerow->exists = 1;
+        $onerow->signed_up = $signup['signed_up'];
+        $onerow->description = $signup['description'];
+        // No need for more loops, we found what we wanted
+        break;
+      }
     }
-  }
-  array_push( $users, $onerow );
+    array_push( $users, $onerow );
   }
 }
 
