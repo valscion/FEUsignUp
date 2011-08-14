@@ -880,9 +880,9 @@ class FEUsignUp extends CMSModule
         $rs = $db->Execute($q,array($sid,$user_id,$event_id,($signup == true),$description));
         
         if( $rs ) {
-          return true;
+          return array( true, $this->Lang( 'signup_updated' ) );
         } else {
-          return false;
+          return array( false, $this->Lang( 'db_error' ) );
         }
      }
        
@@ -906,10 +906,14 @@ class FEUsignUp extends CMSModule
         
         $rs = $db->Execute($q,array($user_id,$event_id,($signup == true),$description,$event_id,$user_id));
         
+        if( !$rs ) {
+          return array( false, $this->Lang( 'db_error' ) );
+        }
+        
         if( $db->Affected_Rows() > 0 ) {
-          return true;
+          return array( true, $this->Lang( 'signup_updated' ) );;
         } else {
-          return false;
+          return array( true, $this->Lang( 'nothing_updated' ) );;
         }
      }
         

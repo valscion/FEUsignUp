@@ -73,11 +73,12 @@ $lang['error-no_id_given'] = 'Et antanut ID:tä CGCalendarille tai Team Sport Sc
 $lang['db_error'] = 'Virhe tietokannassa!';
 
 ## Update-action
-$lang['update_failed'] = '<p class="error">Ilmoittautuminen epäonnistui!</p>';
-$lang['update_failed_no_in_or_out'] = '<p class="error">Ilmoittautuminen epäonnistui! Sinun täytyy valita IN tai OUT.</p>';
-$lang['event_not_found'] = '<p class="error">Tapahtumaa ei löytynyt!</p>';
-$lang['not_admin'] = '<p class="error">Sinulla ei ole oikeuksia muokata tämän käyttäjän ilmoittautumista!</p>';
-$lang['user_not_found_by_id'] = '<p class="error">Käyttäjää ID:llä %s ei löydy tietokannasta!</p>';
+$lang['update_failed'] = 'Ilmoittautuminen epäonnistui!';
+$lang['update_failed_no_in_or_out'] = 'Ilmoittautuminen epäonnistui! Sinun täytyy valita IN tai OUT.';
+$lang['event_not_found'] = 'Tapahtumaa ei löytynyt!';
+$lang['not_admin'] = 'Sinulla ei ole oikeuksia muokata tämän käyttäjän ilmoittautumista!';
+$lang['user_not_found_by_id'] = 'Käyttäjää ID:llä %s ei löydy tietokannasta!';
+$lang['signup_updated'] = 'Ilmoittautuminen päivitetty onnistuneesti!';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>

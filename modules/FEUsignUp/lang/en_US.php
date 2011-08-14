@@ -73,11 +73,12 @@ $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Spor
 $lang['db_error'] = 'Database error!';
 
 ## Update-action
-$lang['update_failed'] = '<p class="error">Signing up failed!</p>';
-$lang['update_failed_no_in_or_out'] = '<p class="error">Signing up failed! One needs to be either IN or OUT.</p>';
-$lang['event_not_found'] = '<p class="error">No event found!</p>';
-$lang['not_admin'] = '<p class="error">You have no rights to modify this!</p>';
-$lang['user_not_found_by_id'] = '<p class="error">Username with ID %s was not found from the database!</p>';
+$lang['update_failed'] = 'Signing up failed!';
+$lang['update_failed_no_in_or_out'] = 'Signing up failed! One needs to be either IN or OUT.';
+$lang['event_not_found'] = 'No event found!';
+$lang['not_admin'] = 'You have no rights to modify this!';
+$lang['user_not_found_by_id'] = 'Username with ID %s was not found from the database!';
+$lang['signup_updated'] = 'Signup updated!';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>

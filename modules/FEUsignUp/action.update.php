@@ -42,10 +42,13 @@ if( !$feu->UserExistsByID( $userid ) ) {
 }
 
 // Let's do it!
-if( $this->ModifySignup( $eventid, $userid, $signup, $description, 'cgcalendar' ) ) {
-  die( 'Jes, ilmoittautumisesi on tallennettu!' );
+$ret = $this->ModifySignup( $eventid, $userid, $signup, $description, 'cgcalendar' );
+if( $ret[0] ) {
+  // Everything went OK
+  echo '<p>' . $ret[1] . '</p>';
 } else {
-  die( 'Viime metreillä meni jotain pieleen... :(' );
+  // Something nasty happened :(
+  echo '<p class="error">' . $ret[1] . '</p>';
 }
 
 ## EOF
