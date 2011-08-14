@@ -58,7 +58,7 @@ foreach( $fetchedSignups as $signup ) {
                 array ('signup_id' => $signup['id'] ));
   $onerow->deletelink = $this->CreateLink ($id, 'admin_savesignup', $returnid,
                 $gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif',
-                        $this->Lang('edit'), '', '', 'systemicon'),
+                        $this->Lang('delete'), '', '', 'systemicon'),
                 array ('signup_id' => $signup['id'], 'delete' => 1),
                 $this->Lang ('areyousure_delsignup') );
   
