@@ -55,7 +55,7 @@ $lang['edit'] = 'Muokkaa';
 $lang['prompt_editlink'] = 'Linkityksen päivitys';
 $lang['cancel'] = 'Peruuta';
 $lang['delete'] = 'Poista';
-$lang['areyousure'] = 'Haluatko varmasti poistaa tämän linkityksen?';
+$lang['areyousure_dellink'] = 'Haluatko varmasti poistaa tämän linkityksen?';
 
 $lang['nothing_updated'] = 'Mitään ei päivitetty.';
 
@@ -79,6 +79,10 @@ $lang['event_not_found'] = 'Tapahtumaa ei löytynyt!';
 $lang['not_admin'] = 'Sinulla ei ole oikeuksia muokata tämän käyttäjän ilmoittautumista!';
 $lang['user_not_found_by_id'] = 'Käyttäjää ID:llä %s ei löydy tietokannasta!';
 $lang['signup_updated'] = 'Ilmoittautuminen päivitetty onnistuneesti!';
+
+## Editing a signup
+$lang['areyousure_delsignup'] = 'Haluatko varmasti poistaa tämän ilmoittautumisen?';
+$lang['signup_deleted'] = 'Ilmoittautuminen poistettu onnistuneesti.';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>

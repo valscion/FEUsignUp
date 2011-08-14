@@ -11,9 +11,9 @@ if (!isset($gCms)) exit;
 
 // Let's check whether all necessary information is submitted
 if( !isset($_POST) || empty($_POST) || !isset( $_POST['event_id'], $_POST['user_id'], $_POST['username'], $_POST['signup'], $_POST['description'] ) ) {
-  die( $this->Lang('update_failed') );
+  die( '<p class="error">' . $this->Lang('update_failed') . '</p>' );
 } elseif( $_POST['signup'] !== 'in' && $_POST['signup'] !== 'out' ) {
-  die( $this->Lang('update_failed_no_in_or_out') );
+  die( '<p class="error">' . $this->Lang('update_failed_no_in_or_out') . '</p>' );
 }
 
 $feu =& cge_utils::get_module('FrontEndUsers');
@@ -27,18 +27,18 @@ $description = $_POST['description'];
 
 // Let's check whether we have a solid event
 if( !$this->_CGCalendarEventExists( $eventid ) ) {
-  die( $this->Lang('event_not_found') );
+  die( '<p class="error">' . $this->Lang('event_not_found') . '</p>' );
 }
 
 // Let's check whether we have rights to modify this users sign-up.
 $logged_in_user = (int)$feu->LoggedInId();
 if( $logged_in_user !== $userid && !$feu->MemberOfGroup( $logged_in_user, 7 ) ) {
-  die( $this->Lang('not_admin') );
+  die( '<p class="error">' . $this->Lang('not_admin') . '</p>' );
 }
 
 // Let's check whether the user we're about to sign in/out is real.
 if( !$feu->UserExistsByID( $userid ) ) {
-  die( $this->Lang('user_not_found_by_id', $userid) );
+  die( '<p class="error">' . $this->Lang('user_not_found_by_id', $userid) . '</p>' );
 }
 
 // Let's do it!

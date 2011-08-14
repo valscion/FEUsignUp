@@ -55,7 +55,7 @@ $lang['edit'] = 'Edit';
 $lang['prompt_editlink'] = 'Update linking';
 $lang['cancel'] = 'Cancel';
 $lang['delete'] = 'Delete';
-$lang['areyousure'] = 'Are you sure you want to delete this linking?';
+$lang['areyousure_dellink'] = 'Are you sure you want to delete this linking?';
 
 $lang['nothing_updated'] = 'Nothing was updated.';
 
@@ -79,6 +79,10 @@ $lang['event_not_found'] = 'No event found!';
 $lang['not_admin'] = 'You have no rights to modify this!';
 $lang['user_not_found_by_id'] = 'Username with ID %s was not found from the database!';
 $lang['signup_updated'] = 'Signup updated!';
+
+## Editing a signup
+$lang['areyousure_delsignup'] = 'Are you sure you want to delete this signup?';
+$lang['signup_deleted'] = 'Signup deleted successfully.';
 
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>

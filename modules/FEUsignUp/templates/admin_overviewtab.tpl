@@ -25,7 +25,7 @@
         <td>{$signup->signed_up}</td>
         <td>{$signup->description}</td>
         <td>{$signup->editlink}</td>
-        <td>{if isset($link->deletelink)}{$link->deletelink}{/if}</td>
+        <td>{if isset($signup->deletelink)}{$signup->deletelink}{/if}</td>
     </tr>
 {/foreach}
     </tbody>

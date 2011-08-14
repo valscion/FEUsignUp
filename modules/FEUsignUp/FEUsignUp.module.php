@@ -844,10 +844,12 @@ class FEUsignUp extends CMSModule
      {
         $db =& $this->GetDb(); /* @var $db ADOConnection */
         
-        if( $from = 'cgcalendar' ) {
+        if( $from == 'cgcalendar' ) {
           $q = 'SELECT id FROM ' . $this->events_table_name . ' WHERE cgcal_event_id = ? AND feu_user_id = ?';
-        } else {
+        } elseif( $from == 'tss' ) {
           $q = 'SELECT id FROM ' . $this->events_table_name . ' WHERE tss_game_id = ? AND feu_user_id = ?';
+        } else {
+          return array( false, $this->Lang('error') );
         }
         $row = $db->GetRow( $q, array( (int)$event_id, (int)$user_id ) );
         if( !$row )
@@ -914,6 +916,27 @@ class FEUsignUp extends CMSModule
           return array( true, $this->Lang( 'signup_updated' ) );;
         } else {
           return array( true, $this->Lang( 'nothing_updated' ) );;
+        }
+     }
+     
+    /**
+     * DeleteSignup()
+     * Deletes a signup from the database.
+     */
+     function DeleteSignup( $sid )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        // Query
+        $q = 'DELETE FROM ' . $this->events_table_name . ' WHERE id = ? LIMIT 1';
+        
+        // Run the query
+        $ret = $db->Execute( $q, array( (int)$sid ) );
+        
+        if( $db->Affected_Rows() == 1 ) {
+            return array( true, $this->Lang('signup_deleted') );
+        } else {
+            return array( false, $this->Lang('db_error') );
         }
      }
         

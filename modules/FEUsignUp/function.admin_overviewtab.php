@@ -56,6 +56,12 @@ foreach( $fetchedSignups as $signup ) {
                 $gCms->variables['admintheme']->DisplayImage('icons/system/edit.gif',
                         $this->Lang('edit'), '', '', 'systemicon'),
                 array ('signup_id' => $signup['id'] ));
+  $onerow->deletelink = $this->CreateLink ($id, 'admin_savesignup', $returnid,
+                $gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif',
+                        $this->Lang('edit'), '', '', 'systemicon'),
+                array ('signup_id' => $signup['id'], 'delete' => 1),
+                $this->Lang ('areyousure_delsignup') );
+  
   
   array_push( $signups, $onerow );
 }

@@ -67,7 +67,7 @@ foreach( $linkings as $link )
                        $gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif',
                                             $this->Lang('delete'), '', '', 'systemicon'),
                        array ('linking_id' => $link['linking_id'], 'delete' => 1),
-                       $this->Lang ('areyousure'));
+                       $this->Lang ('areyousure_dellink'));
     
     // Add all fetched info to array $linkings_objs
     array_push( $linkings_objs, $onerow );
