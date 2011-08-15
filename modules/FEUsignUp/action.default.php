@@ -48,6 +48,7 @@ $linkdescription = '';
 if( isset( $params['cal_id'] ) && !empty( $params['cal_id'] ) ) {
 	$event = $cgcal->GetEvent( $params['cal_id'] );
   $this->smarty->assign('event', $event);
+  $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $params['cal_id'], 'cgcalendar' ) );
   $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
                                 $params['description'] : 
                                 $this->ProcessTemplate('cal_link.tpl');

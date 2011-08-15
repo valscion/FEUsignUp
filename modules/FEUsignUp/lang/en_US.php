@@ -84,6 +84,9 @@ $lang['signup_updated'] = 'Signup updated!';
 $lang['areyousure_delsignup'] = 'Are you sure you want to delete this signup?';
 $lang['signup_deleted'] = 'Signup deleted successfully.';
 
+## Other
+$lang['module_error'] = 'Error in FEUsignUp module! Please report this incident to the webmaster.';
+
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>
 </ul>';

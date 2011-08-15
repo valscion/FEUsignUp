@@ -84,6 +84,9 @@ $lang['signup_updated'] = 'Ilmoittautuminen päivitetty onnistuneesti!';
 $lang['areyousure_delsignup'] = 'Haluatko varmasti poistaa tämän ilmoittautumisen?';
 $lang['signup_deleted'] = 'Ilmoittautuminen poistettu onnistuneesti.';
 
+## Other
+$lang['module_error'] = 'Virhe FEUsignUp-moduulissa! Voisitko ystävällisesti ilmoittaa virheestä ylläpitäjälle?';
+
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>
 </ul>';

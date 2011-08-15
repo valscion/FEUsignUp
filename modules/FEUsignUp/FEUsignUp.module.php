@@ -939,7 +939,34 @@ class FEUsignUp extends CMSModule
             return array( false, $this->Lang('db_error') );
         }
      }
+     
+    /**
+     * GetSignupsAmountForEvent()
+     * Returns the amount of users signed up for a certain event
+     */
+     function GetSignupsAmountForEvent( $eid, $from = 'cgcalendar' )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
         
+        if( $from == 'cgcalendar' ) {
+          $q = 'SELECT id FROM ' . $this->events_table_name . ' WHERE cgcal_event_id = ? AND signed_up = 1';
+        } elseif( $from == 'tss' ) {
+          $q = 'SELECT id FROM ' . $this->events_table_name . ' WHERE tss_game_id = ? AND signed_up = 1';
+        } else {
+          return 0;
+        }
+        
+        // Run the query
+        $ret = $db->Execute( $q, array( (int)$eid ) );
+        
+        if($ret) {
+          $result = $ret->RecordCount();
+        } else {
+          $result = 0;
+        }
+        
+        return $result;
+     }
 }
 
 ?>
