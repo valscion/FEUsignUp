@@ -41,6 +41,9 @@ div.displayevent_test table {
   border-collapse: collapse;
   width: 100%;
 }
+div.displayevent_test td, div.displayevent_test th {
+  border: 0;
+}
 div.displayevent_test td {
     border-top: 1px solid black;
   padding: 4px;
@@ -88,7 +91,6 @@ div#displayevent_info {
   {* Ei vahvistettu tunnusta *}
   <p>Tunnustasi ei ole vielä vahvistettu, joten et ikävä kyllä voi katsella ilmoittautuneita pelaajia.</p>
 {else}
-<p><em>Ilmoittautumisten sovellusta kehitetään tällä hetkellä, ole kiltti äläkä kokeile tätä keskeneräistä systeemiä vielä.</em></p>
 <table>
 
   <thead>
