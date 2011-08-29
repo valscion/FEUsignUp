@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-var signup_event_id = {$event_id};
+var signup_event_id = {$event->id};
 {literal}
 $("a.jslink").click( function(clickEvent) {
     clickEvent.preventDefault();
@@ -91,6 +91,8 @@ div#displayevent_info {
   {* Ei vahvistettu tunnusta *}
   <p>Tunnustasi ei ole vielä vahvistettu, joten et ikävä kyllä voi katsella ilmoittautuneita pelaajia.</p>
 {else}
+<p style="margin-bottom: 1em; text-align: center;"><strong>{$event->info.event_title}</strong><br />
+{$event->info.event_date_start|date_format:"%A, %d.%m. klo %H:%M"}<br />{$event->info.fields.Paikka}</p>
 <table>
 
   <thead>

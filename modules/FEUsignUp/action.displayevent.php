@@ -9,10 +9,17 @@ if (!isset($gCms)) exit;
    
 */
 
-if( $params['from'] == 'cgcal' ) {
+// Create a "event"-object that stores information about this event
+// and assign it to smarty by reference.
+$event = new stdClass();
+$this->smarty->assign_by_ref('event', $event);
+
+if( $params['from'] == 'cgcal' || $params['from'] == 'cgcalendar' ) {
+  $event->from = 'cgcalendar';
+
   // Fetch CGCalendar info
   $cgcal_id = (int)$params['from_id'];
-  $this->smarty->assign('event_id', $cgcal_id);
+  $event->id = $cgcal_id;
   
   $cgcal =& cge_utils::get_module('CGCalendar');
   if( $cgcal === null ) die('CGCalendar module is not installed!');
@@ -20,6 +27,7 @@ if( $params['from'] == 'cgcal' ) {
   $feu =& cge_utils::get_module('FrontEndUsers');
   if( $feu === null ) die('FrontEndUsers module is not installed!');
 
+  $event->info = $cgcal->GetEvent( $cgcal_id );
   
   $events_to_categories_table = $cgcal->events_to_categories_table_name;
   $categories_table = $cgcal->categories_table_name;
@@ -48,10 +56,11 @@ if( $params['from'] == 'cgcal' ) {
   $signups = $this->GetEventUsers( $cgcal_id, 'cgcal' );
   
 } elseif( $params['from'] == 'tss' ) {
+  $event->from = 'tss';
   // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
   // taulukkoon $feug_ids.
   $tss_id = (int)$params['from_id'];
-  $this->smarty->assign('event_id', $tss_id);
+  $event->id = $tss_id;
   $feug_ids = array();
 } else {
   echo '<p class="error">ERROR</p>';
