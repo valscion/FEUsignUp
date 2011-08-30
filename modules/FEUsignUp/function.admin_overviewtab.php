@@ -80,8 +80,20 @@ $smarty->assign('th_signed_up', $this->Lang('th_signed_up') );
 $smarty->assign('th_desc', $this->Lang('th_desc') );
 
 
+// Let's find out what stuff we filter from the database.
+$filterSql = '';
+if( ( isset($params['input_from']) && $params['input_from'] != 'both' ) ||
+    ( isset($params['input_event_id']) && !empty($params['input_event_id']) ) ||
+    ( isset($params['input_in_or_out']) && $params['input_in_or_out'] != 'both' ) )
+{
+  $filterSql = 'WHERE ';
+  if( $params['input_from'] == 'cgcal' ) {
+    $filterSql .= '';
+  }
+}
+
 // Fetch all signups into an array containing objects
-$fetchedSignups = $this->GetSignups();
+$fetchedSignups = $this->GetSignups((int)$params['page']-1);
 $signups = array();
 
 foreach( $fetchedSignups as $signup ) {

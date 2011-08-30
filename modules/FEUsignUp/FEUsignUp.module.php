@@ -797,14 +797,16 @@ class FEUsignUp extends CMSModule
     /**
      * GetSignups()
      * Fetches signups from the database and returns an array containing them.
+     * This function paginates, showing only 30 hits on one call.
      */
-     function GetSignups( $page = 0 )
+     function GetSignups( $page = 0, $restrict = '' )
      {
         $db =& $this->GetDb(); /* @var $db ADOConnection */
         
         // Query
-        $q = 'SELECT * FROM ' . $this->events_table_name . ' ORDER BY id LIMIT ?,?';
+        $q = 'SELECT * FROM ' . $this->events_table_name . ' ' . $restrict . ' ORDER BY id LIMIT ?,?';
         
+        if( $page < 0 ) $page = 0;
         // Run it and return the results
         $result = array();
         $ret = $db->Execute( $q, array( $page*30, ($page+1)*30 ) );
@@ -814,6 +816,11 @@ class FEUsignUp extends CMSModule
 
         return $result;
      }
+     
+    /**
+     * GetSignupPagesAmount()
+     * This function returns the amount of signups divided by 30 from the database.
+     */
      
     /**
      * GetSignup()

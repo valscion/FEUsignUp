@@ -30,6 +30,13 @@
 {$formend}
 
 {if $signup_count > 0}
+{if isset($pages)}
+  <p>{$select_page}:
+  {foreach from=$pages item=page}
+    {$page}
+  {/foreach}
+  </p>
+{/if}
 <table cellspacing="0" class="pagetable">
     <thead>
         <tr>
