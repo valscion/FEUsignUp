@@ -18,6 +18,58 @@ if( $feu === null ) die('FrontEndUsers module is not installed!');
 // Basic info first.
 $smarty->assign('tab_info', $this->Lang('info_overview') );
 
+// If we want to reset sorting, then clear the $params-array.
+if( isset( $params['reset_sorting'] ) ) {
+  $params = array();
+}
+
+// Assign form start and end for sorting / filtering form
+$smarty->assign('formstart',$this->CreateFormStart($id,'defaultadmin',$returnid));
+$smarty->assign('formend',$this->CreateFormEnd());
+
+// Sort/filter infos
+$smarty->assign( 'filter_and_sort', $this->Lang('filter_and_sort') );
+$smarty->assign( 'filter_by_from', $this->Lang('filter_by_from') );
+$smarty->assign( 'filter_by_event_id', $this->Lang('filter_by_event_id') );
+$smarty->assign( 'filter_by_in_or_out', $this->Lang('filter_by_in_or_out') );
+$smarty->assign( 'sort_by', $this->Lang('sort_by') );
+
+// Sort/filter inputs
+$smarty->assign( 'input_from', $this->CreateInputDropdown( 
+      $id, 'input_from', array( 
+                                $this->Lang('show_both') => 'both', 
+                                'CGCalendar' => 'cgcal', 
+                                'Team Sport Scores' => 'tss' 
+                              ), -1,
+      ( isset($params['input_from']) && !empty($params['input_from']) ) ? $params['input_from'] : '' ) );
+$smarty->assign( 'input_event_id', $this->CreateInputText(
+      $id, 'input_event_id', ( isset($params['input_event_id']) ) ? $params['input_event_id'] : '' ) );
+$smarty->assign( 'input_in_or_out', $this->CreateInputDropdown( 
+      $id, 'input_in_or_out', array( 
+                                     $this->Lang('show_both') => 'both', 
+                                     'IN' => 'in', 
+                                     'OUT' => 'out' 
+                                   ), -1,
+      ( isset($params['input_in_or_out']) && !empty($params['input_in_or_out']) ) ? $params['input_in_or_out'] : 'both' ) );
+$smarty->assign( 'input_sort_by', $this->CreateInputDropdown( 
+      $id, 'input_sort_by', array( 
+                                   $this->Lang('sort_by_id') => 'id', 
+                                   $this->Lang('sort_by_username') => 'username', 
+                                   $this->Lang('sort_by_event') => 'event',
+                                   $this->Lang('sort_by_date') => 'date'
+                                 ), -1,
+      ( isset($params['input_sort_by']) && !empty($params['input_sort_by']) ) ? $params['input_sort_by'] : '' ) );
+$smarty->assign( 'input_sort_order', $this->CreateInputDropdown( 
+      $id, 'input_sort_order', array( 
+                                   $this->Lang('in_ascending_order') => 'asc', 
+                                   $this->Lang('in_descending_order') => 'desc'
+                                 ), -1,
+      ( isset($params['input_sort_order']) && !empty($params['input_sort_order']) ) ? $params['input_sort_order'] : '' ) );
+$smarty->assign( 'input_submit_filter_and_sort', $this->CreateInputSubmit(
+      $id, 'submit', $this->Lang('submit_filter_and_sort') ) );
+$smarty->assign( 'reset_sorting', $this->CreateInputSubmit(
+      $id, 'reset_sorting', $this->Lang('reset_sorting') ) );
+
 // Table headers
 $smarty->assign('th_id', $this->Lang('th_id') );
 $smarty->assign('th_feu', $this->Lang('th_feu') );
@@ -33,6 +85,31 @@ $fetchedSignups = $this->GetSignups();
 $signups = array();
 
 foreach( $fetchedSignups as $signup ) {
+  // Let's check do we have to filter this one out.
+  // This is the filtering section.
+  {
+    if( isset($params['input_from']) && $params['input_from'] != 'both' ) {
+      if( ( $signup['cgcal_event_id'] != -1 && $params['input_from'] == 'tss' )
+          ||
+          ( $signup['tss_game_id'] != -1 && $params['input_from'] == 'cgcal' ) )
+      {
+        continue;
+      }
+    }
+    if( isset($params['input_event_id']) && !empty($params['input_event_id']) ) {
+      if( $params['input_event_id'] != $signup['cgcal_event_id']
+          && $params['input_event_id'] != $signup['tss_game_id'] ) {
+        continue;
+      }
+    }
+    if( isset($params['input_in_or_out']) && $params['input_in_or_out'] != 'both' ) {
+      $tmpSignup = ( $signup['signed_up'] ) ? 'in' : 'out';
+      if( $tmpSignup != $params['input_in_or_out'] ) {
+        continue;
+      }
+    }
+  }
+  
   $onerow = new stdClass();
   $onerow->id = $signup['id'];
   $onerow->feu = $feu->GetUsername( $signup['feu_user_id'] );
@@ -74,9 +151,9 @@ foreach( $fetchedSignups as $signup ) {
   array_push( $signups, $onerow );
 }
 
-$sortby = ( isset( $params['sortby'] ) && !empty( $params['sortby'] ) ) ? $params['sortby'] : 'id';
+$sortby = ( isset( $params['input_sort_by'] ) && !empty( $params['input_sort_by'] ) ) ? $params['input_sort_by'] : 'id';
 switch( $sortby ) {
-  case 'user':
+  case 'username':
     // Sort signups by username
     usort( $signups, array( $this, '_SortEventsByUsername' ) );
     break;
@@ -90,9 +167,9 @@ switch( $sortby ) {
     break;
   case 'id':
   default:
-    // Sort by id by default. Note that we don't have to do anything, actually ;)
+    // Sort by id by default. Note that we don't have to do anything here, actually ;)
 }
-if( isset( $params['sortdesc'] ) && $params['sortdesc'] == 1 ) {
+if( isset( $params['input_sort_order'] ) && $params['input_sort_order'] == 'desc' ) {
   // We wanted to sort it in reverse order, so let's flip the whole damn array.
   $signups = array_reverse( $signups );
 }

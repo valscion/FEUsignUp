@@ -51,6 +51,28 @@ $lang['th_date'] = 'Date';
 $lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Edit';
 
+## Sorting of signups
+$lang['filter_and_sort'] = 'Filter or sort events';
+$lang['filter_by_from'] = 'Show events from';
+$lang['input_from'] = 'cgcal/tss-input';
+$lang['show_both'] = 'Show both';
+$lang['filter_by_event_id'] = 'Show only signups, which have an <em>event with ID</em> (leave empty for all)';
+$lang['input_event_id'] = 'id-input';
+$lang['filter_by_in_or_out'] = 'Show only IN/OUT';
+$lang['input_in_or_out'] = 'in/out-input';
+#$lang['show_both']
+$lang['sort_by'] = 'Sort the list by this';
+$lang['input_sort_by'] = 'sortby-input';
+$lang['sort_by_id'] = 'ID';
+$lang['sort_by_username'] = 'Username';
+$lang['sort_by_event'] = 'Event ID';
+$lang['sort_by_date'] = 'Date';
+$lang['input_sort_order'] = 'asc/desc-input';
+$lang['in_ascending_order'] = 'in Ascending order';
+$lang['in_descending_order'] = 'in Descending order';
+$lang['submit_filter_and_sort'] = 'Filter and sort';
+$lang['reset_sorting'] = 'Show all';
+
 ## Listing of signups
 $lang['from_calendar'] = 'Calendar event [%s]: ';
 $lang['from_tss'] = 'Match [%s]: ';

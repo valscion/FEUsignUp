@@ -51,6 +51,28 @@ $lang['th_date'] = 'Päivämäärä';
 $lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Muokkaa';
 
+## Sorting of signups
+$lang['filter_and_sort'] = 'Suodata ja järjestä listausta';
+$lang['filter_by_from'] = 'Näytä tapahtumat moduulista';
+$lang['input_from'] = 'cgcal/tss-input';
+$lang['show_both'] = 'Molemmat';
+$lang['filter_by_event_id'] = 'Näytä vain ilmoittautumiset, joiden <em>tapahtuman ID</em> on (tai jätä tyhjäksi ja näytä kaikki)';
+$lang['input_event_id'] = 'id-input';
+$lang['filter_by_in_or_out'] = 'Näytä vain IN/OUT';
+$lang['input_in_or_out'] = 'in/out-input';
+#$lang['show_both']
+$lang['sort_by'] = 'Järjestä tämän mukaan';
+$lang['input_sort_by'] = 'sortby-input';
+$lang['sort_by_id'] = 'ID';
+$lang['sort_by_username'] = 'Käyttäjänimi';
+$lang['sort_by_event'] = 'Tapahtuman ID';
+$lang['sort_by_date'] = 'Päivämäärä';
+$lang['input_sort_order'] = 'asc/desc-input';
+$lang['in_ascending_order'] = 'Nousevassa järjestyksessä';
+$lang['in_descending_order'] = 'Laskevassa järjestyksessä';
+$lang['submit_filter_and_sort'] = 'Suodata ja järjestä';
+$lang['reset_sorting'] = 'Näytä kaikki';
+
 ## Listing of signups
 $lang['from_calendar'] = 'Kalenteritapahtuma [%s]: ';
 $lang['from_tss'] = 'Ottelu [%s]: ';

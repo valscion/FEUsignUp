@@ -803,7 +803,7 @@ class FEUsignUp extends CMSModule
         $db =& $this->GetDb(); /* @var $db ADOConnection */
         
         // Query
-        $q = 'SELECT * FROM ' . $this->events_table_name . ' LIMIT ?,?';
+        $q = 'SELECT * FROM ' . $this->events_table_name . ' ORDER BY id LIMIT ?,?';
         
         // Run it and return the results
         $result = array();
