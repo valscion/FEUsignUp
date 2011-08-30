@@ -46,10 +46,15 @@ $lang['th_cgcc'] = 'CGCalendar category';
 $lang['th_tsst'] = 'TSS-team';
 $lang['th_desc'] = 'Description';
 $lang['th_feu'] = 'Username';
-$lang['th_cgc_event'] = 'CGCalendar event';
-$lang['th_tss_game'] = 'TSS game';
+$lang['th_event'] = 'Event';
+$lang['th_date'] = 'Date';
 $lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Edit';
+
+## Listing of signups
+$lang['from_calendar'] = 'Calendar event [%s]: ';
+$lang['from_tss'] = 'Match [%s]: ';
+$lang['event_time_format'] = '%A, %m/%d/%y — %H:%M';
 
 ## Editing an existing link
 $lang['prompt_editlink'] = 'Update linking';

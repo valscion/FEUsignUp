@@ -967,6 +967,44 @@ class FEUsignUp extends CMSModule
         
         return $result;
      }
+     
+    /**
+     * _SortEventsByDate()
+     * An internal callback function for usort()-function for sorting events by date.
+     * Used in function.admin_overviewtab.php file.
+     */
+     static function _SortEventsByDate( &$a, &$b ) {
+        if( $a->event_date_ut == $b->event_date_ut ) {
+          return 0;
+        }
+        return ( $a->event_date_ut < $b->event_date_ut ) ? -1 : 1;
+     }
+     
+    /**
+     * _SortEventsByEventId()
+     * An internal callback function for usort()-function for sorting events by events id.
+     * Used in function.admin_overviewtab.php file.
+     */
+     static function _SortEventsByEventId( &$a, &$b ) {
+        if( $a->event_id == $b->event_id ) {
+          return 0;
+        }
+        return ( $a->event_id < $b->event_id ) ? -1 : 1;
+     }
+     
+    /**
+     * _SortEventsByUsername()
+     * An internal callback function for usort()-function for sorting events by username.
+     * Used in function.admin_overviewtab.php file.
+     */
+     static function _SortEventsByUsername( &$a, &$b ) {
+        $al = strtolower( $a->feu );
+        $bl = strtolower( $b->feu );
+        if( $al == $bl ) {
+          return 0;
+        }
+        return ( $al < $bl ) ? -1 : 1;
+     }
 }
 
 ?>

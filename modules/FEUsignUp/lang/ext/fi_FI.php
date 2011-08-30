@@ -46,10 +46,15 @@ $lang['th_cgcc'] = 'CGCalendar-kategoria';
 $lang['th_tsst'] = 'TSS-joukkue';
 $lang['th_desc'] = 'Selitys';
 $lang['th_feu'] = 'Käyttäjänimi';
-$lang['th_cgc_event'] = 'CGCalendarin tapahtuma';
-$lang['th_tss_game'] = 'TSS-peli';
+$lang['th_event'] = 'Tapahtuma';
+$lang['th_date'] = 'Päivämäärä';
 $lang['th_signed_up'] = 'IN/OUT';
 $lang['edit'] = 'Muokkaa';
+
+## Listing of signups
+$lang['from_calendar'] = 'Kalenteritapahtuma [%s]: ';
+$lang['from_tss'] = 'Ottelu [%s]: ';
+$lang['event_time_format'] = '%A, %d.%m.%y klo %H:%M';
 
 ## Editing an existing link
 $lang['prompt_editlink'] = 'Linkityksen päivitys';

@@ -6,8 +6,8 @@
         <tr>
             <th>{$th_id}</th>
             <th>{$th_feu}</th>
-            <th>{$th_cgc_event}</th>
-            <th>{$th_tss_game}</th>
+            <th>{$th_event}</th>
+            <th>{$th_date}</th>
             <th>{$th_signed_up}</th>
             <th>{$th_desc}</th>
             <th class="pageicon">&nbsp;</th>
@@ -20,8 +20,8 @@
     <tr>
         <td>{$signup->id}</td>
         <td>{$signup->feu}</td>
-        <td>{$signup->cgc_event}</td>
-        <td>{$signup->tss_game}</td>
+        <td>{$signup->event_info}</td>
+        <td>{$signup->event_date}</td>
         <td>{$signup->signed_up}</td>
         <td>{$signup->description}</td>
         <td>{$signup->editlink}</td>
