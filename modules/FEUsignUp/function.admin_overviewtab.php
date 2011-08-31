@@ -86,42 +86,36 @@ if( ( isset($params['input_from']) && $params['input_from'] != 'both' ) ||
     ( isset($params['input_event_id']) && !empty($params['input_event_id']) ) ||
     ( isset($params['input_in_or_out']) && $params['input_in_or_out'] != 'both' ) )
 {
-  $filterSql = 'WHERE ';
+  $filterSql = 'WHERE';
+  
   if( $params['input_from'] == 'cgcal' ) {
-    $filterSql .= '';
+    $filterSql .= ' cgcal_event_id != -1';
+  } elseif( $params['input_from'] == 'tss' ) {
+    $filterSql .= ' tss_game_id != -1';
+  }
+  
+  if( !empty($params['input_event_id']) ) {
+    if( $filterSql != 'WHERE' ) $filterSql .= ' AND';
+    
+    $filterSql .= ' (cgcal_event_id = '.$params['input_event_id'].' OR tss_game_id = '.$params['input_event_id'].')';
+  }
+  
+  if( $params['input_in_or_out'] == 'in' ) {
+    if( $filterSql != 'WHERE' ) $filterSql .= ' AND';
+    
+    $filterSql .= ' signed_up = 1';
+  } elseif( $params['input_in_or_out'] == 'out' ) {
+    if( $filterSql != 'WHERE' ) $filterSql .= ' AND';
+    
+    $filterSql .= ' signed_up = 0';
   }
 }
 
 // Fetch all signups into an array containing objects
-$fetchedSignups = $this->GetSignups((int)$params['page']-1);
+$fetchedSignups = $this->GetSignups((int)$params['page']-1, $filterSql);
 $signups = array();
 
 foreach( $fetchedSignups as $signup ) {
-  // Let's check do we have to filter this one out.
-  // This is the filtering section.
-  {
-    if( isset($params['input_from']) && $params['input_from'] != 'both' ) {
-      if( ( $signup['cgcal_event_id'] != -1 && $params['input_from'] == 'tss' )
-          ||
-          ( $signup['tss_game_id'] != -1 && $params['input_from'] == 'cgcal' ) )
-      {
-        continue;
-      }
-    }
-    if( isset($params['input_event_id']) && !empty($params['input_event_id']) ) {
-      if( $params['input_event_id'] != $signup['cgcal_event_id']
-          && $params['input_event_id'] != $signup['tss_game_id'] ) {
-        continue;
-      }
-    }
-    if( isset($params['input_in_or_out']) && $params['input_in_or_out'] != 'both' ) {
-      $tmpSignup = ( $signup['signed_up'] ) ? 'in' : 'out';
-      if( $tmpSignup != $params['input_in_or_out'] ) {
-        continue;
-      }
-    }
-  }
-  
   $onerow = new stdClass();
   $onerow->id = $signup['id'];
   $onerow->feu = $feu->GetUsername( $signup['feu_user_id'] );
