@@ -31,11 +31,11 @@
 
 {if $signup_count > 0}
 {if isset($pages)}
-  <p>{$select_page}:
+  <div>{$select_page}:
   {foreach from=$pages item=page}
     {$page}
   {/foreach}
-  </p>
+  </div>
 {/if}
 <table cellspacing="0" class="pagetable">
     <thead>
@@ -64,6 +64,13 @@
 {/foreach}
     </tbody>
 </table>
+{if isset($pages)}
+  <p>{$select_page}:
+  {foreach from=$pages item=page}
+    {$page}
+  {/foreach}
+  </p>
+{/if}
 {else}
 <p><strong>{$no_signups}</strong></p>
 {/if}

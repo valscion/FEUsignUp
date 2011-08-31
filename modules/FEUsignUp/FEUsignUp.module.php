@@ -821,6 +821,16 @@ class FEUsignUp extends CMSModule
      * GetSignupPagesAmount()
      * This function returns the amount of signups divided by 30 from the database.
      */
+    function GetSignupPagesAmount($restrict = '') {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $q = 'SELECT COUNT(*) AS eventCount FROM ' . $this->events_table_name . ' ' . $restrict;
+        
+        $ret = $db->GetRow( $q );
+        if( !$ret || empty($ret) ) return 0;
+        
+        return (int)ceil( $ret['eventCount'] / 30 );
+    }
      
     /**
      * GetSignup()

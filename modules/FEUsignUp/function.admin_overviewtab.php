@@ -120,6 +120,7 @@ foreach( $fetchedSignups as $signup ) {
   $onerow->id = $signup['id'];
   $onerow->feu = $feu->GetUsername( $signup['feu_user_id'] );
   if( $signup['cgcal_event_id'] != -1 ) {
+    $onerow->event_type = 'calendar';
     $cgcal_event = $cgcal->GetEvent( $signup['cgcal_event_id'] );
     $onerow->event_info = 
         $this->Lang('from_calendar', $signup['cgcal_event_id'] ) . $cgcal_event['event_title'];
@@ -128,12 +129,14 @@ foreach( $fetchedSignups as $signup ) {
     $onerow->event_date_ut = $cgcal_event['event_date_start_ut'];
     $onerow->event_id = $signup['cgcal_event_id'];
   } elseif( $signup['tss_game_id'] != -1 ) {
+    $onerow->event_type = 'tss';
     $onerow->event_info = $this->Lang('from_tss', $signup['tss_game_id'] );
     $onerow->event_date = '???';
     $onerow->event_date_ut = 0;
     $onerow->event_id = $signup['tss_game_id'];
   } else {
     // What, we had both tss and cgcal id's as -1?! ERROR!
+    $onerow->event_type = '';
     $onerow->event_info = $this->Lang('error');
     $onerow->event_date = '';
     $onerow->event_date_ut = 0;
@@ -180,6 +183,23 @@ if( isset( $params['input_sort_order'] ) && $params['input_sort_order'] == 'desc
   $signups = array_reverse( $signups );
 }
 
+// Fetch the amount of pages there are in database
+$signupPages = $this->GetSignupPagesAmount( $filterSql );
+$pageLinks = array();
+$smarty->assign( 'select_page', $this->Lang('select_page') );
+$smarty->assign_by_ref( 'pages', $pageLinks );
+
+// Make $pageLinks contain links to all pages
+$currentPage = ( $params['page'] < 1 ) ? 1 : $params['page'];
+for( $i=1; $i <= $signupPages; $i++ ) {
+  $params['page'] = $i;
+  if( $i == $currentPage ) {
+    $pageLinks[$i] = '<strong>' . $i .'</strong>';
+  } else {
+    $pageLinks[$i] = $this->CreateLink( $id, 'defaultadmin', $returnid, $i, $params );
+  }
+}
+
 // "No signups" -translation
 $smarty->assign('no_signups', $this->Lang('no_signups') );
 
@@ -187,7 +207,7 @@ $smarty->assign('no_signups', $this->Lang('no_signups') );
 $smarty->assign('signup_count', count($signups) );
 
 // Now assign those signups to smarty
-$smarty->assign('signups', $signups);
+$smarty->assign_by_ref('signups', $signups);
 
 echo $this->ProcessTemplate('admin_overviewtab.tpl');
 ## EOF

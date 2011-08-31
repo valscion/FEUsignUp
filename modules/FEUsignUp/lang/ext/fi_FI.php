@@ -74,6 +74,7 @@ $lang['submit_filter_and_sort'] = 'Suodata ja järjestä';
 $lang['reset_sorting'] = 'Näytä kaikki';
 
 ## Listing of signups
+$lang['select_page'] = 'Valitse sivu';
 $lang['from_calendar'] = 'Kalenteritapahtuma [%s]: ';
 $lang['from_tss'] = 'Ottelu [%s]: ';
 $lang['event_time_format'] = '%A, %d.%m.%y klo %H:%M';

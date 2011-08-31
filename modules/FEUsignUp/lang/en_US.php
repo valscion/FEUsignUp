@@ -74,6 +74,7 @@ $lang['submit_filter_and_sort'] = 'Filter and sort';
 $lang['reset_sorting'] = 'Show all';
 
 ## Listing of signups
+$lang['select_page'] = 'Select page';
 $lang['from_calendar'] = 'Calendar event [%s]: ';
 $lang['from_tss'] = 'Match [%s]: ';
 $lang['event_time_format'] = '%A, %m/%d/%y — %H:%M';
