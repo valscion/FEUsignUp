@@ -115,6 +115,8 @@ $lang['signup_deleted'] = 'Signup deleted successfully.';
 ## Other
 $lang['module_error'] = 'Error in FEUsignUp module! Please report this incident to the webmaster.';
 
+$lang['copyright'] = '<p>Copyright &copy; 2011, VesQ <a href="mailto:laakso.vesa@gmail.com">&lt;laakso.vesa@gmail.com&gt;</a>. All Rights Are Reserved.</p>';
+
 $lang['changelog'] = '<ul>
 <li>Version 0.0.1 - 8 April 2011. Initial Release.</li>
 </ul>';

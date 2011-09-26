@@ -33,50 +33,46 @@ if (FALSE == empty($params['active_tab']))
 // If there's messages, assign 'em to smarty
 if( isset($params['message']) && !empty($params['message']) ) {
     if( isset($params['error']) && !empty($params['error']) ) {
-        // If the message is an error, apply it.
-        $this->smarty->assign('message', $this->ShowErrors($params['message']));
+        // If the message is an error, echo it.
+        echo '<p>' . $this->ShowErrors($params['message']) . '</p>';
     } else {
         // Otherwise, display a normal message.
-        $this->smarty->assign('message', $this->ShowMessage($params['message']));
+        echo '<p>' . $this->ShowMessage($params['message']) . '</p>';
     }
 }
 
 
-$tab_header = $this->StartTabHeaders();
+// Print tab headers
+echo $this->StartTabHeaders();
 
-$tab_header .= $this->SetTabHeader('overview',$this->Lang('title_overview'),
-    ('overview' == $tab)?true:false);
-    $this->smarty->assign('start_overview_tab',$this->StartTab('overview', $params));
+echo $this->SetTabHeader('overview',$this->Lang('title_overview'), 
+      ('overview' == $tab)?true:false);
+echo $this->SetTabHeader('linkings',$this->Lang('title_linkings'), 
+      ('linkings' == $tab)?true:false);
+echo $this->SetTabHeader('template_displayevent',$this->Lang('title_template_displayevent'),
+      ('template_displayevent' == $tab)?true:false);
 
-$tab_header .= $this->SetTabHeader('linkings',$this->Lang('title_linkings'),
-    ('linkings' == $tab)?true:false);
-    $this->smarty->assign('start_linkings_tab',$this->StartTab('linkings', $params));
-
-$tab_header .= $this->SetTabHeader('template_displayevent',$this->Lang('title_template_displayevent'),
-    ('template_displayevent' == $tab)?true:false);
-    $this->smarty->assign('start_template_displayevent_tab',$this->StartTab('template_displayevent', $params));
+echo $this->EndTabHeaders();
 
 
-$this->smarty->assign('tabs_start',$tab_header.$this->EndTabHeaders().$this->StartTabContent());
-$this->smarty->assign('tab_end',$this->EndTab());
-$this->smarty->assign('tabs_end',$this->EndTabContent());
-$this->smarty->assign('title_section','defaultadmin');
+// Adding some content to the tabs
+echo $this->StartTabContent();
 
-
-// Adding some content to the tabs. I just love output buffering.
-ob_start();
+echo $this->StartTab('overview', $params);
 require_once(dirname(__FILE__).'/function.admin_overviewtab.php');
-$this->smarty->assign('content_overview',ob_get_clean());
+echo $this->EndTab();
 
-ob_start();
+echo $this->StartTab('linkings', $params);
 require_once(dirname(__FILE__).'/function.admin_linkingstab.php');
-$this->smarty->assign('content_linkings',ob_get_clean());
+echo $this->EndTab();
 
-ob_start();
+echo $this->StartTab('template_displayevent');
 require_once(dirname(__FILE__).'/function.admin_template_displayeventtab.php');
-$this->smarty->assign('content_template_displayevent',ob_get_clean());
+echo $this->EndTab();
 
-echo $this->ProcessTemplate('adminpanel.tpl');
+echo $this->EndTabContent();
 
+// Print the copyright below everything
+echo $this->Lang('copyright');
 
 ## EOF
