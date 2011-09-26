@@ -17,7 +17,7 @@ $smarty->assign('startform',
       $this->CreateFormStart( $id, 'do_setdisplayeventtemplate', $returnid));
 $smarty->assign('input_template',
       $this->CreateTextArea( false, $id,
-             $this->GetTemplate('feusignup_displayevent'),
+             $this->GetTemplate(FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE),
              'template'));
 $smarty->assign('submit',
       $this->CreateInputSubmit ($id, 'submit',

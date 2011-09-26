@@ -38,7 +38,26 @@
 # - Check out the forums at http://forum.cmsmadesimple.org
 # - Chat with developers on the #cms IRC channel
 #-------------------------------------------------------------------------
-class FEUsignUp extends CMSModule
+
+$cgextensions = cms_join_path($gCms->config['root_path'],'modules',
+			      'CGExtensions','CGExtensions.module.php');
+if( !is_readable( $cgextensions ) )
+{
+  echo '<h1><font color="red">ERROR: The CGExtensions module could not be found.</font></h1>';
+  return;
+}
+require_once($cgextensions);
+
+// Some static preferences, names of templates
+define('FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE', 'feusignup_pref_newdisplayevent_template');
+define('FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE', 'feusignup_pref_dfltdisplayevent_template');
+define('FEUSIGNUP_PREF_NEWCALLINK_TEMPLATE', 'feusignup_pref_newcallink_template');
+define('FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE', 'feusignup_pref_dfltcallink_template');
+define('FEUSIGNUP_PREF_NEWTSSLINK_TEMPLATE', 'feusignup_pref_newtsslink_template');
+define('FEUSIGNUP_PREF_DFLTTSSLINK_TEMPLATE', 'feusignup_pref_dflttsslink_template');
+
+
+class FEUsignUp extends CGExtensions
 {
     var $events_table_name;
     var $linkings_table_name;
@@ -82,7 +101,7 @@ class FEUsignUp extends CMSModule
       ---------------------------------------------------------*/
     function GetVersion()
     {
-        return '0.0.1';
+        return '0.2';
     }
 
     /*---------------------------------------------------------
@@ -435,6 +454,10 @@ class FEUsignUp extends CMSModule
    // rel must be a string
    $this->CreateParameter('rel','',$this->Lang('help_rel'));
    $this->SetParameterType('rel',CLEAN_STRING);
+   
+   // template must be a string
+   $this->CreateParameter('template','',$this->Lang('help_template'));
+   $this->SetParameterType('template',CLEAN_STRING);
 
    /*
     * 4. Event Handling

@@ -11,11 +11,11 @@ if (! $this->CheckAccess()) {
 }
 
 if( isset( $params['defaults'] ) ) {
-  $fn = cms_join_path(dirname(__FILE__),'templates','displayevent.tpl');
-  $this->SetTemplate('feusignup_displayevent', file_get_contents($fn) );
+  $dflt = $this->GetTemplate( FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE );
+  $this->SetTemplate(FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE, $dflt );
   $message = $this->Lang('success_defaults');
 } else {
-  $this->SetTemplate('feusignup_displayevent', $params['template']);
+  $this->SetTemplate(FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE, $params['template']);
   $message = $this->Lang('success_template');
 }
 

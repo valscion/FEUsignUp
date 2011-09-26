@@ -51,7 +51,7 @@ if( isset( $params['cal_id'] ) && !empty( $params['cal_id'] ) ) {
   $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $params['cal_id'], 'cgcalendar' ) );
   $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
                                 $params['description'] : 
-                                $this->ProcessTemplate('cal_link.tpl');
+                                $this->ProcessTemplateFromDatabase(FEUSIGNUP_PREF_NEWCALLINK_TEMPLATE);
   $linktarget = 'cgcal';
   $linkId = $params['cal_id'];
 }
@@ -68,7 +68,7 @@ else {
   $this->smarty->assign('match',$matchInfo);
   $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
                                 $params['description'] : 
-                                $this->ProcessTemplate('tss_link.tpl');
+                                $this->ProcessTemplateFromDatabase(FEUSIGNUP_PREF_NEWTSSLINK_TEMPLATE);
   $linktarget = 'tss';
   $linkId = $params['tss_id'];
 }

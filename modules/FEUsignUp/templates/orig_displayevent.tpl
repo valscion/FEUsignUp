@@ -7,7 +7,7 @@ $("a.jslink").click( function(clickEvent) {
     var userId = $(this).parent().parent().find('input[name="user_id"]').val();
     var href = $(this).attr("href");
     $.fancybox.showActivity();
-    var msgObj = $("#displayevent_info");
+    var msgObj = $("#feusu_displayevent_info");
     // Let's fade out the text there already is.
     msgObj.fadeOut( 100, function() {
         msgObj.load( href,{ 
@@ -31,50 +31,50 @@ $("a.jslink").click( function(clickEvent) {
 
 <style type="text/css">
 
-div.displayevent_test {
+.feusu_displayevent {
   background-color: #fff;
   padding: 10px;
   width: 400px;
   font-size: 13.333px;
 }
-div.displayevent_test table {
+.feusu_displayevent table {
   border-collapse: collapse;
   width: 100%;
 }
-div.displayevent_test td, div.displayevent_test th {
+.feusu_displayevent td, .feusu_displayevent th {
   border: 0;
 }
-div.displayevent_test td {
+.feusu_displayevent td {
     border-top: 1px solid black;
   padding: 4px;
 }
-div.displayevent_test td input[type=text] {
+.feusu_displayevent td input[type=text] {
   background-color: #fff;
   border:1px solid #bbb;
   width: 100%;
 }
-div.displayevent_test td input[type=text]:focus {
+.feusu_displayevent td input[type=text]:focus {
   border:1px solid #666;
 }
-div.displayevent_test td.feusu_in, div.displayevent_test td.feusu_out {
+.feusu_displayevent td.feusu_in, .feusu_displayevent td.feusu_out {
   padding: 0 10px;
   text-align: center;
   vertical-align: middle;
 }
 
-div.displayevent_test .feusu_in {
+.feusu_displayevent .feusu_in {
   background-color: green;
 }
-div.displayevent_test .feusu_out {
+.feusu_displayevent .feusu_out {
   background-color: red;
 }
 
-div.displayevent_test td.feusu_submit {
+.feusu_displayevent td.feusu_submit {
   vertical-align: middle;
 }
 
 
-div#displayevent_info {
+#feusu_displayevent_info {
   display: none;
   font-size: 13.333px;
   margin-bottom: 6px;
@@ -82,8 +82,8 @@ div#displayevent_info {
 
 </style>
 {/literal}
-<div class="displayevent_test">
-<div id="displayevent_info"></div>
+<div class="feusu_displayevent">
+<div id="feusu_displayevent_info"></div>
 {if !$ccuser->loggedin()}
   {* Ei sisäänkirjautunut *}
   <p>Sinun täytyy olla kirjautunut sisään nähdäksesi ilmoittautuneet pelaajat</p>

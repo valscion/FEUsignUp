@@ -108,6 +108,6 @@ foreach( $groups as $name => $group ) {
 
 $this->smarty->assign('users', $users);
 
-echo $this->ProcessTemplateFromDatabase('feusignup_displayevent');
+echo $this->ProcessTemplateFromDatabase( FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE );
 
 ## EOF
