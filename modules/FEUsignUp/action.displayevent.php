@@ -108,6 +108,7 @@ foreach( $groups as $name => $group ) {
 
 $this->smarty->assign('users', $users);
 
-echo $this->ProcessTemplateFromDatabase( FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE );
+$template = 'displayevent_' . $this->GetPreference( FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE );
+echo $this->ProcessTemplateFromDatabase( $template );
 
 ## EOF

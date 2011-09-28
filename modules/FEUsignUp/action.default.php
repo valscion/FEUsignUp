@@ -49,9 +49,8 @@ if( isset( $params['cal_id'] ) && !empty( $params['cal_id'] ) ) {
 	$event = $cgcal->GetEvent( $params['cal_id'] );
   $this->smarty->assign('event', $event);
   $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $params['cal_id'], 'cgcalendar' ) );
-  $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
-                                $params['description'] : 
-                                $this->ProcessTemplateFromDatabase(FEUSIGNUP_PREF_NEWCALLINK_TEMPLATE);
+  $linkTemplate = 'callink_' . $this->GetPreference(FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE);
+  $linkdescription = ( $this->ProcessTemplateFromDatabase($linkTemplate) );
   $linktarget = 'cgcal';
   $linkId = $params['cal_id'];
 }
@@ -66,9 +65,8 @@ else {
 		echo '<p class="error">' . $this->Lang('db_error') . '</p>';
 	}
   $this->smarty->assign('match',$matchInfo);
-  $linkdescription = ( isset($params['description']) && !empty($params['description']) ) ? 
-                                $params['description'] : 
-                                $this->ProcessTemplateFromDatabase(FEUSIGNUP_PREF_NEWTSSLINK_TEMPLATE);
+  $linkTemplate = 'tsslink_' . $this->GetPreference(FEUSIGNUP_PREF_DFLTTSSLINK_TEMPLATE);
+  $linkdescription = ( $this->ProcessTemplateFromDatabase($linkTemplate) );
   $linktarget = 'tss';
   $linkId = $params['tss_id'];
 }

@@ -13,8 +13,7 @@ echo $this->Lang('info_cal_link_templates');
 
 echo $this->ShowTemplateList($id,$returnid,'callink_',
 			     FEUSIGNUP_PREF_NEWCALLINK_TEMPLATE,
-			     'link_templates',
+			     'cal_link_templates',
 			     FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE,
-			     'Add/edit',
-			     'CGCalendar links','defaultadmin');
+			     $this->Lang('add-edit_template'));
 ## EOF

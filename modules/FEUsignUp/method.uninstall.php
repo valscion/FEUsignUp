@@ -32,6 +32,11 @@ $dict->ExecuteSQLArray($sqlarray);
 // remove the sequence
 $db->DropSequence( $this->linkings_table_name.'_seq' );
 
+// templates
+$this->DeleteTemplate();
+
+// preferences
+$this->RemovePreference();
 
 // remove the permissions
 $this->RemovePermission('Use FEUsignUp');

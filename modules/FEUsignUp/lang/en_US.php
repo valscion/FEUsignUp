@@ -26,12 +26,12 @@ $lang['template_displayevent'] = 'Template: Display events';
 $lang['title_template_displayevent'] = 'Template: Display events';
 $lang['info_template_displayevent'] = '<p>Manage the template used to display your events on the front end.</p>';
 
-$lang['cal_link_templates'] = 'CGCalendar link templates';
-$lang['title_cal_link_templates'] = 'CGCalendar link templates';
+$lang['cal_link_templates'] = 'Templates: CGCalendar link';
+$lang['title_cal_link_templates'] = 'Templates: CGCalendar link';
 $lang['info_cal_link_templates'] = '<p>Manage templates which are used to display links from CGCalendar events to displayevent -action.</p>';
 
-$lang['tss_link_templates'] = 'TSS link templates';
-$lang['title_tss_link_templates'] = 'TSS link templates';
+$lang['tss_link_templates'] = 'Templates: TSS link';
+$lang['title_tss_link_templates'] = 'Templates: TSS link';
 $lang['info_tss_link_templates'] = '<p>Manage templates which are used to display links from Team Sport Scores matches to displayevent -action.</p>';
 
 ## Linkings-tab stuff
@@ -103,6 +103,7 @@ $lang['defaults'] = 'Reset defaults';
 $lang['submit'] = 'Submit';
 $lang['success_defaults'] = 'Defaults reset successfully';
 $lang['success_template'] = 'Template saved successfully';
+$lang['add-edit_template'] = 'Add/edit template';
 
 $lang['error-no_id_given'] = 'You didn\'t give an id for CGCalendar or Team Sport Scores!';
 $lang['db_error'] = 'Database error!';

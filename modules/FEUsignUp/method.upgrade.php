@@ -15,37 +15,45 @@ if (!isset($gCms)) exit;
   $current_version = $oldversion;
   switch($current_version)
   {
-    case "0.1":
-      // Set the new display event template and delete the old one
-      $this->SetTemplate('feusignup_pref_newdisplayevent_template', 
-                         $this->GetTemplate('feusignup_displayevent'));
-      $this->DeleteTemplate('feusignup_displayevent');
+    case "0.2.1.4":
+      // Remove old templates and preferences
+      $this->DeleteTemplate();
+      $this->RemovePreference();
       
-      // Set new defaults for templates to the database
-      $dflt_displayevent = file_get_contents( cms_join_path( 
-                            $gCms->config['root_path'], 'modules', 'FEUsignUp', 
-                            'templates', 'orig_displayevent.tpl'));
-      $dflt_cal_link = <<<'EOD'
-{strip}
-{assign var=day_name value=$event.event_date_start|date_format:"%A"}
-{assign var=time_start value=$event.event_date_start|date_format:"%H:%M"}
-{assign var=time_end value=$event.event_date_end|date_format:"%H:%M"}
-{assign var=description value="$day_name, $time_start - $time_end"}
-{$description} ({$signups_amount})
-{/strip}
-EOD;
-      $dflt_tss_link = <<<'EOD'
-{assign var=month value=$match.date|date_format:"%m"|regex_replace:"/0([1-9])/":"\\1"}
-{$match.hometeam} - {$match.visitorteam}<br />
-{$match.date|date_format:"%a %e."}{$month}. klo {$match.date|date_format:"%H:%M"}
-EOD;
-      $this->SetTemplate('feusignup_pref_dfltdisplayevent_template', $dflt_displayevent);
-      $this->SetTemplate('feusignup_pref_dfltcallink_template', $dflt_cal_link);
-      $this->SetTemplate('feusignup_pref_dflttsslink_template', $dflt_tss_link);
-      
-      // Set cal_link and tss_link new templates as defaults
-      $this->SetTemplate('feusignup_pref_newcallink_template', $dflt_cal_link);
-      $this->SetTemplate('feusignup_pref_newtsslink_template', $dflt_tss_link);
+      // Set them correctly
+      $fn = cms_join_path(dirname(__FILE__),'templates','orig_displayevent.tpl');
+      if( file_exists( $fn ) )
+        {
+          $template = @file_get_contents($fn);
+          $this->SetTemplate('displayevent_Sample',$template);
+          $this->SetPreference(FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE, $template);
+          $this->SetPreference(FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE, 'Sample');
+        }
+      else {
+        return "Failed to locate templates/orig_displayevent.tpl - is your install package corrupted?";
+      }
+      $fn = cms_join_path(dirname(__FILE__),'templates','orig_cal_link.tpl');
+      if( file_exists( $fn ) )
+        {
+          $template = @file_get_contents($fn);
+          $this->SetTemplate('callink_Sample',$template);
+          $this->SetPreference(FEUSIGNUP_PREF_NEWCALLINK_TEMPLATE, $template);
+          $this->SetPreference(FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE, 'Sample');
+        }
+      else {
+        return "Failed to locate templates/orig_cal_link.tpl - is your install package corrupted?";
+      }
+      $fn = cms_join_path(dirname(__FILE__),'templates','orig_tss_link.tpl');
+      if( file_exists( $fn ) )
+        {
+          $template = @file_get_contents($fn);
+          $this->SetTemplate('tsslink_Sample',$template);
+          $this->SetPreference(FEUSIGNUP_PREF_NEWTSSLINK_TEMPLATE, $template);
+          $this->SetPreference(FEUSIGNUP_PREF_DFLTTSSLINK_TEMPLATE, 'Sample');
+        }
+      else {
+        return "Failed to locate templates/orig_tss_link.tpl - is your install package corrupted?";
+      }
       break;
   }
   

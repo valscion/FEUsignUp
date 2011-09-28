@@ -114,7 +114,7 @@ $("a.jslink").click( function(clickEvent) {
   {/if}
     <tr>
       <input type="hidden" name="user_id" value="{$user->id}" />
-      <td id="username_{$user->id}">{$user->username}</td>
+      <td id="username_{$user->id}">{if isset($user->props.nimimerkki) && !empty($user->props.nimimerkki)}{$user->props.nimimerkki}{else}{$user->username}{/if}</td>
       <td class="feusu_in"><input type="radio" value="in" name="radio_{$user->id}"{if $user->exists && $user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
       <td class="feusu_out"><input type="radio" value="out" name="radio_{$user->id}"{if $user->exists && !$user->signed_up}checked="checked" {/if}{if !$allow_edit} disabled="disabled"{/if} /></td>
       <td>

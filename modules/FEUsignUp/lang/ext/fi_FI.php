@@ -22,13 +22,17 @@ $lang['linkings'] = 'Linkitykset';
 $lang['title_linkings'] = 'Linkitykset Frontend User -ryhmiin';
 $lang['info_linkings'] = '<p>Hallitse linkityksiä Frontend User -ryhmien, CGCalendar:n kategorioiden ja Team Sport Scores -moduulin joukkueiden välillä.</p>';
 
-$lang['template_displayevent'] = 'Pohja: Näytä tapahtuma';
-$lang['title_template_displayevent'] = 'Pohja: Näytä tapahtuma';
-$lang['info_template_displayevent'] = '<p>Muokkaa sivustolla näytettävien tapahtumien pohjaa.</p>';
+$lang['template_displayevent'] = 'Pohjat: Näytä tapahtuma';
+$lang['title_template_displayevent'] = 'Pohjat: Näytä tapahtuma';
+$lang['info_template_displayevent'] = '<p>Muokkaa sivustolla näytettävien tapahtumien pohjia.</p>';
 
-$lang['link_templates'] = 'Linkkien pohjat';
-$lang['title_link_templates'] = 'Linkkien pohjat';
-$lang['info_link_templates'] = '<p>Muokkaa pohjia, joita käytetään moduulin displayevent-tapahtuman linkkeinä.</p>';
+$lang['cal_link_templates'] = 'Pohjat: Kalenterilinkki';
+$lang['title_cal_link_templates'] = 'Pohjat: Kalenterilinkki';
+$lang['info_cal_link_templates'] = '<p></p>';
+
+$lang['tss_link_templates'] = 'Pohjat: TSS link';
+$lang['title_tss_link_templates'] = 'Pohjat: TSS link';
+$lang['info_tss_link_templates'] = '<p></p>';
 
 ## Linkings-tab stuff
 $lang['linking_updated'] = 'Linkitys on päivitetty.';
@@ -99,6 +103,7 @@ $lang['defaults'] = 'Resetoi oletukset';
 $lang['submit'] = 'Lähetä';
 $lang['success_defaults'] = 'Oletukset palautettu onnistuneesti';
 $lang['success_template'] = 'Pohja tallennettu onnistuneesti';
+$lang['add-edit_template'] = 'Lisää pohja / muokkaa sitä';
 
 $lang['error-no_id_given'] = 'Et antanut ID:tä CGCalendarille tai Team Sport Scoresille!';
 $lang['db_error'] = 'Virhe tietokannassa!';

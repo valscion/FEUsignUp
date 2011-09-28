@@ -66,15 +66,42 @@ $this->CreatePermission('Use FEUsignUp', 'Use FEUsignUp');
 
 
 // templates
-$fn = cms_join_path(dirname(__FILE__),'templates','displayevent.tpl');
+$fn = cms_join_path(dirname(__FILE__),'templates','orig_displayevent.tpl');
 if( file_exists( $fn ) )
   {
     $template = @file_get_contents($fn);
-    $this->SetTemplate('feusignup_displayevent',$template);
+    $this->SetTemplate('displayevent_Sample',$template);
+    $this->SetPreference(FEUSIGNUP_PREF_NEWDISPLAYEVENT_TEMPLATE, $template);
+    $this->SetPreference(FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE, 'Sample');
   }
+else {
+  return "Failed to locate templates/orig_displayevent.tpl - is your install package corrupted?";
+}
+$fn = cms_join_path(dirname(__FILE__),'templates','orig_cal_link.tpl');
+if( file_exists( $fn ) )
+  {
+    $template = @file_get_contents($fn);
+    $this->SetTemplate('callink_Sample',$template);
+    $this->SetPreference(FEUSIGNUP_PREF_NEWCALLINK_TEMPLATE, $template);
+    $this->SetPreference(FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE, 'Sample');
+  }
+else {
+  return "Failed to locate templates/orig_cal_link.tpl - is your install package corrupted?";
+}
+$fn = cms_join_path(dirname(__FILE__),'templates','orig_tss_link.tpl');
+if( file_exists( $fn ) )
+  {
+    $template = @file_get_contents($fn);
+    $this->SetTemplate('tsslink_Sample',$template);
+    $this->SetPreference(FEUSIGNUP_PREF_NEWTSSLINK_TEMPLATE, $template);
+    $this->SetPreference(FEUSIGNUP_PREF_DFLTTSSLINK_TEMPLATE, 'Sample');
+  }
+else {
+  return "Failed to locate templates/orig_tss_link.tpl - is your install package corrupted?";
+}
 
 
 // put mention into the admin log
 $this->Audit( 0, $this->Lang('friendlyname'), $this->Lang('installed',$this->GetVersion()));
-        
+
 ?>
