@@ -4,9 +4,9 @@ if (!isset($gCms)) exit;
 if( !isset( $params['linking_id'] ) )
 {
     // set the active tab and an error
-    $params = array('active_tab' => 'linkings', 'error' => true, 'message' => $this->Lang('error'));
+    $params = array('error' => true, 'message' => $this->Lang('error'));
     // redirect back to default admin page
-    $this->Redirect($id, 'defaultadmin', $returnid, $params);
+    $this->RedirectToTab($id, 'linkings', $params);
 }
 
 // Get existing information
@@ -14,9 +14,9 @@ $oldinfo = $this->GetLinkingById( $params['linking_id'] );
 
 if( empty( $oldinfo ) ) {
     // set the active tab and an error
-    $params = array('active_tab' => 'linkings', 'error' => true, 'message' => $this->Lang('error'));
+    $params = array('error' => true, 'message' => $this->Lang('error'));
     // redirect back to default admin page
-    $this->Redirect($id, 'defaultadmin', $returnid, $params);
+    $this->RedirectToTab($id, 'linkings', $params);
 }
 
 // Fetch FEU groups, CGCalendar categories and TSS teams directly from db.

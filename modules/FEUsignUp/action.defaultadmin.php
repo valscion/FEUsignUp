@@ -21,15 +21,6 @@ if (! $this->CheckAccess()) {
    
 */
 
-// Tab Infrastructure for Admin Area -- create three tabs, (two of which
-// are only accessible if permissions are met)
-if (FALSE == empty($params['active_tab']))
-  {
-    $tab = $params['active_tab'];
-  } else {
-  $tab = '';
- }
- 
 // If there's messages, assign 'em to smarty
 if( isset($params['message']) && !empty($params['message']) ) {
     if( isset($params['error']) && !empty($params['error']) ) {
@@ -45,12 +36,11 @@ if( isset($params['message']) && !empty($params['message']) ) {
 // Print tab headers
 echo $this->StartTabHeaders();
 
-echo $this->SetTabHeader('overview',$this->Lang('title_overview'), 
-      ('overview' == $tab)?true:false);
-echo $this->SetTabHeader('linkings',$this->Lang('title_linkings'), 
-      ('linkings' == $tab)?true:false);
-echo $this->SetTabHeader('template_displayevent',$this->Lang('title_template_displayevent'),
-      ('template_displayevent' == $tab)?true:false);
+echo $this->SetTabHeader('overview',$this->Lang('title_overview'));
+echo $this->SetTabHeader('linkings',$this->Lang('title_linkings'));
+echo $this->SetTabHeader('template_displayevent',$this->Lang('title_template_displayevent'));
+echo $this->SetTabHeader('cal_link_templates',$this->Lang('title_cal_link_templates'));
+echo $this->SetTabHeader('tss_link_templates',$this->Lang('title_tss_link_templates'));
 
 echo $this->EndTabHeaders();
 
@@ -68,6 +58,14 @@ echo $this->EndTab();
 
 echo $this->StartTab('template_displayevent');
 require_once(dirname(__FILE__).'/function.admin_template_displayeventtab.php');
+echo $this->EndTab();
+
+echo $this->StartTab('cal_link_templates', $params);
+require_once(dirname(__FILE__).'/function.admin_cal_link_templates.php');
+echo $this->EndTab();
+
+echo $this->StartTab('tss_link_templates', $params);
+require_once(dirname(__FILE__).'/function.admin_tss_link_templates.php');
 echo $this->EndTab();
 
 echo $this->EndTabContent();

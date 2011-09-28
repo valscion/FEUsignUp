@@ -13,9 +13,9 @@ if (! $this->CheckAccess()) {
 if( !isset( $params['signup_id'] ) )
 {
     // set the active tab and an error
-    $params = array('active_tab' => 'overview', 'error' => true, 'message' => $this->Lang('error'));
+    $params = array('error' => true, 'message' => $this->Lang('error'));
     // redirect back to default admin page
-    $this->Redirect($id, 'defaultadmin', $returnid, $params);
+    $this->RedirectToTab($id, 'overview', $params);
 }
 
 $signup_id = (int)$params['signup_id'];

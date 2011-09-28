@@ -20,9 +20,9 @@ if( isset( $params['defaults'] ) ) {
 }
 
 // set the active tab and a message
-$params = array('active_tab' => 'template_displayevent', 'message' => $message);
+$params = array('message' => $message);
 // redirect back to default admin page
-$this->Redirect($id, 'defaultadmin', $returnid, $params);
+$this->RedirectToTab($id, 'template_displayevent', $params);
 
 
 ## EOF

@@ -26,6 +26,9 @@ $lang['template_displayevent'] = 'Pohja: Näytä tapahtuma';
 $lang['title_template_displayevent'] = 'Pohja: Näytä tapahtuma';
 $lang['info_template_displayevent'] = '<p>Muokkaa sivustolla näytettävien tapahtumien pohjaa.</p>';
 
+$lang['link_templates'] = 'Linkkien pohjat';
+$lang['title_link_templates'] = 'Linkkien pohjat';
+$lang['info_link_templates'] = '<p>Muokkaa pohjia, joita käytetään moduulin displayevent-tapahtuman linkkeinä.</p>';
 
 ## Linkings-tab stuff
 $lang['linking_updated'] = 'Linkitys on päivitetty.';

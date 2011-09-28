@@ -26,6 +26,13 @@ $lang['template_displayevent'] = 'Template: Display events';
 $lang['title_template_displayevent'] = 'Template: Display events';
 $lang['info_template_displayevent'] = '<p>Manage the template used to display your events on the front end.</p>';
 
+$lang['cal_link_templates'] = 'CGCalendar link templates';
+$lang['title_cal_link_templates'] = 'CGCalendar link templates';
+$lang['info_cal_link_templates'] = '<p>Manage templates which are used to display links from CGCalendar events to displayevent -action.</p>';
+
+$lang['tss_link_templates'] = 'TSS link templates';
+$lang['title_tss_link_templates'] = 'TSS link templates';
+$lang['info_tss_link_templates'] = '<p>Manage templates which are used to display links from Team Sport Scores matches to displayevent -action.</p>';
 
 ## Linkings-tab stuff
 $lang['linking_updated'] = 'Linking has been updated.';

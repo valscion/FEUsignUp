@@ -41,10 +41,7 @@ if( $ret[0] === FALSE ) {
 // Message to display
 $params['message'] = $ret[1];
 
-// set the active tab
-$params['active_tab'] = 'overview';
-
 // redirect back to default admin page
-$this->Redirect($id, 'defaultadmin', $returnid, $params);
+$this->RedirectToTab($id, 'overview', $params);
 
 ## EOF
