@@ -15,12 +15,6 @@ if (!isset($gCms)) exit;
 $feu =& cge_utils::get_module('FrontEndUsers');
 if( $feu === null ) die('Front End Users module is not installed!');
 
-$cgcal =& cge_utils::get_module('CGCalendar');
-if( $cgcal === null ) die('CGCalendar module is not installed!');
-
-$tss =& cge_utils::get_module('TeamSportScores');
-if( $tss === null ) die('TeamSportScores module is not installed!');
-
 if( !$feu->LoggedIn() ) { 
     //echo('You\'re not logged in!'); 
     //return; 
@@ -35,54 +29,58 @@ if( ( !isset( $params['cal_id'] ) || empty( $params['cal_id'] ) )
     return;
 }
 
-// Is the link to TSS or CGCalendar event? 'tss' and 'cgcal' are possible values.
-$linktarget = '';
-
 // What's the ID for CGCalendar or TSS event?
 $linkId = -1;
 
-// Visible text for the link
-$linkdescription = '';
+// String that contains the template used for output
+$linkTemplate = '';
+
+// What template to use for the link
+$templatename = '';
+if( isset($params['template']) && !empty($params['template']) ) {
+  $templatename = $params['template'];
+}
 
 // Get stuff from the calendar module, linked to parameter "cal_id"
 if( isset( $params['cal_id'] ) && !empty( $params['cal_id'] ) ) {
-	$event = $cgcal->GetEvent( $params['cal_id'] );
+  $cgcal =& cge_utils::get_module('CGCalendar');
+  if( $cgcal === null ) die('CGCalendar module is not installed!');
+  
+  $linkId = (int)$params['cal_id'];
+	$event = $cgcal->GetEvent( $linkId );
+  $this->smarty->assign('from', 'cgcal');
   $this->smarty->assign('event', $event);
-  $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $params['cal_id'], 'cgcalendar' ) );
-  $linkTemplate = 'callink_' . $this->GetPreference(FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE);
-  $linkdescription = ( $this->ProcessTemplateFromDatabase($linkTemplate) );
-  $linktarget = 'cgcal';
-  $linkId = $params['cal_id'];
+  $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $linkId, 'cgcalendar' ) );
+  $this->smarty->assign('link_href',"{$gCms->config['root_url']}/feusignup/view/cgcal/$linkId/");
+  if( $templatename === '' ) {
+    $templatename = $this->GetPreference(FEUSIGNUP_PREF_DFLTCALLINK_TEMPLATE);
+  }
+  $linkTemplate = 'callink_' . $templatename;
 }
 // Or, if 'cgcal_id' wasn't given, try 'tss_id'.
 else {
+  $tss =& cge_utils::get_module('TeamSportScores');
+  if( $tss === null ) die('TeamSportScores module is not installed!');
+  
+  $linkId = (int)$params['tss_id'];
 	$db =& $this->GetDb(); /* @var $db ADOConnection */
   $q = 'SELECT * FROM '.cms_db_prefix().'module_tss_gameschedule_score WHERE gss_id = ?';
-	$dbresult = $db->Execute( $q, array($params['tss_id']) );
+	$dbresult = $db->Execute( $q, array($linkId) );
 	if( $dbresult && $matchInfo = $dbresult->FetchRow() ) {
 		// All OK
 	} else {
 		echo '<p class="error">' . $this->Lang('db_error') . '</p>';
 	}
+  $this->smarty->assign('from', 'tss');
   $this->smarty->assign('match',$matchInfo);
-  $linkTemplate = 'tsslink_' . $this->GetPreference(FEUSIGNUP_PREF_DFLTTSSLINK_TEMPLATE);
-  $linkdescription = ( $this->ProcessTemplateFromDatabase($linkTemplate) );
-  $linktarget = 'tss';
-  $linkId = $params['tss_id'];
+  $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $linkId, 'tss' ) );
+  $this->smarty->assign('link_href',"{$gCms->config['root_url']}/feusignup/view/tss/$linkId/");
+  if( $templatename === '' ) {
+    $templatename = $this->GetPreference(FEUSIGNUP_PREF_DFLTTSSLINK_TEMPLATE);
+  }
+  $linkTemplate = 'tsslink_' . $templatename;
 }
-
-$rel = '';
-if( isset($params['rel']) || !empty($params['rel']) ) {
-    $rel = ' rel="' . $params['rel'] . '"';
-}
-
-// create attributes for rendering "view" links for the object.
-// $id and $returnid are predefined for us by the module API
-// that last parameter is the Pretty URL link
-$link = $this->CreateFrontendLink($id, $returnid, 'view',
-      '',array(),'',true,true,'',false,
-      "feusignup/view/$linktarget/$linkId/");
-      
-echo '<p><a href="'.$link.'" class="pickable"'.$rel.'>'.$linkdescription.'</a></p>';
+ 
+echo $this->ProcessTemplateFromDatabase($linkTemplate);
 
 ?>

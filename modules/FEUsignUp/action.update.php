@@ -25,9 +25,20 @@ $username = $_POST['username'];
 $signup = ( $_POST['signup'] === 'in' ) ? 1 : 0;
 $description = $_POST['description'];
 
-// Let's check whether we have a solid event
-if( !$this->_CGCalendarEventExists( $eventid ) ) {
-  die( '<p class="error">' . $this->Lang('event_not_found') . '</p>' );
+// Check do we modify tss or cgcalendar signup
+$from = '';
+if( $params['from'] == 'cgcal' ) {
+  // Let's check whether we have a solid event
+  if( !$this->_CGCalendarEventExists( $eventid ) ) {
+    die( '<p class="error">' . $this->Lang('event_not_found') . '</p>' );
+  }
+  $from = 'cgcalendar';
+} elseif( $params['from'] == 'tss' ) {
+  // Let's check whether we have a solid match
+  if( !$this->_TSSMatchExists( $eventid ) ) {
+    die( '<p class="error">' . $this->Lang('event_not_found') . '</p>' );
+  }
+  $from = 'tss';
 }
 
 // Let's check whether we have rights to modify this users sign-up.
@@ -42,7 +53,7 @@ if( !$feu->UserExistsByID( $userid ) ) {
 }
 
 // Let's do it!
-$ret = $this->ModifySignup( $eventid, $userid, $signup, $description, 'cgcalendar' );
+$ret = $this->ModifySignup( $eventid, $userid, $signup, $description, $from );
 if( $ret[0] ) {
   // Everything went OK
   echo '<p>' . $ret[1] . '</p>';

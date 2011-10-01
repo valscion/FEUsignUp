@@ -101,7 +101,7 @@ class FEUsignUp extends CGExtensions
       ---------------------------------------------------------*/
     function GetVersion()
     {
-        return '0.2.2';
+        return '0.2.2.1';
     }
 
     /*---------------------------------------------------------
@@ -273,7 +273,8 @@ class FEUsignUp extends CGExtensions
       ---------------------------------------------------------*/
     function GetDependencies()
     {
-        return array('CGCalendar'=>'1.5.7','FrontEndUsers'=>'1.12.13');
+        return array('FrontEndUsers'=>'1.12.13',
+                     'CGExtensions'=>'1.26.6');
     }
 
     /*---------------------------------------------------------
@@ -392,7 +393,7 @@ class FEUsignUp extends CGExtensions
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
 	$this->RegisterRoute(
-        '/feusignup\/update\/(?P<from_id>[0-9]+)$/',
+        '/feusignup\/update\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)$/',
         array('action'=>'update', 'showtemplate'=>'false')
     );
 
@@ -450,10 +451,6 @@ class FEUsignUp extends CGExtensions
    // description must be a string
    $this->CreateParameter('description','',$this->Lang('help_description'));
    $this->SetParameterType('description',CLEAN_STRING);
-   
-   // rel must be a string
-   $this->CreateParameter('rel','',$this->Lang('help_rel'));
-   $this->SetParameterType('rel',CLEAN_STRING);
    
    // template must be a string
    $this->CreateParameter('template','',$this->Lang('help_template'));
@@ -627,7 +624,22 @@ class FEUsignUp extends CGExtensions
         else
           return TRUE;
       }
-      
+    
+    /**
+     * _TSSMatchExists()
+     * Checks whether match exists in Team Sport Scores database.
+     */
+     function _TSSMatchExists( $mid )
+     {
+        $db =& $this->GetDb(); /* @var $db ADOConnection */
+        
+        $q = 'SELECT gss_id FROM '.cms_db_prefix().'module_tss_gameschedule_score WHERE gss_id = ?';
+        $row = $db->GetRow( $q, array( (int)$mid ) );
+        if( !$row )
+          return FALSE;
+        else
+          return TRUE;
+     }
     /**
      * GetEventUsers()
      * Retrieves an array of users from those who are set to the group of the event.
@@ -880,7 +892,7 @@ class FEUsignUp extends CGExtensions
      * ModifySignup()
      * Modifies an existing signup or adds a new one if there aren't any.
      */
-     function ModifySignup( $event_id, $user_id, $signup, $description, $from = 'cgcalendar' )
+     function ModifySignup( $event_id, $user_id, $signup, $description, $from )
      {
         $db =& $this->GetDb(); /* @var $db ADOConnection */
         
@@ -909,10 +921,10 @@ class FEUsignUp extends CGExtensions
         // generate the sequence
         $sid = $db->GenID( $this->events_table_name . '_seq' );
         
-        if( $from = 'cgcalendar' ) {
+        if( $from == 'cgcalendar' ) {
           $q = 'INSERT INTO ' . $this->events_table_name . ' (id,feu_user_id,cgcal_event_id,signed_up,description)
                 VALUES (?,?,?,?,?)';
-        } elseif( $from = 'tss' ) {
+        } elseif( $from == 'tss' ) {
           $q = 'INSERT INTO ' . $this->events_table_name . ' (id,feu_user_id,tss_game_id,signed_up,description)
                 VALUES (?,?,?,?,?)';
         } else {
@@ -936,10 +948,10 @@ class FEUsignUp extends CGExtensions
      {
         $db =& $this->GetDb(); /* @var $db ADOConnection */
         
-        if( $from = 'cgcalendar' ) {
+        if( $from == 'cgcalendar' ) {
           $q = 'UPDATE ' . $this->events_table_name . ' SET feu_user_id = ?, cgcal_event_id = ?, signed_up = ?, description = ?
                 WHERE cgcal_event_id = ? AND feu_user_id = ?';
-        } elseif( $from = 'tss' ) {
+        } elseif( $from == 'tss' ) {
           $q = 'UPDATE ' . $this->events_table_name . ' SET feu_user_id = ?, tss_game_id = ?, signed_up = ?, description = ?
                 WHERE tss_game_id = ? AND feu_user_id = ?';
         } else {

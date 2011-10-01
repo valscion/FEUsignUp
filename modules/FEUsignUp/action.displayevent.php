@@ -9,24 +9,28 @@ if (!isset($gCms)) exit;
    
 */
 
+$feu =& cge_utils::get_module('FrontEndUsers');
+if( $feu === null ) die('FrontEndUsers module is not installed!');
+
 // Create a "event"-object that stores information about this event
 // and assign it to smarty by reference.
 $event = new stdClass();
 $this->smarty->assign_by_ref('event', $event);
 
+// Was the event from cgcal or tss
+$from = '';
+
 if( $params['from'] == 'cgcal' || $params['from'] == 'cgcalendar' ) {
+  $cgcal =& cge_utils::get_module('CGCalendar');
+  if( $cgcal === null ) die('CGCalendar module is not installed!');
+
+  $from = 'cgcal';
   $event->from = 'cgcalendar';
 
   // Fetch CGCalendar info
   $cgcal_id = (int)$params['from_id'];
   $event->id = $cgcal_id;
   
-  $cgcal =& cge_utils::get_module('CGCalendar');
-  if( $cgcal === null ) die('CGCalendar module is not installed!');
-  
-  $feu =& cge_utils::get_module('FrontEndUsers');
-  if( $feu === null ) die('FrontEndUsers module is not installed!');
-
   $event->info = $cgcal->GetEvent( $cgcal_id );
   
   $events_to_categories_table = $cgcal->events_to_categories_table_name;
@@ -44,11 +48,11 @@ if( $params['from'] == 'cgcal' || $params['from'] == 'cgcalendar' ) {
   }
   
   $feug_ids = array();
-  foreach( $cat_ids as $name => $id ) {
+  foreach( $cat_ids as $cal_category => $id ) {
     $q = 'SELECT feusers_group_id FROM ' . $this->linkings_table_name . " WHERE cgcal_category_id = $id";
     $rs = $db->Execute($q);
     while( $row = $rs->FetchRow() ) {
-      $feug_ids[$name] = $row['feusers_group_id'];
+      $feug_ids[$cal_category] = $row['feusers_group_id'];
     }
   }
   
@@ -56,22 +60,44 @@ if( $params['from'] == 'cgcal' || $params['from'] == 'cgcalendar' ) {
   $signups = $this->GetEventUsers( $cgcal_id, 'cgcal' );
   
 } elseif( $params['from'] == 'tss' ) {
+  $tss =& cge_utils::get_module('TeamSportScores');
+  if( $tss === null ) die('TeamSportScores module is not installed!');
+  
+  $from = 'tss';
   $event->from = 'tss';
-  // TODO: Hae matsin joukkueeseen linkitettyjen joukkueiden perusteella FEU-ryhmien ID:t
-  // taulukkoon $feug_ids.
   $tss_id = (int)$params['from_id'];
   $event->id = $tss_id;
+  
+  $q = "SELECT * FROM cms_module_tss_gameschedule_score WHERE gss_id = ? LIMIT 1";
+  $data = $db->GetArray($q,array($tss_id));
+  $info = $data[0];
+  $event->info = $info;
+  
+  $team_id = -1;
+  if( $info['hometeam_id'] != 0 ) {
+    $team_id = $info['hometeam_id'];
+  } elseif( $info['visitorteam_id'] != 0 ) {
+    $team_id = $info['visitorteam_id'];
+  }
+  
+  // Fetch team users group IDs
   $feug_ids = array();
+  $q = 'SELECT feusers_group_id FROM ' . $this->linkings_table_name . ' WHERE tss_team_id = ?';
+  $rs = $db->GetArray($q,array($team_id));
+  $feug_ids[$team_id] = $rs[0]['feusers_group_id'];
+  
+  // Fetch all the previous sign-ups from the database
+  $signups = $this->GetEventUsers( $tss_id, 'tss' );
 } else {
   echo '<p class="error">ERROR</p>';
   return;
 }
 
 $groups = array();
-foreach( $feug_ids as $name => $id ) {
+foreach( $feug_ids as $cal_category => $id ) {
   $fullUsers = $feu->GetFullUsersInGroup( $id );
   if( $fullUsers )
-    $groups[$name] = $fullUsers;
+    $groups[$cal_category] = $fullUsers;
 }
 
 $users = array();
@@ -79,7 +105,7 @@ $users = array();
 // Array to hold only user ID's to ensure we won't get the same user twice or more often
 $users_only_once = array(); 
 
-foreach( $groups as $name => $group ) {
+foreach( $groups as $cal_category => $group ) {
   foreach( $group as $user ) {
     if( in_array( $user['id'], $users_only_once ) ) 
       continue;
@@ -89,8 +115,8 @@ foreach( $groups as $name => $group ) {
     $onerow->username = $user['username'];
     $onerow->id = $user['id'];
     $onerow->props = $user['props'];
-    $onerow->cal_link = $name;
-    $onerow->submit_href = "/feusignup/update/{$user['id']}/";
+    $onerow->cal_category = $cal_category;
+    $onerow->submit_href = "/feusignup/update/$from/{$user['id']}/";
     // Fetch old signup informations
     foreach( $signups as $signup ) {
       if( $signup['feu_user_id'] == $user['id'] ) {
