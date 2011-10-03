@@ -134,7 +134,13 @@ foreach( $groups as $cal_category => $group ) {
 
 $this->smarty->assign('users', $users);
 
-$template = 'displayevent_' . $this->GetPreference( FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE );
+
+if( isset($params['template']) && !empty($params['template'] ) )
+  $templateName = $params['template'];
+else
+  $templateName = $this->GetPreference( FEUSIGNUP_PREF_DFLTDISPLAYEVENT_TEMPLATE );
+
+$template = 'displayevent_' . $templateName;
 echo $this->ProcessTemplateFromDatabase( $template );
 
 ## EOF

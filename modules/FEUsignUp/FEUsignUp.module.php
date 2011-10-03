@@ -389,7 +389,7 @@ class FEUsignUp extends CGExtensions
 	is not enough; you module's links need to create the URLs on their side as well.
     */
 	$this->RegisterRoute(
-        '/feusignup\/view\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)$/',
+        '/feusignup\/view\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)(|\/(?P<template>[a-zA-Z\-_]+))$/',
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
 	$this->RegisterRoute(
