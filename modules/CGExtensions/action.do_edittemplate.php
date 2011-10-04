@@ -83,8 +83,10 @@ if( !isset( $params['template'] ) )
     return;
   }
 $module->SetTemplate( $params['prefix'].
-		      $params['template'], 
-		      cms_html_entity_decode($params['templatecontent'],ENT_QUOTES,get_encoding()));
+		      $params['template'],
+          $params['templatecontent']);
+		      #cms_html_entity_decode($params['templatecontent'],ENT_QUOTES,get_encoding()));
+audit('',$module->GetName(),'Edited Tempalte '.$params['prefix'].$params['template']);
 
 if( isset($params['applybutton']) )
   {

@@ -251,13 +251,19 @@ $lang['help'] = '<h3>Was macht dieses Modul?</h3>
 <h3>Smarty-Erweiterungen</h3>
 <p>Dieses Modul stellt eine paar Smarty-Erweiterungen zur Verwendung in anderen Modulen bereit, die im folgenden beschrieben werden:</p>
 <ul>
-<li>cgerror &ndash; <em>block</em> plugin
+<li><u>cgerror &ndash; <em>block</em> plugin</u>
+<p>Beschreibung: Dieses Block plugin verwendet das Fehler Template, um einen Fehler auszugeben. Das Template kann in der Administration des CGExtensions-Moduls konfiguriert werden</p>
+<p>optionale Parameter: &#039;errorclass&#039; = &uuml;berschreibt den vorgegebenen Klassenamen im Template</p>
 <p>Beispiel: <code>{cgerror}Dies ist ein Fehlertext{/cgerror}</code><br/>
     oder: <code>{cgerror}{$errortextvar}{/cgerror}</br>
 </p>
-<p>optionale Parameter: &bdquo;errorclass&ldquo; = &uuml;berschreibt den vorgegebenen Klassennamen des Templates.
+</li>
+<li><u>cge_cache&ndash; <em>block</em> plugin</u>
+<p>Beschreibung: Cacht den HTML-Code zwischen Start- und End-Tag, um die Performance zu verbessern. Standardm&auml;&szlig;ig wird der Code in Dateien im tmp/cache Verzeichnis f&uuml;r 5 Minuten zwischengespeichert. Sp&auml;tere Versionen dieses Plugins werden die M&ouml;glichkeit beiten, die Lebenszeit des Caches zu verl&auml;ngern.</p>
+<p><strong>Anmerkung:</strong> Dies ist technisch gesehen kein Block Plugin, verh&auml;lt sich aber wie eines.</p>
+<p>Beispiel: <code>{cge_cache}{Products}{/cge_cache}</code></br>
 </p>
-<p>Beschreibung: Dieses block-Plugin verwendet das error-Template, um eine Fehlernachricht anzuzeigen. Das Template kann in der Administration des CGExtensions-Moduls konfiguriert werden.</p>
+</li>
 </ul>
 <h3>Support</h3>
 <p>Dieses Modul beinhaltet keinen kommerziellen Support. Sie k&ouml;nnen jedoch &uuml;ber folgende M&ouml;glichkeiten Hilfe zu dem Modul erhalten:</p>
@@ -289,9 +295,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
-$lang['qca'] = 'P0-1458450664-1284573084918';
-$lang['utmz'] = '156861353.1301074204.33.55.utmcsr=themes.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/';
-$lang['utma'] = '156861353.1403231767.1300657837.1301091815.1301122726.38';
+$lang['utma'] = '156861353.1906910858.1298391273.1307471032.1307475603.24';
+$lang['utmz'] = '156861353.1305492438.14.4.utmcsr=dev.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/projects/glossary';
+$lang['qca'] = 'P0-729088320-1298391273143';
 $lang['utmc'] = '156861353';
-$lang['utmb'] = '156861353.2.10.1301122726';
+$lang['utmb'] = '156861353';
 ?>

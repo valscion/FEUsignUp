@@ -250,7 +250,7 @@ class cge_array
   }
 
 
-  /*
+  /**
    * Given an array and a value, return the index of that value
    *
    * @param data array
@@ -272,7 +272,7 @@ class cge_array
   }
 
 
-  /*
+  /**
    * Implode a hash into an array
    * suitable for forming a URL string with multiple key/value pairs
    *
@@ -287,6 +287,25 @@ class cge_array
     foreach ($assoc as $tk => $tv) $return .= $outglue.$tk.$inglue.$tv;
     return substr($return,strlen($outglue));
   }
+
+
+  /**
+   * Given an array, implode it into a string with the values quoted.
+   *
+   */
+  static public function implode_quoted($data,$glue = ',',$quote = '"')
+  {
+    $return = '';
+    $values = array_values($data);
+    for( $i = 0; $i < count($values); $i++ )
+      {
+	if( !is_numeric($values[$i]) )
+	  {
+	    $values[$i] = $quote.$values[$i].$quote;
+	  }
+      }
+    return implode($glue,$values);
+  }    
 
 
   /***

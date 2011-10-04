@@ -59,6 +59,12 @@ class AssocDataNode
   private $_data;
   private $_extra;
 
+  public function __construct($type,$data)
+  {
+    $this->_type = $type;
+    $this->_data = $data;
+  }
+
   /**
    * Return the type of data
    *
@@ -194,15 +200,17 @@ class AssocData
     $query = 'SELECT id FROM '.CGEXTENSIONS_TABLE_ASSOCDATA.'
                WHERE key1 = ? AND key2 = ? AND key3 = ? AND key4 = ?
                LIMIT 1';
-    $id = $this->_db->GetOne($query);
-    if( $tmp )
+    $id = $this->_db->GetOne($query,
+			     array($this->_key1,$key2,$key3,$key4));
+    if( $id )
       {
 	$query = 'UPDATE '.CGEXTENSIONS_TABLE_ASSOCDATA."
                      SET type = ?, data = ?, modified_date = $now
                    WHERE key1 = ? AND key2 = ? AND key3 = ? AND key4 = ?";
 	$this->_db->Execute($query,
-			    array($node->type,$node->data,
+			    array($node->GetType(),$node->GetData(),
 				  $this->_key1,$key2,$key3,$key4));
+
       }
     else
       {
@@ -211,7 +219,7 @@ class AssocData
                   VALUES (?,?,?,?,?,?,$now,$now)";
 	$this->_db->Execute($query,
 			    array($this->_key1,$key2,$key3,$key4,
-				  $node->type,$node->data));
+				  $node->GetType(),$node->GetData()));
       }
   }
 
@@ -234,23 +242,20 @@ class AssocData
     if( empty($key3) && !empty($key4) ) return FALSE;
 
     // determine type
-    $node = new AssocDataNode;
-    if( is_object($value) )
+    $type = 'simple';
+    $data = $value;
+    if( is_object($value) ) 
       {
-	$node->SetType('object');
-	$node->SetData(serialize($value));
+	$type = 'object';
+	$data = serialize($value);
       }
     else if( is_array($value) )
       {
-	$node->SetType('array');
-	$node->SetData(serialize($value));
-      }
-    else
-      {
-	$node->SetType('simple');
-	$node->SetData($value);
+	$type = 'array';
+	$data = serialize($value);
       }
 
+    $node = new AssocDataNode($type,$data);
     // call _set
     $this->_set($key2,$key3,$key4,$node);
   }
@@ -296,8 +301,8 @@ class AssocData
 	$query = 'SELECT data,type FROM '.CGEXTENSIONS_TABLE_ASSOCDATA.'
                    WHERE key1=? AND key2=? AND key3=? AND key4=?
                    LIMIT 1';
-        $row = $db->GetRow($query,
-			   array($this->_key1,$key2,$key3,$key4));
+        $row = $this->_db->GetRow($query,
+				  array($this->_key1,$key2,$key3,$key4));
 	if( !$row )
 	  {
 	    return FALSE;
@@ -482,7 +487,7 @@ class AssocData
     if( !count($where) ) return;
     
     $query .= ' WHERE '.implode(' AND ',$where);
-    die($query); // debug.
+    $db = $this->_db;
     $dbr = $db->GetArray($query,$qparms);
     if( !is_array($dbr) ) return;
 

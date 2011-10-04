@@ -1,4 +1,13 @@
 <?php
+$lang['param_nocache'] = 'Wordt gebruikt wanneer caching van module-aanvragen is ingeschakeld, met deze parameter is het mogelijk om caching uit te schakelen voor deze module-aanvraag.';
+$lang['info_cache_modulecalls'] = 'Onder sommige omstandigheden kan de output van aanvragen van modules worden gecached. Als u dit inschakelt zal dit zorgen voor een significante snelheidsverbetering van uw website. Mogelijk ontstaan er wel problemen met sommige aanvragen. U kunt deze optie uitschakelen door de parameter &#039;nocache=1&#039; toe te voegen aan een moduletag.';
+$lang['cache_modulecalls'] = 'Cache aanvragen van modules';
+$lang['cache_halfhour'] = 'Half uur';
+$lang['cache_1hr'] = 'Een uur';
+$lang['cache_2hrs'] = 'Twee uur';
+$lang['cache_6hrs'] = 'Zes uur';
+$lang['cache_12hrs'] = 'Twaalf uur';
+$lang['cache_24hrs'] = 'Een dag';
 $lang['cache_noexpiry'] = 'Niet laten verlopen (wees voorzichtig)';
 $lang['cache_filelock'] = 'Beveilig bestanden om rare omstandigheden te voorkomen';
 $lang['cache_autoclean'] = 'Verwijder automatisch gebufferde bestanden';
@@ -401,9 +410,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href=\"http://www.gnu.org/licenses/licenses.html#GPL\">online</a></p>
 ';
-$lang['utma'] = '156861353.1852221271.1287479092.1292311699.1292394944.48';
-$lang['utmz'] = '156861353.1292394944.48.38.utmccn=(referral)|utmcsr=dev.cmsmadesimple.org|utmcct=/project/files/291|utmcmd=referral';
-$lang['qca'] = 'P0-161031897-1287479092171';
+$lang['utma'] = '156861353.116076068.1310369279.1310369279.1310369279.1';
 $lang['utmb'] = '156861353';
 $lang['utmc'] = '156861353';
+$lang['utmz'] = '156861353.1310369279.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
 ?>

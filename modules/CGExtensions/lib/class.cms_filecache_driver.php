@@ -7,6 +7,7 @@ class cms_filecache_driver extends cms_cache_driver
   private $_group;
   private $_lifetime = 300;
   private $_locking = false;
+  private $_blocking = false;
   private $_cache_dir = '/tmp';
   private $_auto_cleaning = 0;
 
@@ -18,7 +19,7 @@ class cms_filecache_driver extends cms_cache_driver
       throw new Exception('Instance of cms_filecache_driver already exists');
     self::$_instance = $this;
 
-    $_keys = array('lifetime','locking','cache_dir','auto_cleaning');
+    $_keys = array('lifetime','locking','cache_dir','auto_cleaning','blocking');
     if( is_array($opts) )
       {
 	foreach( $opts as $key => $value )
@@ -39,6 +40,7 @@ class cms_filecache_driver extends cms_cache_driver
 
     $this->_key = $key;
     $this->_group = $group;
+    $this->_auto_clean_files();
     $fn = $this->_get_filename($key,$group);
     $data = $this->_read_cache_file($fn);
     return $data;
@@ -47,9 +49,7 @@ class cms_filecache_driver extends cms_cache_driver
 
   public function clear($group = '')
   {
-    if( !$group ) $group = 'default';
-
-    return $this->_clean_dir($this->_cache_dir,$group,false,true);
+    return $this->_clean_dir($this->_cache_dir,$group,false);
   }
 
 
@@ -86,7 +86,6 @@ class cms_filecache_driver extends cms_cache_driver
     if( !$group ) $group = 'default';
 
     $fn = $this->_get_filename($key,$group);
-    $this->_auto_clean_files();
     $res = $this->_write_cache_file($fn,$value);
     return $res;
   }
@@ -99,6 +98,42 @@ class cms_filecache_driver extends cms_cache_driver
   }
 
 
+  private function _flock($res,$flag)
+  {
+    if( !$this->_locking ) return TRUE;
+
+    $mode = '';
+    switch( strtolower($flag) )
+      {
+      case 'read':
+	$mode = LOCK_SH;
+	break;
+
+      case 'write':
+	$mode = LOCK_EX;
+	break;
+
+      case 'unlock':
+	$mode = LOCK_UN;
+      }
+      
+    if( $this->_blocking )
+      {
+	return flock($res,$mode);
+      }
+
+    // non blocking lock
+    $mode = $mode | LOCK_NB;
+    for( $n = 0; $n < 5; $n++ )
+      {
+	$res = flock($res,$mode);
+	if( $res ) return TRUE;
+	$tl = rand(1,300);
+	usleep($tl);
+      }
+    return FALSE;
+  }
+
   private function _read_cache_file($fn)
   {
     $this->_cleanup($fn);
@@ -109,10 +144,12 @@ class cms_filecache_driver extends cms_cache_driver
 	$fp = @fopen($fn,'rb');
 	if( $fp )
 	  {
-	    if( $this->_locking ) @flock($fp,LOCK_SH);
-	    $len = @filesize($fn);
-	    if( $len > 0 ) $data = fread($fp,$len);
-	    if( $this->_locking ) @flock($fp,LOCK_UN);
+	    if( $this->_flock($fp,'read') )
+	      {
+		$len = @filesize($fn);
+		if( $len > 0 ) $data = fread($fp,$len);
+		$this->_flock($fp,'unlock');
+	      }
 	    @fclose($fp);
 
 	    if( startswith($data,'__SERIALIZED__') )
@@ -139,16 +176,25 @@ class cms_filecache_driver extends cms_cache_driver
 
   private function _write_cache_file($fn,$data)
   {
-    $fp = @fopen($fn,'wb');
+    @touch($fn);
+    $fp = @fopen($fn,'r+');
     if( $fp )
       {
-	if( $this->_locking ) @flock($fp,LOCK_EX);
-	if( is_array($data) || is_object($data) )
+	if( !$this->_flock($fp,'write') )
 	  {
-	    $data = '__SERIALIZED__'.serialize($data);
+	    @fclose($fp);
+	    @unlink($fn);
+	    return FALSE;
 	  }
-	@fwrite($fp,$data);
-	if( $this->_locking ) @flock($fp,LOCK_UN);
+	else
+	  {
+	    if( is_array($data) || is_object($data) )
+	      {
+		$data = '__SERIALIZED__'.serialize($data);
+	      }
+	    @fwrite($fp,$data);
+	    $this->_flock($fp,'unlock');
+	  }
 	@fclose($fp);
 	return TRUE;
       }
@@ -160,23 +206,23 @@ class cms_filecache_driver extends cms_cache_driver
   {
     if( $this->_auto_cleaning > 0 && ($this->_auto_cleaning == 1 || mt_rand(1,$this->_auto_cleaning) == 1) )
       {
-	return $this->_clean_dir($this->_cache_dir,'','old');
+	return $this->_clean_dir($this->_cache_dir);
       }
+    return 0;
   }
 
 
-  private function _clean_dir($dir,$group = '',$old = true,$ingroup = true)
+  private function _clean_dir($dir,$group = '',$old = true)
   {
-    if( !$group ) $group = 'default';
-    
-    $mask = $dir.'/dcache_'.md5($group).'_*.cg';
-    if( !$ingroup )
+    $mask = $dir.'/dcache_*_*.cg';
+    //$mask = $dir.'/dcache_*.cg';
+    if( $group ) 
       {
-	$mask = $dir.'/dcache_*_*.cg';
+	$mask = $dir.'/dcache_'.md5($group).'_*.cg';
       }
     
     $files = glob($mask);
-    if( !is_array($files) ) return TRUE;
+    if( !is_array($files) ) return 0;
 
     $nremoved = 0;
     foreach( $files as $file )
@@ -202,6 +248,8 @@ class cms_filecache_driver extends cms_cache_driver
 	      }
 	  }
       }
+
+    return $nremoved;
   }
 }
 

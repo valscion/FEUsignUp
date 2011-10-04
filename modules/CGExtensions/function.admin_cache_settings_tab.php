@@ -42,9 +42,14 @@ $tmp = array('0'=>$this->Lang('cache_noexpiry'),
 	     '300'=>'300',
 	     '600'=>'600',
 	     '900'=>'900',
-	     '1800'=>'1800',
-	     '3600'=>'3600');
+	     '1800'=>$this->Lang('cache_halfhour'),
+	     '3600'=>$this->Lang('cache_1hr'),
+	     '7200'=>$this->Lang('cache_2hrs'),
+	     6*3600=>$this->Lang('cache_6hrs'),
+	     12*3600=>$this->Lang('cache_12hrs'),
+	     24*3600=>$this->Lang('cache_24hrs'));
 $smarty->assign('lifetime_opts',$tmp);
+$smarty->assign('cache_modulecalls',$this->GetPreference('cache_modulecalls',0));
 $smarty->assign('cache_lifetime',$this->GetPreference('cache_lifetime',300));
 $smarty->assign('cache_filelock',$this->GetPreference('cache_filelock',1));
 $smarty->assign('cache_autoclean',$this->GetPreference('cache_autoclean',1));

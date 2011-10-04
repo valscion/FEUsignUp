@@ -54,15 +54,30 @@ class module_helper
 
   static public function get_modules_with_method($methodname)
   {
-    global $gCms;
+    $gCms = cmsms();
     $res = array();
     
-    foreach( $gCms->modules as $modulename => $onemodule )
+    if( version_compare(CMS_VERSION,'1.10-beta0') < 0 )
       {
-	if( !isset($onemodule['object']) ) continue;
-	$mod =& $onemodule['object'];
-	if( !method_exists($mod,$methodname) ) continue;
-	$res[$mod->GetName()] = $mod->GetFriendlyName();
+	foreach( $gCms->modules as $modulename => $onemodule )
+	  {
+	    if( !isset($onemodule['object']) ) continue;
+	    $mod =& $onemodule['object'];
+	    if( !method_exists($mod,$methodname) ) continue;
+	    $res[$mod->GetName()] = $mod->GetFriendlyName();
+	  }
+      }
+    else
+      {
+	$modules = ModuleOperations::get_instance()->GetInstalledModules();
+	foreach( $modules as $onemodule )
+	  {
+	    $mod = ModuleOperations::get_instance()->get_module_instance($onemodule);
+	    if( !$mod ) continue;
+
+	    if( !method_exists($mod,$methodname) ) continue;
+	    $res[$mod->GetName()] = $mod->GetFriendlyName();
+	  }
       }
 
     if( empty($res) ) return FALSE;
@@ -72,20 +87,17 @@ class module_helper
 
   static public function get_modules_with_capability($capability,$params = array())
   {
-    global $gCms;
-    $res = array();
-    
-    foreach( $gCms->modules as $modulename => $onemodule )
+    $mod = cms_utils::get_module('CGExtensions');
+    $tmp = $mod->GetModulesWithCapability($capability,$params);
+    if( is_array($tmp) && count($tmp) )
       {
-	if( !isset($onemodule['object']) ) continue;
-	$mod =& $onemodule['object'];
-	if( !method_exists($mod,'HasCapability') ) continue;
-	if( !$mod->HasCapability($capability,$params) ) continue;
-	$res[$mod->GetName()] = $mod->GetFriendlyName();
+	$t2 = array();
+	for( $i = 0; $i < count($tmp); $i++ )
+	  {
+	    $t2[$tmp[$i]] = $tmp[$i];
+	  }
+	return $t2;
       }
-
-    if( empty($res) ) return FALSE;
-    return $res;
   }
 } // class
 

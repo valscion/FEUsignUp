@@ -12,16 +12,19 @@
  * @copyright   2007-2008 Md Emran Hasan
  * @link        http://www.phpfour.com/lib/http
  * @since       Version 0.1
+ *
+ * Modified by Robert Campbell (calguy1000@cmsmadesimple.org)
+ * Fixed some bugs.
  */
 
-class Http
+class http
 {
     /**
      * Contains the target URL
      *
      * @var string
      */
-    var $target;
+    private $target;
 
     /**
      * socket
@@ -34,196 +37,196 @@ class Http
      *
      * @var string
      */
-    var $host;
+    private $host;
     
     /**
      * Contains the target port
      *
      * @var integer
      */
-    var $port;
+    private $port;
     
     /**
      * Contains the target path
      *
      * @var string
      */
-    var $path;
+    private $path;
     
     /**
      * Contains the target schema
      *
      * @var string
      */
-    var $schema;
+    private $schema;
     
     /**
      * Contains the http method (GET or POST)
      *
      * @var string
      */
-    var $method;
+    private $method;
 
     /**
      * Contains raw post data
      *
      * @var str
      */
-    var $rawPostData;
+    private $rawPostData;
 
     /**
      * Contains the parameters for request
      *
      * @var array
      */
-    var $params;
+    private $params;
     
     /**
      * Contains the cookies for request
      *
      * @var array
      */
-    var $cookies;
+    private $cookies;
     
     /**
      * Contains the cookies retrieved from response
      *
      * @var array
      */
-    var $_cookies;
+    private $_cookies;
     
     /**
      * Number of seconds to timeout
      *
      * @var integer
      */
-    var $timeout;
+    private $timeout;
     
     /**
      * Whether to use cURL or not
      *
      * @var boolean
      */
-    var $useCurl;
+    private $useCurl;
     
     /**
      * Contains the referrer URL
      *
      * @var string
      */
-    var $referrer;
+    private $referrer;
     
     /**
      * Contains the User agent string
      *
      * @var string
      */
-    var $userAgent;
+    private $userAgent;
     
     /**
      * Contains the cookie path (to be used with cURL)
      *
      * @var string
      */
-    var $cookiePath;
+    private $cookiePath;
     
     /**
      * Whether to use cookie at all
      *
      * @var boolean
      */
-    var $useCookie;
+    private $useCookie;
     
     /**
      * Whether to store cookie for subsequent requests
      *
      * @var boolean
      */
-    var $saveCookie;
+    private $saveCookie;
     
     /**
      * Contains the Username (for authentication)
      *
      * @var string
      */
-    var $username;
+    private $username;
     
     /**
      * Contains the Password (for authentication)
      *
      * @var string
      */
-    var $password;
+    private $password;
     
     /**
      * Contains the fetched web source
      *
      * @var string
      */
-    var $result;
+    private $result;
     
     /**
      * Contains the last headers 
      *
      * @var string
      */
-    var $headers;
+    private $headers;
     
     /**
      * Contains the last call's http status code
      *
      * @var string
      */
-    var $status;
+    private $status;
     
     /**
      * Whether to follow http redirect or not
      *
      * @var boolean
      */
-    var $redirect;
+    private $redirect;
     
     /**
      * The maximum number of redirect to follow
      *
      * @var integer
      */
-    var $maxRedirect;
+    private $maxRedirect;
     
     /**
      * The current number of redirects
      *
      * @var integer
      */
-    var $curRedirect;
+    private $curRedirect;
     
     /**
      * Contains any error occurred
      *
      * @var string
      */
-    var $error;
+    private $error;
     
     /**
      * Store the next token
      *
      * @var string
      */
-    var $nextToken;
+    private $nextToken;
     
     /**
      * Whether to keep debug messages
      *
      * @var boolean
      */
-    var $debug;
+    private $debug;
 
     /**
      * Stores optional http headers
      *
      * @var array
      */
-    var $headerArray;
+    private $headerArray;
 
     /**
      * Stores the debug messages
@@ -231,21 +234,21 @@ class Http
      * @var array
      * @todo will keep debug messages
      */
-    var $debugMsg;
+    private $debugMsg;
 
     /**
      * Stores proxy information (host:port)
      *
      * @var string
      */
-    var $proxy;
+    private $proxy;
 
     /**
      * Constructor for initializing the class with default values.
      * 
      * @return void  
      */
-    function Http()
+    public function __construct()
     {
         $this->clear();    
     }
@@ -329,6 +332,7 @@ class Http
         $this->username     = '';
         $this->password     = '';
         $this->redirect     = FALSE;
+	$this->result       = null;
         
         // Set the cookie and agent defaults
         $this->nextToken    = '';
@@ -611,13 +615,16 @@ class Http
 	{
 	  $this->headerArray = array();
 	}
-      $tmp = explode(':',$key);
-      $key = trim($tmp[0]);
+      if( strpos($key,':') !== FALSE )
+	{
+	  $tmp = explode(':',$key);
+	  $key = trim($tmp[0]);
+	}
       for( $i = 0; $i < count($this->headerArray); $i++ )
 	{
 	  $tmp = explode(':',$this->headerArray[$i],1);
 	  $key2 = trim($tmp[0]);
-	  if( $key2 == $key1 ) return TRUE;
+	  if( $key2 == $key ) return TRUE;
 	}
       return FALSE;
     }
@@ -632,19 +639,23 @@ class Http
 	{
 	  $this->headerArray = array();
 	}
-      $tmp = explode(':',$str,1);
-      $key = trim($tmp[0]);
+
       $f = 0;
-      for( $i = 0; $i < count($this->headerArray); $i++ )
+      if( strpos($str,':') !== FALSE )
 	{
-	  $tmp = explode(':',$this->headerArray[$i],1);
-	  $key2 = trim($tmp[0]);
-	  if( $key2 == $key1 )
+	  $tmp = explode(':',$str,1);
+	  $key = trim($tmp[0]);
+	  for( $i = 0; $i < count($this->headerArray); $i++ )
 	    {
-	      // found a duplicate.
-	      $this->headerArray[$i] = $str;
-	      $f = 1;
-	      break;
+	      $tmp = explode(':',$this->headerArray[$i],1);
+	      $key2 = trim($tmp[0]);
+	      if( $key2 == $key )
+		{
+		  // found a duplicate.
+		  $this->headerArray[$i] = $str;
+		  $f = 1;
+		  break;
+		}
 	    }
 	}
       if( !$f )
@@ -696,19 +707,7 @@ class Http
 	}
         else if(is_array($this->params) && count($this->params) > 0)
         {
-            // Get a blank slate
-            $tempString = array();
-            
-            // Convert data array into a query string (ie animal=dog&sport=baseball)
-            foreach ($this->params as $key => $value) 
-            {
-                if(strlen(trim($value))>0)
-                {
-                    $tempString[] = $key . "=" . urlencode($value);
-                }
-            }
-            
-            $queryString = join('&', $tempString);
+	    $queryString = http_build_query($this->params);
         }
         
         // If cURL is not installed, we'll force fscokopen
@@ -838,17 +837,26 @@ class Http
             $content = curl_exec($ch);
 	    if( !empty($content) )
 	      {
-		$tmp = explode("\r\n\r\n", $content);
+		$tmp = explode("\r\n\r\n", $content,2);
+	        $this->_parseHeaders($tmp[0]);
+		if( $this->status == 100 )
+                 {
+                    $tmp = explode("\r\n\r\n",$tmp[1],2);
+                 }	
+
 		for( $i = 0; $i < count($tmp); $i++ )
 		  {
 		    if( empty($tmp[$i]) ) unset($tmp[$i]);
 		  }
 
-		// Store the contents
-		$this->result = $tmp[count($tmp)-1];
+		if( count($tmp) > 1 )
+		  {
+		    // Store the contents
+		    $this->result = $tmp[1];
+		  }
 		
 		// Parse the headers
-		$this->_parseHeaders($tmp[count($tmp)-2]);
+		$this->_parseHeaders($tmp[0]);
 	      }
             
             // Get the request info 
@@ -862,14 +870,14 @@ class Http
         }
         else
         {
-            // Get a file pointer
+	  // Get a file pointer
 	  $filePointer = @stream_socket_client($this->_socket, $errorNumber, $errorString, $this->timeout);
        
-            // We have an error if pointer is not there
-            if (!$filePointer)
+	  // We have an error if pointer is not there
+	  if (!$filePointer)
             {
-                $this->_setError('Failed opening http socket connection: ' . $errorString . ' (' . $errorNumber . ')');
-                return FALSE;
+	      $this->_setError('Failed opening http socket connection: ' . $errorString . ' (' . $errorNumber . ')');
+	      return FALSE;
             }
 
             // Set http headers with host, user-agent and content type
@@ -877,10 +885,10 @@ class Http
 	    $this->addRequestHeader("Host: " . $this->host);
 	    $this->addRequestHeader('Accept: */*');
  	    $this->addRequestHeader("User-Agent: " . $this->userAgent);
-	    if( $this->requestHeaderExists('Content-Type') )
-	      {
-		$this->addRequestHeader("Content-Type: application/x-www-form-urlencoded");
-	      }
+// 	    if( !$this->requestHeaderExists('Content-Type') )
+// 	      {
+// 		$this->addRequestHeader("Content-Type: application/x-www-form-urlencoded");
+// 	      }
             
             // Specify the custom cookies
             if ($this->useCookie && $cookieString != '')
@@ -895,7 +903,7 @@ class Http
             }
             
             // Specify the referrer
-	      $this->addRequestHeader("Referer: " . $this->referrer);
+	    $this->addRequestHeader("Referer: " . $this->referrer);
             if ($this->referrer != '')
             {
 	      $this->addRequestHeader("Referer: " . $this->referrer);
@@ -925,15 +933,16 @@ class Http
             $responseContent = '';
 
             // 3...2...1...Launch !
+	    $n = 0;
             do
             {
                 $responseHeader .= fread($filePointer, 1);
             }
             while (!preg_match('/\\r\\n\\r\\n$/', $responseHeader) && !feof($filePointer));
-            
+
             // Parse the headers
             $this->_parseHeaders($responseHeader);
-            
+
             // Do we have a 301/302 redirect ?
             if (($this->status == '301' || $this->status == '302') && $this->redirect == TRUE)
             {
@@ -973,7 +982,7 @@ class Http
             else
             {
                 // Nope...so lets get the rest of the contents (non-chunked)
-	      if (isset($this->headers['transfer_encoding']) && $this->headers['transfer-encoding'] != 'chunked')
+	      if (!isset($this->headers['transfer-encoding']) || $this->headers['transfer-encoding'] != 'chunked')
                 {
                     while (!feof($filePointer))
                     {
@@ -981,9 +990,9 @@ class Http
                     }
                 }
                 else
-                {
+		  {
                     // Get the contents (chunked)
-                    while ($chunkLength = hexdec(fgets($filePointer)))
+		    while (!feof($filePointer) && $chunkLength = hexdec(fgets($filePointer)))
                     {
                         $responseContentChunk = '';
                         $readLength = 0;

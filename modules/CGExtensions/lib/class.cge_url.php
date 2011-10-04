@@ -38,6 +38,11 @@
 class cge_url
 {
   /**
+   * protected constructor
+   */
+  protected function __construct() {}
+
+  /**
    * Convert a standard url into an SSL url
    *
    * @param string The input URL
@@ -104,6 +109,30 @@ class cge_url
       {
 	return $content_obj->GetURL();
       }
+  }
+
+  /**
+   * Given an existing URL, add or adjust one of the parameters
+   *
+   * @param string The input url
+   * @param string The key name
+   * @param string The value for the variable
+   * @returns string  The resulting URL
+   */
+  public static function set_param($url,$key,$value)
+  {
+    if( !$url ) return;
+    $tmp = parse_url($url);
+    if( $tmp === FALSE ) return;
+
+    $query = array();
+    if( isset($tmp['query']) )
+      {
+	parse_str($tmp,$query);
+      }
+    $query[$key] = $value;
+    $tmp['query'] = http_build_query($query);
+    return http_build_url($tmp);
   }
 }
 

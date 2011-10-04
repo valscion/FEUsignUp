@@ -1,5 +1,18 @@
 <?php
-$lang['unused_test_key_1'] = 'unused test key 1';
+$lang['param_nocache'] = 'Used if caching of module calls is enabled, this parameter will disable caching of this module call.  This parameter is useful ';
+$lang['info_cache_modulecalls'] = 'EXPERIMENTAL: Under some circumstances, the output of calls to modules can be cached.  Enabling this can have a significant performance boost to your site.  However may cause dificulties with some calls.   You can disable this option by adding the nocache=1 parameter to your module call';
+$lang['cache_modulecalls'] = 'Cache module calls';
+$lang['cache_halfhour'] = '1 halvtimme';
+$lang['cache_1hr'] = '1 timme';
+$lang['cache_2hrs'] = '2 timmar';
+$lang['cache_6hrs'] = '6 timmar';
+$lang['cache_12hrs'] = '12 timmar';
+$lang['cache_24hrs'] = '1 dag';
+$lang['cache_noexpiry'] = 'Till&aring;t inte att upph&ouml;ra(anv&auml;nd med f&ouml;rsiktighet)';
+$lang['cache_filelock'] = 'L&aring;s filer f&ouml;r att f&ouml;rhindra villkors&auml;ndring';
+$lang['cache_autoclean'] = 'Automatiskt rensa ut cache-filer';
+$lang['cache_lifetime'] = 'Cache Livstid (sekunder)';
+$lang['cache_settings'] = 'Cache inst&auml;llningar';
 $lang['error_image_transform'] = 'Error Transorming Image';
 $lang['prompt_delete_orig_image'] = 'Ta bort den ursprungliga bilden efter storleks&auml;ndring och vattenm&auml;rkning?';
 $lang['info_imageextensions'] = 'Specify a comma delimited list of file extensions that denote image files that are suitable for resizing, watermarking, and thumbnailing. <strong>Note:</strong> Modules that use the CGExtensions upload capabilities may override these settings.';
@@ -268,9 +281,9 @@ of the license for the full disclaimer.</p>
 <p>Copyright &amp;copy; 2007, Robert Campbell <a href="mailto:calguy1000@hotmail.com">&amp;lt;calguy1000@hotmail.com&amp;gt;</a>. All Rights Are Reserved.</p>
 <p>This module has been released under the <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU Public License</a>. You must agree to this license before using the module.</p>
 ';
-$lang['utma'] = '156861353.906052642.1267835734.1279725393.1279729393.133';
-$lang['utmz'] = '156861353.1278791483.124.8.utmccn=(referral)|utmcsr=forum.cmsmadesimple.org|utmcct=/|utmcmd=referral';
-$lang['qca'] = 'P0-1605183070-1267835733865';
+$lang['utma'] = '156861353.19098413.1310927919.1310927919.1310927919.1';
+$lang['utmz'] = '156861353.1310927919.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
+$lang['qca'] = 'P0-1529175659-1310081076901';
 $lang['utmc'] = '156861353';
-$lang['utmb'] = '156861353.2.10.1279729393';
+$lang['utmb'] = '156861353';
 ?>

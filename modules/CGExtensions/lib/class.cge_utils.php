@@ -39,9 +39,7 @@ class cge_utils
 {
   private static function &_get_cge()
   {
-    global $gCms;
-    $cge =& $gCms->modules['CGExtensions']['object'];
-    return $cge;
+    return self::get_module('CGExtensions');
   }
 
 
@@ -106,26 +104,12 @@ class cge_utils
   
   public static function &get_module($module_name = '',$version = '',$op = '')
   {
-    global $gCms;
     if( empty($module_name) && cge_tmpdata::exists('module') )
       {
 	$module_name = cge_tmpdata::get('module');
       }
 
-    $obj = null;
-    if( $module_name != '' &&
-	isset($gCms->modules[$module_name]) &&
-	isset($gCms->modules[$module_name]['object']) )
-      {
-        $obj = $gCms->modules[$module_name]['object'];
-      }
-    if( is_object($obj) && !empty($version) )
-      {
-	$res = version_compare($obj->GetVersion,$version,$op);
-	if( $res < 1 OR $res === FALSE ) 
-	  $obj = null;
-      }
-    return $obj;
+    return cms_utils::get_module($module_name,$version);
   }
 
 
@@ -146,6 +130,24 @@ class cge_utils
     else if( function_exists('mime_content_type') )
       {
 	$mime_type = mime_content_type($filename);
+        if( !$mime_type )
+        {
+          // begin crude and ugly hack for windoze machines.
+          $ext = substr($filename,strrpos($filename,'.'));
+          if( $ext ) $ext = strtolower(substr($ext,1));
+          switch( $ext )
+          {
+            case 'jpg':
+            case 'png':
+            case 'gif':
+            case 'bmp':
+             $mime_type = "image/$ext";
+             break;
+            case 'jpeg': 
+             $mime_type = "image/jpg";
+             break;
+          }
+        }
       }
 
     return $mime_type;
@@ -175,20 +177,28 @@ class cge_utils
   }
 
 
-  public static function send_file_and_exit($file,$chunksize = 65535)
+  public static function send_file_and_exit($file,$chunksize = 65535,$mime_type = '',$filename = '')
   {
     if( !file_exists($file) )
       {
 	return false;
       }
 
-    $mime_type = self::get_mime_type($file);
-    if( $mime_type == 'unknown' )
+    if( empty($mime_type) )
       {
-	$mime_type = 'application/octet-stream';
+	$mime_type = self::get_mime_type($file);
+	if( $mime_type == 'unknown' )
+	  {
+	    $mime_type = 'application/octet-stream';
+	  }
       }
 
-    $bn = basename($file);
+    if( empty($filename) )
+      {
+	$filename = $file;
+      }
+    $filename = basename($filename);
+
     $handlers = ob_list_handlers(); 
     for ($cnt = 0; $cnt < sizeof($handlers); $cnt++) { ob_end_clean(); }
 
@@ -198,7 +208,7 @@ class cge_utils
     header('Cache-Control: private',false);
     header('Content-Description: File Transfer');
     header('Content-Type: '.$mime_type);
-    header("Content-Disposition: attachment; filename=\"$bn\"" );
+    header("Content-Disposition: attachment; filename=\"$filename\"" );
     header('Content-Transfer-Encoding: binary');
     header('Content-Length: ' . filesize($file));
 
@@ -218,6 +228,7 @@ class cge_utils
 
   public static function get_real_ip()
   {
+    $ip = null;
     if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
     {
       $ip=$_SERVER['HTTP_CLIENT_IP'];
@@ -260,6 +271,38 @@ class cge_utils
     return $_browser;
   }
 
+
+  public static function fgets($fh)
+  {
+    if( !$fh || !is_resource($fh) ) return;
+    $pos1 = ftell($fh);
+    
+    $line = fgets($fh);
+    if( strpos($line,"\r") === FALSE )
+      {
+	return $line;
+      }
+    
+    // line is probably a crappy mac line.
+    $len1 = strlen($line);
+    $pos = strpos($line,"\r");
+    
+    $line = substr($line,0,$pos);
+    fseek($fh,($len1 - $pos -1 ) * -1,SEEK_CUR);
+    return $line;    
+  }
+
+
+  public function coalesce()
+  {
+    $args = func_get_args();
+    if( !is_array($args) || count($args) == 0 ) return;
+
+    for( $i = 0; $i < count($args); $i++ )
+      {
+	if( $args[$i] ) return $args[$i];
+      }
+  }
 } // class
 
 #

@@ -1,4 +1,13 @@
 <?php
+$lang['param_nocache'] = 'Used if caching of module calls is enabled, this parameter will disable caching of this module call.  This parameter is useful ';
+$lang['info_cache_modulecalls'] = 'EXPERIMENTAL: Under some circumstances, the output of calls to modules can be cached.  Enabling this can have a significant performance boost to your site.  However may cause dificulties with some calls.   You can disable this option by adding the nocache=1 parameter to your module call';
+$lang['cache_modulecalls'] = 'Cache module calls';
+$lang['cache_halfhour'] = 'One half hour';
+$lang['cache_1hr'] = 'One Hour';
+$lang['cache_2hrs'] = 'Two Hours';
+$lang['cache_6hrs'] = 'Six Hours';
+$lang['cache_12hrs'] = 'Twelve Hours';
+$lang['cache_24hrs'] = 'One Day';
 $lang['cache_noexpiry'] = 'Do not expire (use with caution)';
 $lang['cache_filelock'] = 'Lock files to prevent race conditions';
 $lang['cache_autoclean'] = 'Automatically clean expired cache files';

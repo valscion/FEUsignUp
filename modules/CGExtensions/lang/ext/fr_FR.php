@@ -1,4 +1,13 @@
 <?php
+$lang['param_nocache'] = 'Used if caching of module calls is enabled, this parameter will disable caching of this module call.  This parameter is useful ';
+$lang['info_cache_modulecalls'] = 'EXPERIMENTAL: Under some circumstances, the output of calls to modules can be cached.  Enabling this can have a significant performance boost to your site.  However may cause dificulties with some calls.   You can disable this option by adding the nocache=1 parameter to your module call';
+$lang['cache_modulecalls'] = 'Cache module calls';
+$lang['cache_halfhour'] = 'Une demi heure';
+$lang['cache_1hr'] = 'Une heure';
+$lang['cache_2hrs'] = 'Deux heures';
+$lang['cache_6hrs'] = 'Six heures';
+$lang['cache_12hrs'] = 'Douze heures';
+$lang['cache_24hrs'] = 'Un jour';
 $lang['cache_noexpiry'] = 'N&#039;expire pas (utiliser avec prudence)';
 $lang['cache_filelock'] = 'Verrouiller les fichiers pour pr&eacute;venir des &eacute;tats de concurrence';
 $lang['cache_autoclean'] = 'Supprimer automatiquement les fichiers cache p&eacute;rim&eacute;s';
@@ -233,7 +242,7 @@ $lang['areyousure'] = '&Ecirc;tes-vous s&ucirc;r ?';
 $lang['resettofactory'] = 'R&eacute;initialiser aux valeurs par d&eacute;faut';
 $lang['error_template'] = 'Gabarit  d&#039;erreur&nbsp;';
 $lang['error_templatenameexists'] = 'Il y a d&eacute;j&agrave; un gabarit du m&ecirc;me nom';
-$lang['friendlyname'] = 'Calguys Module Extensions ';
+$lang['friendlyname'] = 'Extensions de modules (CG)';
 $lang['postinstall'] = 'Ce module est pr&ecirc;t &agrave; l&#039;emploi. Codez !';
 $lang['postuninstall'] = 'A bient&ocirc;t';
 $lang['uninstalled'] = 'Module d&eacute;sinstall&eacute;.';
@@ -247,31 +256,152 @@ $lang['help'] = '<h3>Que fait ce module ?</h3>
 <p>Ce module fournit une API, des formulaires et des tags smarty &agrave; utiliser dans d&#039;autres modules.  Si vous n&#039;&ecirc;tes pas un programmeur, vous n&#039;aurez certianement rien &agrave; faire avec ce module, bien qu&#039;il soit indispensable au bon fonctionnement d&#039;autres modules (d&eacute;pendences).</p>
 <h3 style=&quot;color: #f00;&quot;>Notes</h3>
 <p>Many modules take advantages of the forms that are provided by the CGExtensions module to assist in managing templates.  When they do, the CGExtensions module information is displayed prominently.  However when you submit, or cancel from these forms you will be returned to the original module.</p>
-<h3>Comment l&#039;utiliser ?</h3>
+<h3>How Do I Use It</h3>
 <p>Well, you start your own module (I suggest starting with the Skeleton module), and then when you need to use an advanced form object from this library, simply make your module dependant upon FormObjects, and then instantiate an object of the appropriate type.  See the code inside the FormObjects directory for usage instructions.</p>
 <h3>Smarty Addons</h3>
 <p>This module adds a few smarty conveniences for use with other modules. They are listed and described here:</p>
 <ul>
-<li>cgerror - <em>block</em> plugin
-<p>i.e: <code>{cgerror}This is error text{/cgerror}</code><br/>
-    or: <code>{cgerror}{$errortextvar}{/cgerror}</code><br/>
-</p>
-<p>optional parameters: &#039;errorclass&#039; = override the default class name in the template.
-</p>
+<li><u>cgerror - <em>block</em> plugin</u>
 <p>Description: This block plugin uses the error template (configurable from the CGExtensions admin interface) to display an error message.</p>
-</li></ul>
+<p>optional parameters: &#039;errorclass&#039; = override the default class name in the template.</p>
+<p>i.e: <code>{cgerror}This is error text{/cgerror}</code><br/>
+    or: <code>{cgerror}{$errortextvar}{/cgerror}</br>
+</p>
+</li>
+<li><u>{cge_isbot [assign=name]}</u> - <em>function</em> plugin
+<p>Description: A plugin to detect wether the request is from a robot.<p>
+<p>i.e: <code>{cg_isbot assign=&#039;isbot&#039;}{if $isbot}&amp;lt;h3&amp;gt;You are a bot&amp;lt;/h3&amp;gt;{/if}</code></p>
+</li>
+<li><u>{cge_is_smartphone [assign=name]}</u> - <em>function</em> plugin
+<p>Description: A plugin to detect wether the request is from a smart phone such as an iphone or android.<p>
+<p>i.e: <code>{cg_is_smartphone assign=&#039;isbot&#039;}{if $isbot}&amp;lt;h3&amp;gt;I should do some funky mobile styling here.&amp;lt;/h3&amp;gt;{/if}</code></p>
+</li>
+<li><u>cge_state_options - <em>function</em> plugin</u>
+<p>Description: Output a set of &amp;lt;option&amp;gt; tags for states.  The values are US/Canada State/Province abbreviations, the labels are the full length names in english.  This method reads the defined state list as defined in the database.</p>
+<p>i.e: <code>&amp;lt;select name=&quot;foo&quot;&amp;gt;{cge_state_options selected=&amp;quot;ab&amp;quot;}&amp;lt;/select&amp;gt;</code></p>
+</li>
+<li><u>cge_country_options - <em>block</em> plugin</u>
+<p>Description: Output a set of &amp;lt;options&amp;gt; tags for countries.  The values are approved country codes, the labels are the full length names (in english).  This method reads the country list as defined in the database, and takes into account the priority countries as defined in the CGExtensions admin console.</p>
+<p>i.e: <code>&amp;lt;select name=&amp;quot;foo&amp;quot;{cge_country_options selected=&amp;quot;us&amp;quot;}&amp;lt;/select&amp;gt;</code></p>
+</li>
+<li><u>get_current_url - <em>function</em> plugin</u>
+<p>Description: Return the current page url.</p>
+<p>Optional Parameters: &#039;assign&#039; = assign the output to the named smarty variable.</p>
+<p>i.e: <code>{get_current_url assign=&amp;quot;cur_url&amp;quot;}{$cur_url}</code></p>
+</li>
+<li><u>cge_yesno_options - <em>function</em> plugin</u>
+<p>Description: Output options for a dropdown list that allows selecting two options, &amp;quot;Yes&amp;quot; or &amp;quot;No&amp;quot;.  This plugin will output the &amp;lt;option&amp;gt tags using localized strings for the labels, and integers for the values.</p>
+<p>Optional Parameters:
+  <ul>
+    <li>&amp;quot;prefix&amp;quot; - A prefix to place before the name attribute on the tag.  i.e: prefix=$actionid</li>
+    <li>&amp;quot;name&amp;quot; - A name for the select list, if this parameter is specified the system will generate a complete &amp;lt;select&amp;gt; tag.  Otherwise, only &amp;lt;option&amp;gt; tags will be generated.</li>
+    <li>&amp;quot;selected&amp;quot; - The value of the currently selected element (either 0 or 1)</li>
+    <li>&amp;quot;assign&amp;quot; - Assign the output html code to a newly generated smarty variable.</li>
+  </ul>
+</p>
+<br/>
+<p>i.e: <code>{cge_yesno_options prefix=\$actionid name=&amp;quot;send_mail&amp;quot; selected=$send_mail}</code></p>
+</li>
+<li><u>cge_have_module - <em>function</em> plugin</u>
+  <p>Description: Output a boolean (0 or 1) value if a module is installed and ready to use.</p>
+  <p>Optional Parameters:
+     <ul>
+       <li>&amp;quot;m&amp;quot;|&amp;quot;mod&amp;quot;|&amp;quot;module&amp;quot; - Specify the module name</lI>
+       <li>&amp;quot;assign&amp;quot; - Assign the output html code to a newly generated smarty variable.</li>
+     </ul>
+  </p>
+<br/>
+<p>i.e: <code>{cge_have_module module=&amp;quot;FrontEndUsers&amp;quot assign=&amp;quot;have_feu&amp;quot;}</code></p>
+</li>
+<li><u>cgimage - <em>function</em> plugin</u>
+  <p>Description: Output an image tag, This plugin is typically used in admin templates, as it automatically searches in the admin theme, and in registered icon directories.</p>
+  <p>Required Parameters:
+    <ul>
+      <li>&amp;quot;image&amp;quot; - The filename of the image.  You may specify a filename, or a path relative to the admin theme&amp;quot;s images directory.</li>
+    </ul>
+  </p>
+  <br/>
+  <p>Optional Parameters:
+    <ul>
+      <li>&amp;quot;alt&amp;quot; - Specify alt text for the image.  If not specified, the value of the image parameter will be used.</li>
+      <li>&amp;quot;class&amp;quot; - Specify a class for the image tag.</li>
+      <li>&amp;quot;width&amp;quot; - Specify an integer width for the image tag.</li>
+      <li>&amp;quot;height&amp;quot; - Specify an integer height for the image tag.</li>
+      <li>&amp;quot;assign&amp;quot; - Assign the output html code to a newly generated smarty variable.</li>
+    </ul>
+  </p>
+  <br/>
+  <p>See also:  CGExtensions->AddImageDir()</p>
+  <p>i.e: <code>{cgimage image=&amp;quot;icons/system/newobject.gif&amp;quot;}</code></p>
+</li>
+<li><u>rfc_date - <em>modifier</em> plugin</u>
+<p>Description: Format a supplied time in an RFC consistent manner.  This modifier is particularly useful when generating RSS feeds.</p>
+<p>i.e: <code>{$smarty.now|rfc_date}</code></p>
+</li>
+<li><u>jsmin - <em>block</em> plugin</u>
+  <p>Description: Pass content through the javascript minifier.</p>
+  <p>Note: You must specify the approprate {literal},{/literal},{ldelim|, and {rdelim} inside the block to allow smarty to process or ignore the code.</p>
+  <p>i.e:  <code>{jsmin}&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;// alot of javascript code here&amp;lt;/script&amp;gt;{/jsmin}</code></p>
+</li>
+<li><u>cge_textarea - <em>block</em> plugin</u>
+  <p>Description: Create a text area tag, with optional support for wysiwyg editor.  This tag is typically used in admin templates to create text areas.</p>
+  <p>Required Parameters:
+    <ul>
+      <li>&amp;quot;prefix&amp;quot; - A string to prefix the textarea element name.  i.e: {$actionid}</li>
+      <li>&amp;quot;name&amp;quot; - The element name.</li>
+    </ul>
+  </p>
+  <br/>
+  <p>Optional Parameters:
+    <ul>
+      <li>&amp;quot;wysiwyg&amp;quot; - An integer value to indicate wether a wysiwyg should be applied (the actual wysiwyg that is used depends on CMSMS site preferrences and user preferences.</li>
+      <li>&amp;quot;content&amp;quot; - The content for the text area.</li>
+      <li>&amp;quot;class&amp;quot; - An optional class to supply to the text area tag.</li>
+      <li>&amp;quot;assign&amp;quot; - Assign the output html code to a newly generated smarty variable.</li>
+    </ul>
+  </p>
+  <br/>
+  <p>i.e: <code>{cge_textarea prefix=$actionid name=&amp;quot;description&amp;quot; content=$description wysiwyg=1}</code></p>
+</li>
+<li><u>cge_str_to_assoc - <em>function</em> plugin</u>
+  <p>Description: Convert url parameter type string to an associative array.</p>
+  <p>Required Parameters:
+    <ul>
+      <li>&amp;quot;input&amp;quot; - The input string</li>
+    </ul>
+  </p>
+  <br/>
+  <p>Optional Parameters:
+    <ul>
+      <li>&amp;quot;delim1&amp;quot; - Delimiter for separating the string into a list of variables.  Defaults to &amp;quot;,&amp;quot;</li>
+      <li>&amp;quot;delim2&amp;quot; - Delimiter for separating variable into a variable name and value.  Defaults to &amp;quot;=&amp;quot;</li>
+      <li>&amp;quot;assign&amp;quot; - Assign the output html code to a newly generated smarty variable.</li>
+    </ul>
+  </p>
+  <br/>
+  <p>i.e: <code>{cge_str_to_assoc input=&amp;quot;var1=val1,var2=val2,var3=val3&amp;quot; assign=&amp;quot;tmp&amp;quot;}</code></p>
+</li>
+<li><u>cge_cache - <em>block</em> plugin</u>
+  <p>Description: Cache html outout between start and end blocks for performance. By default content between the start and end tags is cached to files in the tmp/cache directory for a period of five minutes.  Later versions of this plugin will allow extending the cache lifetime.</p>
+  <p><strong>Note:</strong> This is not technically a block plugin, but does behave like one.</p>
+  <p><strong>Note:</strong> This is an advanced plugin that can dramatically improve the average performance of your (primarily static) website, though it should be used with caution as using it incorrectly can cause strange behaviour on your site.  This functionality works best when wrapped around smarty tags that query the database and generate static html content.  This plugin should not be used around dynamic functionality or forms.</p>
+  <p><strong>Note:</strong> This plugin utilizes file locking to prevent race conditions.  This may present problems on different platforms.  Use this plugin with caution.</p>
+  <pp>i.e: <code>{cge_cache}{Products}{/cge_cache}</code></p>
+</li>
+</ul>
 <h3>Support</h3>
 <p>This module does not include commercial support. However, there are a number of resources available to help you with it:</p>
 <ul>
-<li>For the latest version of this module, FAQs, or to file a Bug Report or buy commercial support, please visit the cms development forge at <a href="http://dev.cmsmadesimple.org">dev.cmsmadesimple.org</a>.</li>
-<li>Additional discussion of this module may also be found in the <a href="http://forum.cmsmadesimple.org">CMS Made Simple Forums</a>.</li>
-<li>The author(s), calguy et all can often be found in the <a href="irc://irc.freenode.net/#cms">CMS IRC Channel</a>.</li>
+<li>For the latest version of this module, FAQs, or to file a Bug Report or buy commercial support, please visit the cms development forge at <a href=\"http://dev.cmsmadesimple.org\">dev.cmsmadesimple.org</a>.</li>
+<li>Additional discussion of this module may also be found in the <a href=\"http://forum.cmsmadesimple.org\">CMS Made Simple Forums</a>.</li>
+<li>The author(s), calguy et all can often be found in the <a href=\"irc://irc.freenode.net/#cms\">CMS IRC Channel</a>.</li>
 <li>Lastly, you may have some success emailing the author(s) directly.</li>  
 </ul>
-<p>Conform&eacute;ment &agrave; la licence GPL, ce module est distribu&eacute; tel quel. Veuillez vous r&eacute;f&eacute;rer directement &agrave; la licence pour tout avis de non responsabilit&eacute;.</p>
+<p>As per the GPL, this software is provided as-is. Please read the text
+of the license for the full disclaimer.</p>
 
-<h3>Copyright et Licence</h3>
-<p>Copyright &copy; 2007, Robert Campbell <a href="mailto:calguy1000@hotmail.com">calguy1000@hotmail.com</a>.Tous droits r&eacute;serv&eacute;s.</p>
+<h3>Copyright and License</h3>
+<p>Copyright &amp;copy; 2008, Robert Campbel <a href=\"mailto:calguy1000@cmsmadesimple.org\">&amp;lt;calguy1000@cmsmadesimple.org&amp;gt;</a>. All Rights Are Reserved.</p>
 <p>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -288,10 +418,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
-$lang['utma'] = '156861353.467093620.1291702376.1291702376.1291702376.1';
-$lang['utmb'] = '156861353.1.10.1291702376';
+Or read it <a href=\"http://www.gnu.org/licenses/licenses.html#GPL\">online</a></p>';
+$lang['qca'] = 'P0-167338602-1304155985682';
+$lang['utma'] = '156861353.1242350738.1310284715.1310284715.1310284715.1';
 $lang['utmc'] = '156861353';
-$lang['utmz'] = '156861353.1291702376.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)';
-$lang['qca'] = 'P0-728519009-1291702376412';
+$lang['utmz'] = '156861353.1310284715.1.1.utmccn=(referral)|utmcsr=forum.cmsmadesimple.org|utmcct=/viewtopic.php|utmcmd=referral';
+$lang['utmb'] = '156861353';
 ?>

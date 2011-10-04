@@ -35,7 +35,7 @@
 #-------------------------------------------------------------------------
 #END_LICENSE
 
-if( !class_exists('CGExtensions') )
+if( !class_exists('CGExtensions',false) )
   {
 
 define('CGEXTENSIONS_TABLE_COUNTRIES',cms_db_prefix().'module_cge_countries');
@@ -72,9 +72,24 @@ class CGExtensions extends CMSModule
     // setup caching
     if( get_class($this) == 'CGExtensions' && !is_object(cms_cache_handler::get_instance()->get_driver()) )
       {
-	$lifetime = $this->GetPreference('cache_lifetime',300);
-	$filelock = $this->GetPreference('cache_filelock',1);
-	$autoclean = $this->GetPreference('cache_autoclean',1);
+	$lifetime = (int)$this->GetPreference('cache_lifetime',300);
+	$filelock = (int)$this->GetPreference('cache_filelock',1);
+	$autoclean = (int)$this->GetPreference('cache_autoclean',1);
+	if( $autoclean ) 
+	  {
+	    // autoclean is enabled... but we don't want to search through the directory for files to delete
+	    // on each request... so we just do that once per interval.
+	    $tmp = $this->GetPreference('cache_autoclean_last',0);
+	    if( (time() - $tmp) < $lifetime )
+	      {
+		$autoclean = 0;
+	      }
+	    else
+	      {
+		$autoclean - 1;
+		$this->SetPreference('cache_autoclean_last',time());
+	      }
+	  }
 	$driver = new cms_filecache_driver(array('cache_dir'=>TMP_CACHE_LOCATION,
 						 'lifetime'=>$lifetime,
 						 'locking'=>$filelock,
@@ -187,6 +202,8 @@ class CGExtensions extends CMSModule
     $this->RestrictUnknownParams();
     $this->SetParameterType('cge_msg',CLEAN_STRING);
     $this->SetParameterType('cge_error',CLEAN_INT);
+    $this->SetParameterType('nocache',CLEAN_INT);
+    $this->CreateParameter('nocache',0,$this->Lang('param_nocache'));
   }
 
 
@@ -243,7 +260,7 @@ class CGExtensions extends CMSModule
    ---------------------------------------------------------*/
   public function GetVersion()
   {
-    return '1.24.2';
+    return '1.26.6';
   }
 
 
@@ -422,11 +439,47 @@ class CGExtensions extends CMSModule
 	    $this->_messages = explode(':msg:',$params['cg_message']);
 	    unset($params['cg_message']);
 	  }
+
+	$this->DisplayErrors();
+	$this->DisplayMessages();
       }
 
-    $this->DisplayErrors();
-    $this->DisplayMessages();
+    $cge = $this->GetModuleInstance('CGExtensions');
+    if( $cge->GetPreference('cache_modulecalls',0) && (!isset($params['nocache']) || !$params['nocache']) &&
+	cms_cache_handler::can_cache() )
+      {
+	$key = '';
+	if( isset($params['cache_key']) )
+	  {
+	    $key = trim($params['cache_key']);
+	  }
+	else
+	  {
+	    $tmp = debug_backtrace();
+	    $bt = array();
+	    foreach( $tmp as $elem )
+	      {
+		$bt[] = $elem['file'].':'.$elem['line'];
+	      }
+	    $key = 'm'.md5($this->GetName().serialize($params).serialize($bt).$id.$returnid);
+	  }
 
+	$output = '';
+	if( !cms_cache_handler::get_instance()->exists($key,'cge_module') )
+	  {
+	    @ob_start();
+	    parent::DoAction($name,$id,$params,$returnid);
+	    $output = @ob_get_contents();
+	    @ob_end_clean();
+	    if( strlen($output) ) cms_cache_handler::get_instance()->set($key,$output,'cge_module');
+	  }
+	else
+	  {
+	    $output = cms_cache_handler::get_instance()->get($key,'cge_module');
+	  }
+	echo $output;
+	return;
+      }
     parent::DoAction($name,$id,$params,$returnid);
   }
 
@@ -967,7 +1020,7 @@ class CGExtensions extends CMSModule
   // todo: delete me.
   function ListTemplatesWithPrefix($prefix='',$trim = false )
   {
-    return cge_template_utils::get_templates_by_prefix($prefix,$trim);
+    return cge_template_utils::get_templates_by_prefix($this,$prefix,$trim);
   }
 
   // todo: delete me.

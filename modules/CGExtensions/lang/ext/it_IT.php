@@ -410,8 +410,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href=\"http://www.gnu.org/licenses/licenses.html#GPL\">online</a></p>
 ';
-$lang['utma'] = '156861353.974349155.1299072468.1299072468.1299074554.2';
+$lang['utma'] = '156861353.974349155.1299072468.1302003201.1303465107.4';
+$lang['qca'] = 'P0-1868709163-1302003200778';
 $lang['utmb'] = '156861353';
-$lang['utmz'] = '156861353.1299072468.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
 $lang['utmc'] = '156861353';
+$lang['utmz'] = '156861353.1303465107.4.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
 ?>

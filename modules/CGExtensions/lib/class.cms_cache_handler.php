@@ -36,7 +36,7 @@ class cms_cache_handler
 
   final public function clear($group = '')
   {
-    if( !$this->can_cache() ) return FALSE;
+    if( !self::can_cache() ) return FALSE;
 
     if( is_object($this->_driver) )
       {
@@ -56,9 +56,9 @@ class cms_cache_handler
     return FALSE;
   }
 
-  final public function exists($key,$goup = '')
+  final public function exists($key,$group = '')
   {
-    if( !$this->can_cache() ) return FALSE;
+    if( !self::can_cache() ) return FALSE;
     if( is_object($this->_driver) )
       {
 	return $this->_driver->exists($key,$group);
@@ -68,7 +68,7 @@ class cms_cache_handler
 
   final public function erase($key,$group = '')
   {
-    if( !$this->can_cache() ) return FALSE;
+    if( !self::can_cache() ) return FALSE;
     if( is_object($this->_driver) )
       {
 	return $this->_driver->erase($key,$group);
@@ -78,7 +78,7 @@ class cms_cache_handler
 
   final public function set($key,$value,$group = '')
   {
-    if( !$this->can_cache() ) return FALSE;
+    if( !self::can_cache() ) return FALSE;
     if( is_object($this->_driver) )
       {
 	return $this->_driver->set($key,$value,$group);
@@ -89,7 +89,6 @@ class cms_cache_handler
 
   final public static function can_cache($type = 0)
   {
-    return TRUE;
     $type == (int)$type;
     global $CMS_ADMIN_PAGE;
     global $CMS_INSTALL_PAGE;
@@ -103,39 +102,10 @@ class cms_cache_handler
     $config = cmsms()->GetConfig();
     if( isset($config['debug']) && $config['debug'] == true ) return FALSE;
 
-    $global_caching = get_site_preference('global_caching',0);
-    if( !$global_caching ) return FALSE;
-    die('so far can cache');
-
     $uid = get_userid(false);
-    if( $uid )
-      {
-	$user_caching = get_preference($uid,'user_caching',0);
-	if( !$user_caching ) return FALSE;
-      }
-    
-    switch( $type )
-      {
-      case self::TYPE_PAGE:
-	return get_site_preference('page_caching',0);
-	
-      case self::TYPE_STYLESHEET:
-	return get_site_preference('stylesheet_caching',0);
+    if( $uid ) return FALSE; // caching disabled for logged in administrators
 
-      case self::TYPE_TEMPLATE:
-	return get_site_preference('template_caching',0);
-
-      case self::TYPE_CONTENT:
-      case self::TYPE_MODULE:
-	return FALSE;
-
-      case self::TYPE_ANY:
-	return TRUE;
-
-      default:
-	return FALSE;
-      }
-    return TRUE;
+    return TRuE;
   }
 }
 

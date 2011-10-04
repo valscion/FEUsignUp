@@ -112,6 +112,7 @@ if( $txt != "" )
 // we're ready to set it
 $txt = cms_html_entity_decode($params['templatecontent'],ENT_QUOTES,get_encoding());
 $module->SetTemplate($newtemplate,$txt);
+audit('',$module->GetName(),'Added Template '.$newtemplate);
 
 if( $this->_current_tab != '' )
   {

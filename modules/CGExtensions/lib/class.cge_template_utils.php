@@ -43,7 +43,7 @@ class cge_template_utils
       {
 	$mod = cge_utils::get_module();
       }
-    
+
     $templates = $mod->ListTemplates();
     if( $prefix == '' ) return $templates;
     
@@ -68,7 +68,7 @@ class cge_template_utils
 
   public static function create_template_dropdown($id,$name,$prefix = '',$selectedvalue = -1,$addtext = '')
   {
-    $templates = self::get_templates_by_prefix($prefix);
+    $templates = self::get_templates_by_prefix('',$prefix);
     $items = array();
     foreach( $templates as $onename )
       {

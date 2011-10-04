@@ -2,6 +2,7 @@
 
 class cge_encrypt
 {
+  protected function __construct() {}
 
   static public function encrypt($key,$data)
   {

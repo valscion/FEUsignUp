@@ -44,6 +44,7 @@ class cg_fileupload
   const BADDESTDIR = 'CGFILEUPLOAD_BADDESTDIR';
   const BADPERMS = 'CGFILEUPLOAD_BADPERMS';
   const MOVEFAILED = 'CGFILEUPLOAD_MOVEFAILED';
+  const UPLOADFAILED = 'CGFILEUPLOAD_UPLOADFAILED';
   const PREPROCESSING_FAILED = 'CGFILEUPLOAD_PREPROCESSING_FAILED';
 
   private $_maxfilesize;
@@ -372,9 +373,10 @@ class cg_fileupload
     $extension = strrchr($file['name'],".");
 
     // Check the file size
-    if( ($this->_maxfilesize > 0) && 
-	($file['size'] > $this->_maxfilesize) )
+    if( (($this->_maxfilesize > 0) && $file['size'] > $this->_maxfilesize) ||
+	$file['size'] == 0 )
       {
+	debug_display($file); die();
 	$this->_errno = self::FILESIZE;
 	return false;
       }
@@ -443,8 +445,6 @@ class cg_fileupload
     $res = @copy( $srcname, $destname );
     if( !$res )
       {
-	debug_display("ERROR: copy $srcname to $destname failed");
-	debug_to_log("ERROR: copy $srcname to $destname failed");
 	$this->_errno = self::MOVEFAILED;
 	return false;
       }

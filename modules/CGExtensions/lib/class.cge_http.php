@@ -78,7 +78,7 @@ class cge_http
   {
     if( !in_array('curl',get_loaded_extensions()) )
       {
-	return file_get_contents($url);
+	return file_get_contents($URL);
       }
     else
       {

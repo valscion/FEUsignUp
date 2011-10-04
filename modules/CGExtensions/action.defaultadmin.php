@@ -73,6 +73,7 @@ else if( isset($params['graphical_submit']) )
   }
 else if( isset($params['cache_submit']) )
   {
+    $this->SetPreference('cache_modulecalls',(int)$params['cache_modulecalls']);
     $this->SetPreference('cache_lifetime',(int)$params['cache_lifetime']);
     $this->SetPreference('cache_filelock',(int)$params['cache_filelock']);
     $this->SetPreference('cache_autoclean',(int)$params['cache_autoclean']);

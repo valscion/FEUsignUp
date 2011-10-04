@@ -56,6 +56,7 @@ $flds = "id I KEY AUTO,
          key3 C(255),
          key4 C(255),
          data X,
+         type C(20),
          expiry C(20),
          create_date ".CMS_ADODB_DT.",
          modified_date ".CMS_ADODB_DT;

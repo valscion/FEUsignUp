@@ -60,6 +60,7 @@ if( isset($params['resettodefault']) &&
 	$template = @file_get_contents($fn);
 	$module->SetTemplate($params['prefname'],$template);
 	$module->RemovePreference($params['prefname']); // clear old cruft.
+	audit('',$module->GetName(),'Reset the default template for '.$params['prefname']);
       }
   }
  else if( isset($params['submit']) &&
@@ -67,6 +68,7 @@ if( isset($params['resettodefault']) &&
    {
      $module->SetTemplate($params['prefname'],$params['input_template']);
      $module->RemovePreference($params['prefname']); // clear old cruft.
+     audit('',$module->GetName(),'Template '.$params['prefname'].' was edited');
    }
 
 $module->SetCurrentTab($this->_current_tab);

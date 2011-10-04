@@ -35,8 +35,13 @@
 #-------------------------------------------------------------------------
 #END_LICENSE
 
-class cge_smarty_plugins
+final class cge_smarty_plugins
 {
+  protected function __construct() {}
+
+  static private $_cge_cache_keys;
+  static private $_cge_cache_keystack;
+
   /***
    * A smarty function for creating a list of state options
    */
@@ -402,22 +407,34 @@ class cge_smarty_plugins
   { 
     if( !cms_cache_handler::can_cache() ) return '{';
 
-    $params = $smarty->_parse_attrs($tag_arg);
-    $bt = debug_backtrace();
-    $key = 'v'.md5(serialize($bt).serialize($_REQUEST).cms_utils::get_current_pageid().cge_url::current_url());
-    if( isset($params['key']) )
+    $tmp = debug_backtrace();
+    $bt = array();
+    foreach( $tmp as $elem )
       {
-	$key = 'v'.trim($params['key']);
+	$bt[] = $elem['file'].':'.$elem['line'];
       }
 
-    $tdata = array();
-    if( cge_tmpdata::exists('cge_cache') )
+    if( !is_array(self::$_cge_cache_keys) )
       {
-	$tdata = cge_tmpdata::get('cge_cache');
-	if( !is_array($tdata) ) throw new Exception('cge_cache data in cge_tmpdate object is not an array');
+	self::$_cge_cache_keys = array();
+	self::$_cge_cache_keystack = array();
       }
-    $tdata[] = $key;
-    cge_tmpdata::set('cge_cache',$tdata);
+    $nn = '';
+    while( $nn == '' || $nn < 100 )
+      {
+	$keyr = 'v'.md5(serialize($bt).cms_utils::get_current_pageid().cge_url::current_url());
+	$key = $keyr.$nn;
+	if( !in_array($key,self::$_cge_cache_keys) )
+	  {
+	    break;
+	  }
+	if( $nn == '' ) $nn = 1;
+	$nn = $nn++;
+      }
+
+    if( $key == '' ) return '{';
+    self::$_cge_cache_keys[] = $key;
+    self::$_cge_cache_keystack[] = $key;
 
     $output = "\$$key=cms_cache_handler::get_instance()->get('$key','cge_cache'); if(\$$key!=''){echo '<!--cge_cache-->'.\$$key;}else{ob_start();";
     return $output;
@@ -428,28 +445,14 @@ class cge_smarty_plugins
   {
     if( !cms_cache_handler::can_cache() ) return '}';
 
-    if( !cge_tmpdata::exists('cge_cache') )
+    if( !is_array(self::$_cge_cache_keystack) || count(self::$_cge_cache_keystack) == 0 )
       {
 	throw new Exception('in /cge_cache smarty tag without existing cache data');
       }
-    $tdata = cge_tmpdata::get('cge_cache');
-    $key = '';
-    if( !is_array($tdata) || count($tdata) < 0 )
-      {
-	throw new Exception('in /cge_cache with no key information');
-      }
-    $key = array_pop($tdata);
+    $key = array_pop(self::$_cge_cache_keystack);
     if( $key == '' )
       {
 	throw new Exception('in /cge_cache with invalid key');
-      }
-    if( count($tdata) > 0 )
-      {
-	cge_tmpdata::set('cge_cache',$tdata);
-      }
-    else
-      {
-	cge_tmpdata::erase('cge_cache');
       }
 
     $output = "\$$key=@ob_get_contents();@ob_end_clean();echo \$$key;cms_cache_handler::get_instance()->set('$key',\$$key,'cge_cache');}";

@@ -35,12 +35,12 @@
 #-------------------------------------------------------------------------
 #END_LICENSE
 
+$db = cmsms()->GetDb();
+$tabopotarray = array( 'mysql' => 'TYPE=MyISAM' );
+$dict = NewDataDictionary($db);
+
 if( version_compare($oldversion,'1.8') < 0 )
   {
-    $db =& $this->GetDb();
-    $tabopotarray = array( 'mysql' => 'TYPE=MyISAM' );
-    $dict = NewDataDictionary($db);
-    
     
     // tables
     $flds = "id   I KEY AUTO,
@@ -80,7 +80,6 @@ if( version_compare($oldversion,'1.8') < 0 )
 
 if( version_compare($oldversion,'1.11') < 0 )
   {
-    $db =& $this->GetDb();
     $tabopotarray = array( 'mysql' => 'TYPE=MyISAM' );
     $dict = NewDataDictionary($db);
 
@@ -100,7 +99,6 @@ if( version_compare($oldversion,'1.11') < 0 )
 
 if( version_compare($oldversion,'1.16') < 0 )
   {
-    $db =& $this->GetDb();
     $tabopotarray = array( 'mysql' => 'TYPE=MyISAM' );
     $dict = NewDataDictionary($db);
 
@@ -122,10 +120,6 @@ if( version_compare($oldversion,'1.16') < 0 )
 
 if( version_compare($oldversion,'1.19.3') < 0 )
   {
-    $db =& $this->GetDb();
-    $tabopotarray = array( 'mysql' => 'TYPE=MyISAM' );
-    $dict = NewDataDictionary($db);
-
     $flds = "id   I KEY AUTO,
              code C(2) KEY,
              name C(50),
@@ -160,6 +154,12 @@ if( version_compare($oldversion,'1.19.3') < 0 )
 	$db->Execute($query,array($acronym,$state_name));
       }
 
+  }
+
+if( version_compare($oldversion,'1.24.3') < 0 )
+  {
+    $sqlarray = $dict->AddColumnSQL(CGEXTENSIONS_TABLE_ASSOCDATA,'type C(50)');
+    $dict->ExecuteSQLArray($sqlarray);
   }
 
 // this may fail, but let it fail.
