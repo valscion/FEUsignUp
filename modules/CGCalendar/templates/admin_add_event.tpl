@@ -190,7 +190,7 @@ function handleDropdown()
 {foreach from=$fields item='one'}
 <div class="pageoverflow">
   <p class="pagetext">{$one->name}</p>
-  <p class="pageinput">{if isset($one->value)}{$one->value}&nbsp;{/if}{$one->field}</p>
+  <p class="pageinput">{if isset($one->value) && $one->type != 3}{$one->value}&nbsp;{/if}{$one->field}</p>
 </div>
 {/foreach}
 {/if}

@@ -1,4 +1,6 @@
 <?php
+$lang['delete'] = 'Poista';
+$lang['cd_company'] = 'Yhti&ouml; Hakemisto Yhti&ouml;';
 $lang['dflt_urlprefix'] = 'URL-osoitteiden oletus etuliite';
 $lang['dflt_alldayevent'] = 'Uudet tapahtumat ovat oletuksena &quot;Koko p&auml;iv&auml;n&quot;-tapahtumia';
 $lang['dflt_starttime'] = 'Uusien tapahtumien oletus alkamisaika';
@@ -104,7 +106,7 @@ $lang['info_search_template_tab'] = 'Saatavilla oleva lista hakulomakkeen sivupo
 $lang['cal_search_form_templates'] = 'Hakulomake';
 $lang['max'] = 'max.';
 $lang['times'] = 'kertaa';
-$lang['on'] = 'on';
+$lang['on'] = 'on ';
 $lang['areyousure_uninstall'] = 'Oletko varma, ett&auml; haluat tehd&auml; t&auml;m&auml;n? Jatkaminen poistaa kaikki t&auml;h&auml;n moduuliin liittyv&auml;t tiedot.';
 $lang['post_uninstall'] = 'Kalenterimoduuli on poistettu onnistuneesti ja t&auml;h&auml;n moduuliin liittyv&auml;t sivupohjat on poistettu.';
 $lang['fieldupdated'] = 'Kentt&auml; p&auml;ivitetty';
@@ -368,207 +370,192 @@ $lang['cal_recur_until'] = 'Toistuu kunnes';
 $lang['help_template'] = '<p><b>Print Author Name:</b></p>
 <code>Author: {$event.authorname}</code>
 ';
-$lang['cal_help'] = '		<h3>What does this do?</h3>
-		<p>Calendar is a module for displaying events on your page. When the
-		module is installed, a Calendar admin page is added to the plugins menu
-		that will allow you to manage your events.</p>
-		<h3>Security</h3>
-		<p>The user must belong to a group with the &#039;Modify Calendar&#039; permission
-		in order to add, edit, or delete calendar event entries.</p>
-		<h3>How do I use it?</h3>
-		<ol>
-		  <li>Put the cms_module tag in the page content. Make sure it is not enclosed in <pre>...</pre> tags.  You will need to view source code for this.  The code would look something like:<br />
-		  <tt>{cms_module module=&quot;Calendar&quot; table_id=&quot;big&quot;}</tt><br />
-		  The <tt>table_id</tt> parameter is required for the CSS (see below for details).</li>
-		  <li>Create a new stylesheet called Calendar, and fill it with the contents of the <tt>calendar_example.css</tt> file in the module directory.</li>
-		  <li>Associate this stylesheet with the template you are using for the calendar page.</li>
-		</ol>
-		<h3>Locale</h3>
-		<p>Calendar also supports translation of all text strings to another language. To support
-		your language, add a file named <b><code><language>.php</code></b> to the
-		<code>modules/Calendar/lang</code> directory. I would suggest copying en_US.inc.php as a starting point.
-		You can then select your language from the Settings tab in the Calendar admin.</p>
-		<p>Note you can
-		override the language used for a particular calendar displayed on the front end site by adding lang=&quot;xx_XX&quot; to
-		the {cms_module module=&quot;Calendar&quot;} call. For instance: {cms_module module=&quot;Caldendar&quot; lang=&quot;de_DE&quot;}</p>
-		<h3>What Parameters Exist?</h3>
-		<table border=0 cellpadding=3 cellspacing=0>
-		<tr>
-			<td>display</td>
-			<td>Acceptable values:<br>
-			  &quot;calendar&quot; - displays events for the current month in a traditional grid.  Inclues links to prev. and next months.<br>
-			  &quot;list&quot; - displays events for the current month as a list.  Includes links to prev. and next months.<br>
-			  &quot;yearlist&quot; - displays events for the current year in a list.  Includes links to prev. and next years.<br>
-			  &quot;upcominglist&quot; - displays all upcoming events.  No prev/next links.<br>
-			Defaults to &quot;calendar&quot; <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>category</td>
-			<td>Only display items for that category. Leaving unset, will show all categories. Note that
-			you can limit to muliple categories by separating each one with a comma.<em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>month</td>
-			<td>Display entries for a particular month. If year is not set, then the current year is
-				assumed. This option only works if display is set to &quot;list&quot; or &quot;calendar&quot;. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>year</td>
-			<td>Display entries for a particular year.
-				This option only works if display is set to &quot;list&quot; or &quot;calendar&quot;. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>limit</td>
-			<td>Set to the maximum number of events to display. This option only works if display is set to &quot;list&quot; or &quot;upcominglist&quot;. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>first_day_of_week</td>
-			<td>Set to the first day of the week as a number between 0 and 6 (0 = Sunday). Default is 1 (Monday).
-				This option only works if display is set to &quot;calendar&quot;. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>summaries</td>
-			<td>Set to 1 to display the summary information or 0 to not display it in calendar mode. Default is 1. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>detail</td>
-			<td>Set to 1 to display the detail information or 0 to not display it in list mode. Default is 0. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>table_id</td>
-			<td>Id to set for this calendar or list. This is useful for applying CSS styling. Default is &quot;calendar-<autogenerated id number>&quot;. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>date_format</td>
-			<td>Format to display the event&#039;s date (as used in <a href=&#039;http://www.php.net/manual/en/function.strftime.php&#039; target=&#039;_blank&#039;>strftime()</a>). Default is &quot;%d/%b/%Y&quot;. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>use_session</td>
-			<td>Use a session variable to store the current month of the calendar. Default is ture. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>compact_view</td>
-			<td>Set to 1 to hide the navigation links. Helpful to show current month&#039;s events on the home page. Default is 0. <em>(optional)</em></td>
-		</tr>
-		<tr>
-			<td>reverse</td>
-			<td>Set to true to display events in reverse chronological order. Applicable to list and upcominglist displays. Default is false. <em>(optional)</em></td>
-		</tr>
-		</table>
+$lang['cal_help'] = '<h3>Notice:</h3>
+<p>Version 1.0 of the Calguy Calendar module is a complete fork of the old calendar module.  However, this module is not compatible in any way with the other module.</p>
+<h3>What does this do?</h3>
+<p>Calguys Calendar is a module for displaying events on your page. When the
+module is installed, a &amp;quot;Calguys Calendar&amp;quot; admin page is added to the plugins menu
+that will allow you to manage your events.</p>
+<h3>Security</h3>
+<p>The user must belong to a group with the &#039;Modify Calendar&#039; permission
+in order to add, edit, or delete calendar event entries.</p>
+<h3>How do I use it?</h3>
+<ol>
+  <li>Put the cms_module tag in the page content. Make sure it is not enclosed in &amp;lt;pre&amp;gt;...&amp;lt;/pre&amp;gt; tags.  You will need to view source code for this.  The code would look something like:<br />
+  <tt>{cms_module module=&quot;CGCalendar&quot;}</tt><br />
+  <li>Style the calendar appropriately for your display (an example stylesheet is provided for this purpose)</li>
+</ol>
+<br/>
+<p><b>To attach the sample stylesheet to your template:</b></p>
+<ol>
+<li>Go to &quot;Layout -> Templates&quot;</li>
+<li>Click the CSS icon (Attach Stylesheet to Template) button to the right of your template</li>
+<li>Choose &quot;Calguys Calendar CSS example&quot; from the drop-down menu.</li>
+<li>Click the &quot;Add a Stylesheet&quot; button.</li>
+</ol>
+<br/>
+<h3>Parameters</h3>
+<table border=0 cellpadding=3 cellspacing=0>
+  <tr>
+     <td>action</td>
+     <td>Acceptable values:<br>
+        &quot;default&quot; - Specifies the default action, works in conjunction with the &quot;display&quot; parameter below.<br/>
+	&quot;search&quot; - Display a form for advanced searching of calendar events.<br/>
+        &quot;myevents&quot; - Display a list of all of a users events, and allow adding, editing or deleting those events<br/>
+        &quot;addedit_event&quot; - Display a form allowing to add or edit a single event.;
+     </td>
+  </tr>
 
-		<h3>Templates</h3>
-		<p>All four types of display used on the front end are controlled from templates that can be changed in the admin. If you want to reset
-		a template back to the default, then delete the entire template content in the admin and it will be reset on the next display of that calendar
-		view on the front end site.</p>
-		<h3>Sample CSS Styles</h3>
+  <tr>
+     <td>display</td>
+     <td>Acceptable values:<br>
+	 &quot;calendar&quot; - displays events for the current month in a traditional grid.  Inclues links to prev. and next months.<br/>
+	 &quot;event&quot; - display a detail report for a specific event.  To use this display mode, the event_id parameter must be specified.<br/>
+	 &quot;list&quot; - displays events for the current month as a list.  Includes links to prev. and next months.<br/>
+	 &quot;yearlist&quot; - displays events for the current year in a list.  Includes links to prev. and next years.<br/>
+	 &quot;pastlist&quot; - displays all past events.  No prev/next links.<br/>
+	 &quot;upcominglist&quot; - displays all upcoming events.  No prev/next links.<br/>
+		Defaults to &quot;calendar&quot; <em>(optional)</em>
+     </td>
+  </tr>
 
-		<p>This is a set of example CSS rules to make the calendar view look good. To see in action use:
-		<pre style=&quot;font-size: 12px&quot;>{cms_module module=&#039;Calendar&#039; table_id=&#039;big&#039;}</pre></p>
-		<p>Rules:</p>
-		<blockquote><pre style=&quot;font-size: 12px&quot;>
-/* make all links red */
-.calendar tr td a
-{
-color: red;
-}
+  <tr>
+     <td>category</td>
+     <td>Only display items for that category. Leaving unset, will show all categories. Note that
+	 you can limit to multiple categories by separating each one with a comma.<em>(optional)</em></td>
+  </tr>
 
-/* highlight &quot;today&quot; for the small calendar */
-.calendar-today
-{
-font-weight: bold;
-}
+  <tr>
+     <td>month</td>
+     <td>Display entries for a particular month. If year is not set, then the current year is
+	 assumed. This option only works if display is set to &quot;list&quot; or &quot;calendar&quot;. <em>(optional)</em></td>
+  </tr>
 
-/* display the &quot;upcominglist&quot; as one line per entry (assuming table_id=&#039;cal-upcominglist&#039;) */
-#cal-upcominglist .calendar-date-title
-,#cal-upcominglist .calendar-summary-title
-{
-display: none;
-}
+  <tr>
+     <td>year</td>
+     <td>Display entries for a particular year.
+	This option only works if display is set to &quot;list&quot; or &quot;calendar&quot;. <em>(optional)</em></td>
+  </tr>
 
-#cal-upcominglist h2
-,#cal-upcominglist .calendar-date
-,#cal-upcominglist .calendar-summary
-{
-display: inline;
-margin-right: 5px;
-}
+  <tr>
+     <td>limit</td>
+     <td>Set to the maximum number of events to display. This option only works if display is set to &quot;list&quot;, &quot;pastlist&quot; or &quot;upcominglist&quot;. <em>(optional)</em></td>
+  </tr>
 
-/* tidy up text sizes for lists */
-#cal-list h1, #cal-upcominglist h1
-{
-color: red;
-font-size: 120%;
-}
-#cal-list h2, cal-upcominglist h2
-{
-font-size: 110%;
-}
+  <tr>
+     <td>first_day_of_week</td>
+     <td>Set to the first day of the week as a number between 0 and 6 (0 = Sunday). Default is 1 (Monday).
+	 This option only works if display is set to &quot;calendar&quot;. <em>(optional)</em></td>
+  </tr>
 
-/** large calendar rules (assuming table_id=&#039;big&#039;) **/
-/* border on for #big */
-#big{
-margin: 0px;
-border-collapse:    collapse;
-border: 1px solid black;
-}
+  <tr>
+     <td>use_session</td>
+	 <td>Use session variables to store the specifications of the calendar. This will allow a calendar to remember its settings over numerous page views and while scrolling to different months.  In the search form it allows saving the search settings until the browser is reset.  Default is false.  If specified, the value should contain a unique identifier for that calendar instance.  This option only works if display is set to &quot;calendar&quot; or &quot;list&quot;, or if &quot;action&quot; is search. <em>(optional)</em></td>
+  </tr>
 
-/* nice squares for the #big table */
-#big th
-{
-border: 1px solid black;
-padding: 3px;
-width: 75px;
-}
+  <tr>
+     <td>inline</td>
+     <td>Set to 1 to set all of the event links to inlined mode (they will replace the oringal tag).  Default is 0. <em>(optional)</em></td>
+  </tr>
 
-#big td {
-border: 1px solid black;
-vertical-align: top;
-padding: 3px;
-height: 75px;
-width: 75px;
-}
+  <tr>
+     <td>reverse</td>
+     <td>Set to true to display events in reverse chronological order. Applicable to &quot;list&quot;, &quot;pastlist&quot; and &quot;upcominglist&quot; displays. Default is false. For the &quot;pastlist&quot;, reverse=true is assumed.<em>(optional)</em></td>
+  </tr>
 
-/* format summaries nicely in #big */
-#big ul
-{
-margin: 0px;
-padding: 0px;
-padding-left: 5px;
-}
+  <tr>
+     <td>detailpage=&quot;pagealias&quot;</td>
+     <td>Page to display Calendar event details in. This can either be a page alias or an id. Used to allow details to be displayed in a different template from the summary. Default is current page. <em>(optional)</em></td>
+  </tr>
 
-#big li
-{
-list-style-type: none;
-padding: 0px;
-margin: 0px;
-}
+  <tr>
+     <td>columns</td>
+     <td>Makes Calendar output only a subset of relevant events for allowing displaying in columns. Allowed values 1/2. Default is 1. Implemented for upcominglist and pastlist only. <em>(optional)</em></td>
+  </tr>
 
-/* background colours for #big */
-#big td
-{
-background-color: silver;
-}
+  <tr>
+     <td>columnstyle</td>
+     <td>If columns=2 this parameter sets whether the order of events in columns should be organized horizontally (0) or vertically (1). Default is 1. <em>(optional)</em></td>
+  </tr>
 
-#big .calendar-day
-{
-background-color: #80ff80;
-}
+  <tr>
+     <td>currentcolumn</td>
+     <td>If columns=2 this indicated whether Calendar should display content of column 1 or 2. Allowed values 1/2. Default is 1. <em>(optional)</em></td>
+  </tr>
 
-#big .calendar-today
-{
-font-weight: normal;
-background-color: #8080ff;
-}
+  <tr>
+     <td>event_id</td>
+     <td>Used with the display=event mode, this parameter allows you to display information about a specific event on demand.</td>
+  </tr>
 
-.calendar-event .calendar-date-title,
-.calendar-event .calendar-summary-title,
-.calendar-event .calendar-details-title
-{
-display: none;
-}
-</pre></blockquote>';
-$lang['utmz'] = '156861353.1282051258.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)';
-$lang['utma'] = '156861353.386609350.1282051258.1283686642.1283705305.29';
+  <tr>
+     <td>limit</td>
+     <td>Used with the list displays, this parameter allows specifying a maximum number of events to display, and then provides pagination capabilities.</td>
+  </tr>
+
+  <tr>
+     <td>calendartemplate</td>
+     <td>Used with display=calendar, this parameter allows you to specify a non default calendar template.</td>
+  </tr>
+
+  <tr>
+     <td>eventtemplate</td>
+     <td>Used with display=event, or you can also specify this parameter on any Calendar module call, this parameter allows you to specify a non default event template.</td>
+  </tr>
+
+  <tr>
+     <td>listtemplate</td>
+     <td>Used with display=list, this parameter allows you to specify a non default list template.</td>
+  </tr>
+
+  <tr>
+     <td>upcominglisttemplate</td>
+     <td>Used with display=upcominglist, this parameter allows you to specify a non default upcominglist template.</td>
+  </tr>
+
+  <tr>
+     <td>unique_only</td>
+     <td>Used with display=upcominglist, and with action=search, this parameter allows you to specify that only one event of a certain type should be returned&#039;;
+  </tr>
+
+</table>
+
+<h3>Custom Fields</h3>
+<p>It is possible to define a number of custom fields to associate with each event using the Fields tab in the admin. Once one or more fields has been defined the values of that field for each event can be set using the events tab in the admin. These field values can be rendered using a template using the syntax event.fields.fieldname. Hint - insert {debug} into your template see all the data passed to the template.</p>
+
+<h3>Examples</h3>
+<h4>Example of allowing Comments on Calendar events</h4>
+<p>Install the Comments module and put this in your Calendar &quot;Event Template&quot;:</p>
+<pre>{cms_module module=&#039;comments&#039; modulename=&#039;CGCalendar&#039; pageid=$event.event_id}</pre>
+<h3>Support</h3>
+<p>This module does not include commercial support. However, there are a number of resources available to help you with it:</p>
+<ul>
+<li>Discussion of this module may also be found in the <a href="http://forum.cmsmadesimple.org">CMS Made Simple Forums</a>.</li>
+<li>The author, calguy1000, can often be found in the <a href="irc://irc.freenode.net/#cms">CMS IRC Channel</a>.</li>
+<li>Lastly, you may have some success emailing the author directly.</li>  
+</ul>
+<h3>Copyright and License</h3>
+<p>Copyright &amp;copy; 2008, Robert Campbel <a href="mailto:calguy1000@cmsmadesimple.org">&amp;lt;calguy1000@cmsmadesimple.org&amp;gt;</a>. All Rights Are Reserved.</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+<p>However, as a special exception to the GPL, this software is distributed
+as an addon module to CMS Made Simple.  You may not use this software
+in any Non GPL version of CMS Made simple, or in any version of CMS
+Made simple that does not indicate clearly and obviously in its admin 
+section that the site was built with CMS Made simple.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
+$lang['utma'] = '156861353.913577157.1292870007.1307535822.1307565405.18';
+$lang['utmz'] = '156861353.1302546643.10.5.utmcsr=feedburner|utmccn=Feed: cmsmadesimple/blog (CMS Made Simple)|utmcmd=feed';
+$lang['qca'] = 'P0-584376928-1292870006667';
+$lang['utmb'] = '156861353';
 $lang['utmc'] = '156861353';
-$lang['utmb'] = '156861353.4.10.1283705305';
 ?>

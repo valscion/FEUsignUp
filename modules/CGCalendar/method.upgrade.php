@@ -113,6 +113,20 @@ switch( $oldversion )
     $query = 'UPDATE '.$this->fields_table_name.' SET field_searchable = 1
                WHERE field_type != 1';
     $db->Execute($query);
+
+  case '1.4.1': // just for safety
+  case '1.4.2': // just for safety
+  case '1.5':
+  case '1.5.1':
+  case '1.5.2':
+  case '1.5.3':
+  case '1.5.4':
+  case '1.5.5':
+  case '1.5.6':
+  case '1.5.7':
+    $sqlarray = $dict->AddColumnSQL($this->fields_table_name,'field_extra X');
+    $dict->ExecuteSQLArray($sqlarray);
+
   }
 
 ?>

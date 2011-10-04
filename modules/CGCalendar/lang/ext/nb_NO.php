@@ -1,4 +1,6 @@
 <?php
+$lang['delete'] = 'Slett';
+$lang['cd_company'] = 'Company Directory firma';
 $lang['dflt_urlprefix'] = 'Standard URL-prefiks for brukervennlige URLer';
 $lang['dflt_alldayevent'] = 'Nye begivenheter er &quot;Hele dagen&quot; begivenheter som standard';
 $lang['dflt_starttime'] = 'Standard starttid for nye begivenheter';
@@ -6,14 +8,14 @@ $lang['info_dflt_starttime'] = '<em>(kun gyldig om nye begivenheter ikke er &quo
 $lang['search_type'] = 'S&oslash;ketype';
 $lang['search_any'] = 'Vis resultater som passer hvilket som helst ord';
 $lang['search_all'] = 'Vis resultater som passer alle ordene';
-$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Merk:</span> &quot;Filopplastingsfelt&quot; er ikke s&oslash;kbare.';
+$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Merk:</span> &quot;Filopplastingsfelt&quot; er ikke s&oslash;kbare. &Aring; klikke p&aring; avkrysningsboks for andre felter vil ikke ha effekt.';
 $lang['searchable'] = 'S&oslash;kbar';
 $lang['help_param_editeventtemplate'] = 'Gjelder kun til myevents handlingen, denne parameteren kan angi en ikke standard &#039;rediger begivenhet&#039; mal som skal brukes n&aring;r en bruker oppretter eller redigerer en begivenhet';
 $lang['help_param_editpage'] = 'Gjelder kun til myevents handlingen, denne parameteren kan angi en annen side for redigerings skjemaet.';
 $lang['help_param_myeventstemplate'] = 'Gjelder kun til myevents handlingen, denne parameteren kan angi en ikke standard mal &aring; benytte';
 $lang['cal_edit_event'] = 'Rediger Kalenderbegivenhet';
 $lang['error_dberror'] = 'Datasefeil';
-$lang['submit'] = 'Send';
+$lang['submit'] = 'Lagre';
 $lang['info_sysdflt_editevent_template'] = 'Systemstandard &quot;Rediger begivenhet&quot; mal';
 $lang['info_sysdflt_myevents_template'] = 'Systemstandard &quot;Mine begivenheter&quot; mal';
 $lang['prompt_feedit_group'] = 'Medlemmer av denne FEU-gruppe kan legge til begivenheter';
@@ -22,7 +24,7 @@ $lang['none'] = 'Ingen';
 $lang['owner'] = 'Eier';
 $lang['cal_editevent_templates'] = 'Rediger Begivehetskjema maler';
 $lang['info_editevent_template_tab'] = 'Listen med maler som er tilgjengelige for &quot;Rediger handelse&quot; skjema';
-$lang['editeventtemplate_addedit'] = 'Kegg til/rediger en &quot;Rediger begivenhet&quot; skjemamal';
+$lang['editeventtemplate_addedit'] = 'Legg til/rediger en &quot;Rediger begivenhet&quot; skjemamal';
 $lang['cal_myevents_templates'] = '&quot;Mine Begivenheter&quot; listemaler';
 $lang['info_myevents_template_tab'] = 'Listen med maler som er tilgjengelige for &aring; vise en liste med brukerbegivenheter';
 $lang['myeventstemplate_addedit'] = 'Legg til/rediger en &quot;Mine begivenheter&quot; rapportmal';
@@ -88,7 +90,7 @@ $lang['last_wednesday'] = 'Siste onsdag i m&aring;neden';
 $lang['last_thursday'] = 'Siste torsdag i m&aring;neden';
 $lang['last_friday'] = 'Siste fredag i m&aring;neden';
 $lang['last_saturday'] = 'Siste l&oslash;rdag i m&aring;neden';
-$lang['error_invalid_recur_monthly_freq'] = 'Ugyldig hyppighet.... du kan ikke spesifisere b&aring;de en spesifik dato OG andre valg';
+$lang['error_invalid_recur_monthly_freq'] = 'Ugyldig hyppighet.... du kan ikke spesifisere b&aring;de en spesifikk dato OG andre valg';
 $lang['searchresulttemplate_addedit'] = 'Legg til/rediger en s&oslash;keresultat mal';
 $lang['info_searchresult_template_tab'] = 'Listen med maler som er tilgjengelig for s&oslash;keresultat visningen';
 $lang['info_sysdflt_searchresult_template'] = 'Systemstandard s&oslash;keresultat mal';
@@ -236,7 +238,7 @@ $lang['error_csvfilenotfound'] = 'FEIL: Kunne ikke finne CSV Filen';
 $lang['error_cantopenfile'] = 'FEIL: Kan ikke &aring;pne filen';
 $lang['error_categoryexists'] = 'ERROR: En kategori med navnet %s eksisterer allerede';
 $lang['cal_id'] = 'ID';
-$lang['cal_calendar'] = 'Kalender';
+$lang['cal_calendar'] = 'Calguys Kalender';
 $lang['cal_default_templates'] = 'Standard maler';
 $lang['cal_description'] = 'En fleksibel modul med mange egenskaper som tillater visning av informasjon om begivenheter p&aring; mange forskjellige m&aring;ter.';
 $lang['cal_addevent'] = 'Legg til begivenhet';
@@ -283,8 +285,8 @@ $lang['cal_september'] = 'September ';
 $lang['cal_october'] = 'Oktober';
 $lang['cal_november'] = 'November ';
 $lang['cal_december'] = 'Desember';
-$lang['cal_add'] = 'Oppdater';
-$lang['cal_update'] = 'Legg til';
+$lang['cal_add'] = 'Legg til';
+$lang['cal_update'] = 'Lagre og lukk';
 $lang['cal_event'] = 'Begivenhet';
 $lang['cal_date'] = 'Dato';
 $lang['cal_summary'] = 'Sammendrag';
@@ -549,9 +551,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
-$lang['utmz'] = '156861353.1283287349.3202.74.utmcsr=forum.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/index.php';
-$lang['utma'] = '156861353.179052623084110100.1210423577.1284228895.1284233799.3248';
-$lang['qca'] = '1210971690-27308073-81952832';
+$lang['utma'] = '156861353.1900154316.1310459398.1310459398.1310459398.1';
+$lang['utmz'] = '156861353.1310459398.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
+$lang['qca'] = 'P0-1089425687-1306833892307';
 $lang['utmc'] = '156861353';
 $lang['utmb'] = '156861353';
 ?>

@@ -104,6 +104,10 @@ function DisplayUpcomingList(&$module, $id, &$parameters, $returnid)
 
   $sorting = ($reverse == 'true' ? 'DESC' : 'ASC');
   $start = $db->DbTimeStamp(time());
+  if( isset($parameters['displayforday']) )
+    {
+      $start = mktime(00,01);
+    }
 
   $txt = "$where ($events_table_name.event_date_start $expr $start OR
                  ($events_table_name.event_date_end $expr $start AND 
@@ -136,7 +140,7 @@ function DisplayUpcomingList(&$module, $id, &$parameters, $returnid)
       $sql2 .= ' AND '.$txt;
     }
 
-  if( !isset($parameters['unique_only']) || $parameters['unique_only'] == 1 )
+  if( isset($parameters['unique_only']) && $parameters['unique_only'] )
     {
       $sql2 .= " GROUP BY $events_table_name.event_title";
     }

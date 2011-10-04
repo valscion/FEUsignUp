@@ -39,16 +39,16 @@
 function DisplayList(&$module, $id, &$parameters, $returnid)
 {
   global $gCms;
-  $smarty =& $gCms->GetSmarty();
+  $smarty = $gCms->GetSmarty();
 
 	$detailpage = '';
 	if (isset($parameters['detailpage']))
 	{
-		$manager =& $gCms->GetHierarchyManager();
-		$node =& $manager->sureGetNodeByAlias($parameters['detailpage']);
+		$manager = $gCms->GetHierarchyManager();
+		$node = $manager->sureGetNodeByAlias($parameters['detailpage']);
 		if (isset($node))
 		{
-			$content =& $node->GetContent();
+			$content = $node->GetContent();
 			if (isset($content))
 			{
 				$detailpage = $content->Id();
@@ -56,7 +56,7 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 		}
 		else
 		{
-			$node =& $manager->sureGetNodeById($parameters['detailpage']);
+			$node = $manager->sureGetNodeById($parameters['detailpage']);
 			if (isset($node))
 			{
 				$detailpage = $parameters['detailpage'];
@@ -117,12 +117,11 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 	$next_month['month'] = date('n', $next_month['timestamp']);
 
 	$last_day_of_month = mktime(0, 0, 0, $next_month['month'], 0, $next_month['year']);
-
 	$day = get_parameter_value($parameters, 'day', -1);
 
-	$db =& $module->GetDb();
+	$db = $module->GetDb();
 	$where = 'WHERE';
-	$sql = "SELECT DISTINCT $events_table_name.*
+	$sql = "SELECT DISTINCT $events_table_name.event_id,$events_table_name.*
 				FROM $events_table_name\n";
 	if($category)
 	{
@@ -135,18 +134,23 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 
 	if($day > 0)
 	{
-		$start = sprintf('%04d-%02d-%02d 00:00:00', $year, $month, $day);
-		$end = sprintf('%04d-%02d-%02d 23:59:59', $year, $month, $day);
+	  $tmp = mktime(0,0,0,$month,$day,$year);
+	  $start = $db->DbTimeStamp($tmp);
+
+	  $tmp = mktime(23,59,59,$month,$day,$year);
+	  $end = $db->DbTimeStamp($tmp);
 	}
 	else
 	{
-		$start = sprintf('%04d-%02d-01 00:00:00', $year, $month);
-		$end = sprintf('%04d-%02d-%02d 23:59:59', date('Y', $last_day_of_month), date('m', $last_day_of_month), date('d', $last_day_of_month));
+	  $tmp = mktime(0,0,0,$month,1,$year);
+	  $start = $db->DbTimeStamp($tmp);
+
+	  $tmp = mktime(23,59,59,date('m',$last_day_of_month),date('d',$last_day_of_month),date('Y',$last_day_of_month));
+	  $end = $db->DbTimeStamp($tmp);
 	}
-	$sql .= "$where ($events_table_name.event_date_start >= '$start' \n\tOR $events_table_name.event_date_end >= '$start')\n";
-	$sql .= "AND ($events_table_name.event_date_start <= '$end' OR
-                 ($events_table_name.event_date_end <= '$end'
-                 AND COALESCE($events_table_name.event_date_end,'00-00-00 00:00:00') != '0000-00-00 00:00:00') )";
+	$sql .= "$where (($events_table_name.event_date_start BETWEEN $start AND $end)\n";
+	$sql .= "OR ($events_table_name.event_date_end BETWEEN $start AND $end)\n";
+	$sql .= "OR ($events_table_name.event_date_start <= $start AND $events_table_name.event_date_end > $end))\n";
 	$where = ' AND ';
 
 	if($category)
@@ -169,6 +173,7 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 	}
 	$sql .= " ORDER BY $events_table_name.event_date_start $sorting";
 
+	$rs = '';
 	if($limit > 0)
 	{
 		$rs = $db->SelectLimit($sql, $limit);
@@ -178,8 +183,8 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 		$rs = $db->Execute($sql); /* @var $rs ADOConnection */
 	}
 
-	$userops =& $gCms->GetUserOperations();
-	$userlist =& $userops->LoadUsers();
+	$userops = $gCms->GetUserOperations();
+	$userlist = $userops->LoadUsers();
 	// print_r($userlist);
 	$users = array();
 	foreach ($userlist as $oneuser)
@@ -187,7 +192,7 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 		$users[$oneuser->id] = $oneuser;
 	}
 	$events = array();
-	if($rs->RecordCount() > 0)
+	if(is_object($rs) && $rs->RecordCount() > 0)
 	{
 		while($row = $rs->FetchRow())
 		{	
@@ -274,16 +279,8 @@ function DisplayList(&$module, $id, &$parameters, $returnid)
 	}
 
 
-	$parms = array();
+	$parms = $parameters;
 	$parms['display'] = 'list';
-	if( isset($parameters['detailpage']) )
-	  {
-	    $parms['detailpage'] = $parameters['detailpage'];
-	  }
-	if( isset($parameters['eventtemplate']) )
-	  {
-	    $parms['eventtemplate'] = $parameters['eventtemplate'];
-	  }
 	$parms['use_session'] = $use_session;
 	$parms['year'] = $next_month['year'];
 	$parms['month'] = $next_month['month'];

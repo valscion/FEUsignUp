@@ -1,4 +1,33 @@
 <?php
+$lang['delete'] = 'Elimina';
+$lang['cd_company'] = 'Company Directory Company';
+$lang['dflt_urlprefix'] = 'Prefisso URL predefinito per Pretty URL';
+$lang['dflt_alldayevent'] = 'I nuovi eventi sono &quot;Tutto il giorno&quot; di default';
+$lang['dflt_starttime'] = 'Ora di inizio predefinita per i nuovi eventi';
+$lang['info_dflt_starttime'] = '<em>(si applica solo se i nuovi eventi non sono &quot;Tutto il giorno&quot;.)</em>';
+$lang['search_type'] = 'Cerca Tipo';
+$lang['search_any'] = 'Corrispondenza di qualsiasi termine';
+$lang['search_all'] = 'Corrispondenza di tutti i termini';
+$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Nota:</span> I Campi di Caricamento File non sono ricercabili.';
+$lang['searchable'] = 'Ricercabile';
+$lang['help_param_editeventtemplate'] = 'Applicabile solo all&#039;azione &quot;myevents&quot;, questo parametro permette di specificare un modello di modifica evento non predefinito quando un utente crea o modifica un evento';
+$lang['help_param_editpage'] = 'Applicabile solo all&#039;azione &quot;myevent&quot;, questo parametro permette di specificare una pagina differente per il modulo di modifica.';
+$lang['help_param_myeventstemplate'] = 'Applicabile solo all&#039;azione &quot;myevent&quot;, questo parametro permette di specificare l&#039;uso di un modello non predefinito';
+$lang['cal_edit_event'] = 'Modifica Evento Calendario';
+$lang['error_dberror'] = 'Errore del Database';
+$lang['submit'] = 'Invia';
+$lang['info_sysdflt_editevent_template'] = 'Modello Predefinito di Sistema &quot;Modifica Evento&quot;';
+$lang['info_sysdflt_myevents_template'] = 'Modello Predefinito di Sistema &quot;Miei Eventi&quot;';
+$lang['prompt_feedit_group'] = 'I membri di questo gruppo FEU possono aggiungere eventi';
+$lang['prompt_feedit_page'] = 'Pagina predefinita lato utente per il modulo di modifica.';
+$lang['none'] = 'Nessuno';
+$lang['owner'] = 'Proprietario';
+$lang['cal_editevent_templates'] = 'Modelli del Modulo di Modifica Evento';
+$lang['info_editevent_template_tab'] = 'La lista dei modelli disponibili per il modulo di modifica evento';
+$lang['editeventtemplate_addedit'] = 'Aggiungi/modifica un Modello Modulo di Modifica Evento';
+$lang['cal_myevents_templates'] = 'Modelli di Lista Miei Eventi';
+$lang['info_myevents_template_tab'] = 'La lista dei modelli disponibili per la visualizzazione di una lista di eventi dell&#039;utente';
+$lang['myeventstemplate_addedit'] = 'Aggiungi/Modifica un modello di report &quot;Miei Eventi&quot;';
 $lang['areyousure_removeconflicting'] = 'Questa azione rimuover&agrave; ogni evento in conflitto con eventi non sovrapponibili. Siete certi di volere procedere?';
 $lang['filter_conflicting'] = 'Filtra Eventi in Conflitto';
 $lang['overlap_action_remove'] = 'Rimuovi eventi in conflitto silenziosamente';
@@ -12,7 +41,7 @@ $lang['policy_all'] = 'Tutti gli eventi si possono sovrapporre';
 $lang['policy_none'] = 'Nessun evento si pu&ograve; sovrapporre';
 $lang['policy_individual'] = 'Definito evento per evento';
 $lang['lbl_back'] = 'Indietro';
-$lang['lbl_templates'] = 'Template';
+$lang['lbl_templates'] = 'Modelli';
 $lang['textarea'] = 'Area di Testo';
 $lang['error_calendar_incompatible'] = 'Abbiamo verificato la presenza anche del modulo Calendar. Questo modulo non &egrave; compatibile con il modulo Calendar e i due non possono coesistere nella stessa installazione. Vi chiediamo di disinstallare il modulo Calendar.';
 $lang['error_event_not_found'] = 'Event_id non presente nel database, oppure c&#039;&egrave; pi&ugrave; di un evento con questo id! (%d)';
@@ -507,9 +536,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
-$lang['utma'] = '156861353.563238401015149400.1226334751.1266331389.1266334975.57';
-$lang['utmz'] = '156861353.1266246978.55.24.utmccn=(referral)|utmcsr=fondazioneteatroborgatti.it|utmcct=/ammin/moduleinterface.php|utmcmd=referral';
-$lang['qca'] = 'P0-2007686920-1251190815027';
-$lang['utmc'] = '156861353';
-$lang['utmb'] = '156861353';
+$lang['utma'] = '156861353.1236385967.1296578145.1298365216.1301560700.6';
+$lang['utmz'] = '156861353.1301560750.6.4.utmcsr=feedburner|utmccn=Feed: cmsmadesimple/blog (CMS Made Simple)|utmcmd=feed';
+$lang['qca'] = 'P0-1476505638-1296578145169';
 ?>

@@ -57,6 +57,11 @@ $types = array();
 $types[$this->Lang('textfield')] = 0;
 $types[$this->Lang('uploadfield')] = 1;
 $types[$this->Lang('textarea')] = 2;
+$cdmod = cms_utils::get_module('CompanyDirectory');
+if( is_object($cdmod) )
+  {
+    $types[$this->Lang('cd_company')] = 3;
+  }
 
 $fieldsarr = array();
 for($i = 0; $i < $num_fields; $i++)

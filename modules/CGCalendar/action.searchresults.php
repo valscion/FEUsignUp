@@ -254,8 +254,11 @@ if( isset($params['cal_search_submit']) )
 	      }
 	    $query .= '(';
 	    $query .= implode($expr,$where2);
-	    $query .= ' OR ';
-	    $query .= '(' . implode($expr, $where3) . ')';
+	    if( count($where3) )
+	      {
+		$query .= ' OR ';
+		$query .= '(' . implode($expr, $where3) . ')';
+	      }
 	    $query .= ')';
 	  }
 

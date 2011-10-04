@@ -59,7 +59,7 @@ for($i = 0; $i < $num_records; $i++)
   $field_type = $types[$i];
   $field_searchable = (isset($searchable[$field_oldname]))?$searchable[$field_oldname]:0;
 
-  if( $field_type == 1 )
+  if( $field_type == 1 || $field_type == 3 )
     {
       // file upload fields are never searchable.
       $field_searchable = 0;

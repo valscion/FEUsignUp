@@ -1,4 +1,36 @@
 <ul>
+<li>Version: 1.7.2 - July, 2011
+  <ul>
+  <li>More Fixes to the list view.</li>
+  </ul>
+</li>
+<li>Version: 1.7.2 - July, 2011
+  <ul>
+  <li>Fixes to the list view.</li>
+  </ul>
+</li>
+<li>Version: 1.7.1 - July, 2011
+  <ul>
+  <li>The unique_only parameter now defaults to &quot;off&quot; for all views.</li>
+  <li>Adds the displayforday parameter to the upcominglist view.</li>
+  </ul>
+</li>
+<li>Version: 1.7 - June, 2011
+  <ul>
+  <li>Adds the ability to filter the &quot;myevents&quot; view by a category.</li>
+  </ul>
+</li>
+<li>Version: 1.6.1 - April, 2011
+  <ul>
+    <li>Remove debug statements.</li>
+  </ul>
+</li>
+<li>Version: 1.6 - April, 2011
+  <ul>
+    <li>Adds a company directory field type.</li>
+    <li>Bug Fixes.</li>
+  </ul>
+</li>
 <li>Version: 1.5.7 - September 2010
   <ul>
     <li>More fixes to displaycalendar and displayupcominglist.</li>

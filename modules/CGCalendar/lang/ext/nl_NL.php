@@ -1,12 +1,14 @@
 <?php
+$lang['delete'] = 'Verwijder';
+$lang['cd_company'] = 'Company Directory Bedrijf';
 $lang['dflt_urlprefix'] = 'Te gebruiken prefix voor Pretty URLS';
 $lang['dflt_alldayevent'] = 'Nieuwe evenementen beslaan standaard de gehele dag';
-$lang['dflt_starttime'] = 'Standaard start tijd voor nieuwe evenementen';
+$lang['dflt_starttime'] = 'Standaard starttijd voor nieuwe evenementen';
 $lang['info_dflt_starttime'] = '<em>(alleen van toepassing als nieuwe evenementen niet de gehele dag beslaan.)</em>';
 $lang['search_type'] = 'Zoek Type';
 $lang['search_any'] = 'E&eacute;n of meer zoektermen moeten overeenkomen';
 $lang['search_all'] = 'Alle zoektermen moeten overeenkomen';
-$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Opmerking:</span> &quot;Bestand Upload Velden&quot; zijn niet zoekbaar.';
+$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Opmerking:</span> &quot;Bestand Upload Velden&quot; zijn niet doorzoekbaar.';
 $lang['searchable'] = 'Doorzoekbaar';
 $lang['help_param_editeventtemplate'] = 'Alleen toepasbaar in de myevents-bewerking, deze parameter specificeert een niet-standaard evenementsjabloon om te gebruiken wanneer een gebruiker een evenement aanmaakt of wijzigt.';
 $lang['help_param_editpage'] = 'Enkel toepasbaar op de myevents-bewerking, deze parameter specificeert een andere pagina voor de edit-form';
@@ -226,10 +228,10 @@ $lang['eventhelp-CategoryDeleted'] = '<p>Verzonden na verwijdering van een kalen
 $lang['msg_eventadded'] = 'Gebeurtenis toegevoegd';
 $lang['error_noeventname'] = 'Een naam voor een gebeurtenis is verplicht';
 $lang['error_noupload'] = 'Fout: geen ge&uuml;pload bestand gevonden';
-$lang['error_invalidfilename'] = 'Fout: het ge&uuml;ploade bestand kan niet worden geaccepteerd';
+$lang['error_invalidfilename'] = 'Fout: het ge&uuml;ploade bestand wordt niet geaccepteerd';
 $lang['error_problemwithupload'] = 'Fout: een probleem trad op tijdens het uploaden van het bestand';
-$lang['error_filecopyfailed'] = 'Fout: een probleem trad op tijden het kopi&euml;ren van het bestand naar de uiteindelijke bestemming';
-$lang['error_fileexists'] = 'Fout: een bestand met die naam bestaat al';
+$lang['error_filecopyfailed'] = 'Fout: een probleem trad op tijdens het kopi&euml;ren van het bestand naar de uiteindelijke bestemming';
+$lang['error_fileexists'] = 'Fout: een bestand met deze naam bestaat al';
 $lang['error_csvfilenotfound'] = 'Fout: kan het CSV-bestand niet vinden';
 $lang['error_cantopenfile'] = 'Fout: kan het bestand niet openen';
 $lang['error_categoryexists'] = 'Fout: Een categorie met de naam %s bestaat al';
@@ -340,7 +342,7 @@ $lang['categoryupdated'] = 'Categorie bijgewerkt';
 $lang['categoryadded'] = 'Categorie toegevoegd';
 $lang['eventdeleted'] = 'De gebeurtenis is verwijderd';
 $lang['eventupdated'] = 'De gebeurtenis is bijgewerkt';
-$lang['default_page_error'] = 'Fout: U moet een standaardpagina opgeven om de Kalender met pretty URLs ingeschakeld te kunnen gebruiken.';
+$lang['default_page_error'] = 'Fout: Met de toepassing van Pretty URLs moet een een standaard pagina opgeven worden, om de kalender te kunnen gebruiken.';
 $lang['time_at'] = 'om';
 $lang['type'] = 'Type ';
 $lang['name'] = 'Naam';
@@ -350,8 +352,8 @@ $lang['fielddeleted'] = 'Veld verwijderd';
 $lang['fields'] = 'Instelbare velden';
 $lang['textfield'] = 'Tekstveld';
 $lang['uploadfield'] = 'Bestand upload veld';
-$lang['description'] = '<p>Kalender is een module om gebeurtenissen op een pagina te tonen. Als de module ge&iuml;nstalleerd is, wordt er een Kalenderbeheerpagina aan het Inhoud-menu toegevoegd die het beheer van de gebeurtenissen mogelijk maakt.</p>';
-$lang['defaultcalendarpage'] = 'Standaardpagina die de kalender bevat. Deze pagina moet een Smarty-tag bevatten die de kalender aanroept. Verplicht als u de pretty URL&#039;s gebruikt.';
+$lang['description'] = '<p>Kalender is een module om gebeurtenissen op een pagina te tonen. Als de module ge&iuml;nstalleerd is, wordt er een Kalender beheer pagina aan het Inhoud-menu toegevoegd die het beheer van de gebeurtenissen mogelijk maakt.</p>';
+$lang['defaultcalendarpage'] = 'Standaard pagina die de kalender bevat. Deze pagina moet een Smarty-tag bevatten die de kalender aanroept. Verplicht als u de pretty URL&#039;s gebruikt.';
 $lang['uploaddirectory'] = 'Map waar de ge&uuml;ploade bestanden moeten worden geplaatst';
 $lang['uploadfiletypes'] = 'Toegestane bestandstypen';
 $lang['uploadunique'] = 'Garandeer unieke bestandsnamen';
@@ -547,9 +549,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
-$lang['qca'] = 'P0-94671928-1277843203656';
-$lang['utmz'] = '156861353.1282486936.3.3.utmcsr=forum.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/index.php/board,13.0.html';
-$lang['utma'] = '156861353.587621801.1277843204.1282482344.1282486936.3';
+$lang['utma'] = '156861353.6073969.1302356129.1302717365.1302806901.6';
+$lang['utmz'] = '156861353.1302806901.6.5.utmcsr=zeijen.nu|utmccn=(referral)|utmcmd=referral|utmcct=/';
+$lang['qca'] = 'P0-1337552814-1302356128667';
+$lang['utmb'] = '156861353.1.10.1302806901';
 $lang['utmc'] = '156861353';
-$lang['utmb'] = '156861353.2.10.1282486936';
 ?>

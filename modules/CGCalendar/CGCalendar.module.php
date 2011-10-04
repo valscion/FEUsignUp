@@ -114,6 +114,7 @@ class CGCalendar extends CGExtensions
 	  $this->SetParameterType('searchtemplate',CLEAN_STRING); // todo, doc this.
 	  $this->SetParameterType('searchresulttemplate',CLEAN_STRING); // todo, doc this.
 	  $this->SetParameterType('searchresultpage',CLEAN_STRING); // todo, doc this
+	  $this->SetParameterType('displayforday',CLEAN_INT);
 
 	  $this->CreateParameter('myeventstemplate','',$this->Lang('help_param_myeventstemplate'));
 	  $this->SetParameterType('myeventstemplate',CLEAN_STRING); 
@@ -134,13 +135,6 @@ class CGCalendar extends CGExtensions
       $this->RegisterRoute('/'.$this->GetPreference('url_prefix','calendar').'\/(?P<returnid>[0-9]+)\/(?P<event_id>[0-9]+)-.*$/',
 			   array('action'=>'default',
 				 'display'=>'event'));
-// 	  if( $this->GetPreference('url_prefix') != 'calendar' )
-// 		{
-// 		  // for backwards compatiblity.
-// 		  $this->RegisterRoute('/calendar\/(?P<returnid>[0-9]+)\/(?P<event_id>[0-9]+)-.*$/',
-// 							   array('action'=>'default',
-// 									 'display'=>'event'));
-// 		}
     }
   
 
@@ -194,12 +188,12 @@ class CGCalendar extends CGExtensions
 
   function GetVersion()
     {
-      return '1.5.7';
+      return '1.7.4';
     }
 
   function GetDependencies()
     {
-      return array('CGExtensions'=>'1.19.4');
+      return array('CGExtensions'=>'1.25');
     }
 
   function GetDescription($lang = 'en_US')
@@ -224,7 +218,7 @@ class CGCalendar extends CGExtensions
 
   function MinimumCMSVersion()
     {
-      return '1.8.1';
+      return '1.9.2';
     }
 
   function GetChangeLog()
@@ -249,7 +243,7 @@ class CGCalendar extends CGExtensions
 
   function GetEvent($event_id)
     {
-      $db =& $this->GetDb(); /* @var $db ADOConnection */
+      $db = $this->GetDb(); /* @var $db ADOConnection */
 
       $sql = 'SELECT * FROM ' . $this->events_table_name .' WHERE event_id = ?';
       $rs = $db->Execute($sql,array($event_id));
@@ -350,7 +344,7 @@ class CGCalendar extends CGExtensions
 
   function GetEventFromParams(&$event,$params,$is_edit = false)
     {
-	  $db =& $this->GetDb();
+	  $db = $this->GetDb();
 	  if( isset($params['event_id']) )
 		{
 		  $event['event_id'] =  (int)$params['event_id'];
@@ -495,7 +489,7 @@ class CGCalendar extends CGExtensions
 
   function GetCategories($order_by='category_order, category_name')
     {
-      $db =& $this->GetDb(); /* @var $db ADOConnection */
+      $db = $this->GetDb(); /* @var $db ADOConnection */
       $categories_table_name = $this->categories_table_name;
       $sql = "SELECT * FROM $categories_table_name";
       if($order_by != '')
@@ -512,7 +506,7 @@ class CGCalendar extends CGExtensions
 
   function GetCategoryName($id)
   {
-	$db =& $this->GetDb();
+	$db = $this->GetDb();
 	$sql = 'SELECT name FROM '.$this->categories_table_name.'
              WHERE id = ?';
 	$name = $db->GetOne($query,array($id));
@@ -553,7 +547,7 @@ class CGCalendar extends CGExtensions
 
   function GetFields()
     {
-      $db =& $this->GetDb(); /* @var $db ADOConnection */
+      $db = $this->GetDb(); /* @var $db ADOConnection */
       $fields_table_name = $this->fields_table_name;
       $sql = "SELECT * FROM $fields_table_name ORDER BY field_name";
 
@@ -569,7 +563,7 @@ class CGCalendar extends CGExtensions
 
   function AdminDeleteField($field_oldname)
     {
-      $db =& $this->GetDb(); /* @var $db ADOConnection */
+      $db = $this->GetDb(); /* @var $db ADOConnection */
       $fields_table_name = $this->fields_table_name;
       $event_field_values_table_name = $this->event_field_values_table_name;
 	  
@@ -582,7 +576,7 @@ class CGCalendar extends CGExtensions
 	
   function AdminAddField($field_newname,$field_type = 0,$field_searchable = 0)
     {
-      $db =& $this->GetDb(); /* @var $db ADOConnection */
+      $db = $this->GetDb(); /* @var $db ADOConnection */
       $sql = 'INSERT INTO ' . $this->fields_table_name . '
                 (field_name,field_type,field_searchable)
               VALUES (?,?,?)';
@@ -591,7 +585,7 @@ class CGCalendar extends CGExtensions
 	
   function AdminUpdateField($field_oldname,$field_newname,$field_type = 0,$field_searchable = 0)
     {
-      $db =& $this->GetDb(); /* @var $db ADOConnection */
+      $db = $this->GetDb(); /* @var $db ADOConnection */
 
       $sql = 'UPDATE ' . $this->fields_table_name . '
                  SET field_name = ?, field_type = ?, field_searchable = ?
@@ -658,6 +652,7 @@ class CGCalendar extends CGExtensions
     {
       $lang['date'] = $this->Lang('cal_date');
       $lang['summary'] = $this->Lang('cal_summary');
+
       $lang['details'] = $this->Lang('cal_details');
       $lang['return'] = $this->Lang('cal_return');
       $lang['to'] = $this->Lang('cal_to');
@@ -703,7 +698,7 @@ class CGCalendar extends CGExtensions
 	  return $result;
 	}
 		  
-      $db =& $this->GetDb();
+      $db = $this->GetDb();
       $query = 'SELECT event_title FROM '.$this->events_table_name.' WHERE event_id = ?';
       $title = $db->GetOne( $query, array($event_id) );
 		  
@@ -731,10 +726,10 @@ class CGCalendar extends CGExtensions
 		
   function SearchReindex(&$module)
     {
-      $db =& $this->GetDb();
+      $db = $this->GetDb();
 
       $query = 'SELECT * FROM '.$this->events_table_name.' ORDER BY event_date_start';
-      $dbr =& $db->Execute($query);
+      $dbr = $db->Execute($query);
 
 	  $fquery = 'SELECT fv.field_value FROM '.$this->fields_table_name.' fd 
                    LEFT JOIN '.$this->event_field_values_table_name.' fv 

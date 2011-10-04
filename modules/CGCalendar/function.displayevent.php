@@ -135,13 +135,11 @@ function DisplayEvent(&$module, $id, &$parameters, $returnid)
 
 	// Begin custom fields retrieval
 	{
-		$fieldDb = $module->GetDb();
-
 		// Build the sql to retrieve the field values for this event.
 		$sql = "SELECT field_name,field_value
 			FROM $event_field_values_table_name
 			WHERE event_id = $event_id";
-		$frs = $fieldDb->Execute($sql); // Get the field values
+		$frs = $db->Execute($sql); // Get the field values
 		$fields = array();
 		$fields_temp = array();
 		if ($frs) // make sure there are results and assign to the $fields array

@@ -211,6 +211,8 @@ foreach($fields as $field)
 	
   $obj = new StdClass();
   $obj->name = $field['field_name'];
+  $obj->value = $field_value;
+  $obj->type = $field['field_type'];
   switch( $field_type )
     {
     case 0: // the normal text field
@@ -222,10 +224,37 @@ foreach($fields as $field)
       $obj->field = $this->CreateFileUploadInput($id,'field_'.$safefieldname,'',50).
 	$this->CreateInputHidden($id,'upload_field_'.$safefieldname,$field_name).
 	$this->CreateInputHidden($id,'upload_field_oldvalue_'.$safefieldname,$field_value);
+      if( $field_value ) $obj->field .=
+	$this->CreateInputHidden($id,'remove_field_'.$safefiledname,0).
+	$this->CreateInputCheckbox($id,'remove_field_'.$safefieldname,1).'&nbsp;'.$this->Lang('delete');
       break;
 
     case 2:
       $obj->field = $this->CreateTextArea(false,$id,$field_value,'field_'.$safefieldname);
+      break;
+
+    case 3:
+      // company directory entry.
+      $cdmod = cms_utils::get_module('CompanyDirectory');
+      if( !$cdmod )
+	{
+	  // have field type, but no companydirectory module.
+	  continue;
+	}
+      // get a list of the companies that we want to display
+      {
+	$query = 'SELECT id,company_name FROM '.cms_db_prefix().'module_compdir_companies ORDER BY company_name';
+	$dbr = $db->GetArray($query);
+	if( $dbr )
+	  {
+	    $tmp2 = array($this->Lang('none')=>-1);
+	    for( $i = 0; $i < count($dbr); $i++ )
+	      {
+		$tmp2[$dbr[$i]['company_name']] = $dbr[$i]['id'];
+	      }
+	    $obj->field = $this->CreateInputDropdown($id,'field_'.$safefieldname,$tmp2,-1,$field_value);
+	  }
+      }
       break;
     }
   $tmp[] = $obj;

@@ -1,6 +1,8 @@
 <?php
 # Simple Language file for the Calendar module.
 # Copyright (c) 2004 by Rob Allen <rob@akrabat.com>
+$lang['delete'] = 'Delete';
+$lang['cd_company'] = 'Company Directory Company';
 $lang['dflt_urlprefix'] = 'Default URL prefix for Pretty URLS';
 $lang['dflt_alldayevent'] = 'New events are &quot;All Day&quot; events by default';
 $lang['dflt_starttime'] = 'Default start time for new events';
@@ -8,7 +10,7 @@ $lang['info_dflt_starttime'] = '<em>(applies only if new events are not &quot;Al
 $lang['search_type'] = 'Search Type';
 $lang['search_any'] = 'Return results matching any word';
 $lang['search_all'] = 'Return results matching all words';
-$lang['info_customfields'] = '<span style="color: red;">Note:</span> &quot;File Upload Fields&quot; are not searchable.';
+$lang['info_customfields'] = '<span style="color: red;">Note:</span> Only text fields are searchable.  Clicking the chechbox on other field types will have no effect.';
 $lang['searchable'] = 'Searchable';
 $lang['help_param_editeventtemplate'] = 'Applicable only to the myevents action, this parameter allows specifying a non default edit event template to use when a user creates or edits an event';
 $lang['help_param_editpage'] = 'Applicable only to the myevents action, this parameter allows specifying a different page for the edit form.';
@@ -452,7 +454,9 @@ in order to add, edit, or delete calendar event entries.</p>
   <tr>
      <td>category</td>
      <td>Only display items for that category. Leaving unset, will show all categories. Note that
-	 you can limit to multiple categories by separating each one with a comma.<em>(optional)</em></td>
+	 you can limit to multiple categories by separating each one with a comma. This parameter can be 
+         used with the myevents action and with the various display options.  If multiple category names are specified
+         a match is done on ANY of the categories specified. <em>(optional)</em></td>
   </tr>
 
   <tr>
@@ -545,7 +549,12 @@ in order to add, edit, or delete calendar event entries.</p>
 
   <tr>
      <td>unique_only</td>
-     <td>Used with display=upcominglist, and with action=search, this parameter allows you to specify that only one event of a certain type should be returned';
+     <td>Used with display=upcominglist, and with action=search, this parameter allows you to specify that only one event with a certain name should be returned.  Default value is 0';
+  </tr>
+
+  <tr>
+     <td>displayforday</td>
+     <td>Used with display=upcominglist, this parameter specifies that 00:01 of the current day should be used for calculating wether an event should be displayed, rather than the current server time.</td>
   </tr>
 
 </table>

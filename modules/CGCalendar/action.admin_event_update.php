@@ -41,8 +41,7 @@ function handle_null_date_ts($val)
 {
   if( $val )
     {
-      global $gCms;
-      $db =& $gCms->GetDb();
+      $db = cmsms()->GetDb();
       $str = $db->DbTimeStamp($val);
       return trim($str,"'");
     }
@@ -97,7 +96,8 @@ function nth_weekday($nth,$weekday,$fromdate)
 
       if( $weekday_of_last < $weekday )
 	{
-	  $ndays = $days_in_month - $weekday_of_last - $weekday - 1;
+	  //$ndays = $days_in_month - $weekday_of_last - $weekday - 1;
+	  $ndays = $days_in_month - $weekday_of_last + $weekday - 7; 
 	}
       else
 	{
@@ -133,9 +133,6 @@ function nth_weekday($nth,$weekday,$fromdate)
 function check_overlapping_events($event_start_ut,$event_end_ut,
 				  $child_events)
 {
-//   global $gCms;
-//   $db =& $gCms->GetDb();
-
   $tmp = array();
   $tmp[] = array('start'=>$event_start_ut,'end'=>$event_end_ut);
   $tmp = array_merge($tmp,$child_events);
@@ -148,18 +145,9 @@ function check_overlapping_events($event_start_ut,$event_end_ut,
     {
       $prev =& $tmp[$i-1];
       $cur =& $tmp[$i];
-
-//       $a = $db->DbTimeStamp($prev['start']);
-//       $b = $db->DbTimeStamp($prev['end']);
-//       $c = $db->DbTimeStamp($cur['start']);
-//       $d = $db->DbTimeStamp($cur['end']);
-//       echo "DEBUG: prev = $a - $b  cur = $c - $d<br/>";
       if( ($cur['start'] >= $prev['start'] && $cur['start'] <= $prev['end']) ||
 	  ($cur['end'] >= $prev['start'] && $cur['end'] <= $prev['end']) )
 	{
-// 	  echo "DEBUG: prev = ".strftime("%x %X",$prev['start'])." - ".strftime("%x %X",$prev['end']).'<br/>';
-// 	  echo "DEBUG: cur = ".strftime("%x %X",$cur['start'])." - ".strftime("%x %X",$cur['end']).'<br/>';
-// 	  die();
 	  return true;
 	}
     }
@@ -170,8 +158,7 @@ function check_overlapping_events($event_start_ut,$event_end_ut,
 
 function check_db_for_conflicts(&$module,$event,$event_id,$policy,$event_allows_overlap)
 {
-  global $gCms;
-  $db = $gCms->GetDb();
+  $db = cmsms()->GetDb();
 
   $str = '';
   if( $policy == 'individual' && $event_allows_overlap)
@@ -228,9 +215,7 @@ function check_db_for_conflicts(&$module,$event,$event_id,$policy,$event_allows_
       $query = 'SELECT event_id FROM '.$module->events_table_name."
                  WHERE (($start BETWEEN event_date_start and event_date_end) 
                        OR ($end BETWEEN event_date_start and event_date_end))";
-      $dbr = $db->GetOne($query.$str,
-			 array(trim($start,'"'),
-			       trim($end,'"')));
+      $dbr = $db->GetOne($query.$str);
     }
   if( $dbr ) return true;
   return false;
@@ -327,6 +312,10 @@ function calculate_recurring_events($event_start_ut, $event_end_ut,
 	      $results[] = $tmp;
 	    }
 	  $tmp2 = strtotime(sprintf('+%d months',$event_recur_interval),$date);
+	  if (date('d',$tmp2)>28)
+            {
+	      $tmp2 = strtotime('-4 days',$tmp2);
+            }
 	  $date = $tmp2;
 	}
       break;
@@ -397,6 +386,10 @@ function calculate_recurring_events($event_start_ut, $event_end_ut,
 	      }
 
 	    $tmp2 = strtotime(sprintf('+%d months',$event_recur_interval),$date);
+	    if (date('d',$tmp2)>28)
+	      {
+		$tmp2 = strtotime('-4 days',$tmp2);
+	      }
 	    $date = $tmp2;
 	  }
 	  break;
@@ -454,7 +447,24 @@ foreach( $params as $k => $v )
       $params['field_'.$thefield] = $v;
     }
 }
+// handle deletion
+foreach( $params as $k => $v )
+{
+  if( preg_match('/^remove_field_/', $k) && $v == 1 )
+    {
+      $thefield = substr($k,strlen('remove_field_'));
+      if( isset($params['upload_field_oldvalue_'.$thefield]) )
+	{
+	  $v = $params['upload_field_oldvalue_'.$thefield];
+	  $config = cmsms()->GetConfig();
+	  $destDir = $this->GetPreference('uploaddirectory',$config['uploads_path']);
+	  $dn = cms_join_path($destDir,$v);
 
+	  @unlink($dn);
+	  unset($params['field_'.$thefield]);
+	}
+    };
+}
 
 //
 // Error Handling
@@ -539,7 +549,7 @@ if( $event['event_recur_period'] != 'none' )
 //
 // check for conflicting events.
 //
-$policy = $this->GetPreference('overlap_polciy','all');
+$policy = $this->GetPreference('overlap_policy','all');
 if( $policy != 'all' )
   {
     $conflict = check_db_for_conflicts($this,$event,$event['event_id'],$policy,

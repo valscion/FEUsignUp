@@ -136,6 +136,31 @@ if( $fields )
 	  case 2:
 	    $obj->field = $this->CreateTextArea(false,$id,$field_value,'cal_field_'.$obj->safename);
 	    break;
+
+	  case 3:
+	    // company directory entry.
+	    $cdmod = cms_utils::get_module('CompanyDirectory');
+	    if( !$cdmod )
+	      {
+		// have field type, but no companydirectory module.
+		continue;
+	      }
+	    // get a list of the companies that we want to display
+	    {
+	      $query = 'SELECT id,company_name FROM '.cms_db_prefix().'module_compdir_companies ORDER BY company_name';
+	      $dbr = $db->GetArray($query);
+	      if( $dbr )
+		{
+		  $tmp2 = array($this->Lang('none')=>-1);
+		  for( $i = 0; $i < count($dbr); $i++ )
+		    {
+		      $tmp2[$dbr[$i]['company_name']] = $dbr[$i]['id'];
+		    }
+		  $obj->field = $this->CreateInputDropdown($id,'cal_field_'.$obj->safename,$tmp2,-1,$field_value);
+		}
+	    }
+	    break;
+
 	  }
 	$tmp[$obj->safename] = $obj;
       }
@@ -191,8 +216,6 @@ else if( isset($params['cal_submit']) )
       }
     $params = $tmp;
     $this->GetEventFromParams($event,$tmp,true);
-//     debug_display($params); 
-//     debug_display($event);
 
     // check for data quality
     if( $event['event_date_end_ut'] != NULL &&
@@ -311,7 +334,6 @@ else if( isset($params['cal_submit']) )
 				       $event['event_allows_overlap'],
 				       $event['event_id'],
 				       $feu_uid));
-
 	  }
 	else
 	  {
@@ -343,6 +365,7 @@ else if( isset($params['cal_submit']) )
 				    implode(',',$event['event_recur_weekdays']),
 				    implode(',',$event['event_recur_monthdays']),
 				    $event['event_allows_overlap']));
+
 	  }
 
 	if( !$dbr )
@@ -371,7 +394,11 @@ else if( isset($params['cal_submit']) )
 
 	    if( !empty($field->value) )
 	      {
-		$db->Execute($query,array($field->name,$event['event_id'],$field->value));
+		$dbr = $db->Execute($query,array($field->name,$event['event_id'],$field->value));
+		if( !$dbr )
+		  {
+		    debug_display($db->sql.' -- '.$db->ErrorMsg()); die();
+		  }
 	      }
 	  }
       }

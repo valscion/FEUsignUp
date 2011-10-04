@@ -124,7 +124,7 @@ function AdminDisplayManageEvents(&$mod, $id, &$parameters, $returnid)
 						$gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif', 
 											     $mod->Lang('cal_delete'),'','','systemicon'),
 						array('event_id'=>$row['event_id']), 
-						$mod->Lang('cal_areyousure').' \\\''.strip_tags($row['event_title']).'\\\'?');
+						$mod->Lang('cal_areyousure').' &quot;'.addslashes(strip_tags($row['event_title'])).'&quot;');
 
 	  $entries[] = $row;
 	}

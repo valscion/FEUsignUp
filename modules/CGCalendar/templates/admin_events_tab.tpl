@@ -69,7 +69,7 @@ function selectall() {
           {$one.event_title}
         {else}
 *}
-          <a href="{$one.edit_url}" title="{$one.event_title|strip_tags}">{$one.event_title|strip_tags}</a>
+          <a href="{$one.edit_url}" title="{$one.event_title|strip_tags|cms_escape}">{$one.event_title|strip_tags|cms_escape}</a>
 {*        {/if} *}
       </td>
       <td>{if $one.event_date_end == 0}{$one.event_date_start|date_format:"%x"}{else}{$one.event_date_start|date_format:"%x %X"}{/if}</td>

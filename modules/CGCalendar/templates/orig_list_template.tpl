@@ -34,3 +34,4 @@
 {if $return_url != ""}
   <div class="calendar-returnlink">{$return_url}</div>
 {/if}
+</div>

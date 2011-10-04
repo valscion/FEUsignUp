@@ -59,7 +59,8 @@ $dict->ExecuteSQLArray($sqlarray);
 $fields = "
 			field_name C(255) KEY,
                         field_type I,
-                        field_searchable I1
+                        field_searchable I1,
+                        field_extra X
 		";
 $sqlarray = $dict->CreateTableSQL($this->fields_table_name, $fields, $table_options);
 $dict->ExecuteSQLArray($sqlarray);

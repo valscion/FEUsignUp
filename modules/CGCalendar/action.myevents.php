@@ -68,9 +68,41 @@ $destpage = $returnid;
 // 
 // Get data 
 //
-$query = 'SELECT * FROM '.$this->events_table_name.'
-           WHERE event_created_by = ? ORDER BY event_modified_date';
-$data = $db->GetArray($query,array($feu_uid));
+$category_ids = '';
+if( isset($params['category']) && $params['category'] != '' )
+  {
+    $category = explode(',',$params['category']);
+    for( $i = 0; $i < count($category); $i++ )
+      {
+	$category[$i] = "'".trim($category[$i])."'";
+      }
+    $query = 'SELECT category_id FROM '.$this->categories_table_name.' WHERE category_name IN ('.implode(',',$category).')';
+    $category_ids = $db->GetCol($query);
+  }
+
+$qparms = array();
+$where  = array();
+$joins  = array();
+$query = 'SELECT * FROM '.$this->events_table_name.' ev';
+$where[] = 'event_created_by = ?';
+$qparms[] = (int)$feu_uid;
+if( is_array($category_ids) && count($category_ids) > 0 )
+  {
+    $joins[] = ' LEFT JOIN '.$this->events_to_categories_table_name.' ec ON ev.event_id = ec.event_id';
+    $where[] = 'ec.category_id IN ('.implode(',',$category_ids).')';
+  }
+$order = ' ORDER BY event_modified_date';
+// build the query.
+if( count($joins) )
+  {
+    $query .= implode(' ',$joins);
+  }
+if( count($where) )
+  {
+    $query .= ' WHERE '.implode(' AND ',$where);
+  }
+$query .= $order;
+$data = $db->GetArray($query,$qparms);
 
 //
 // Give data to smarty

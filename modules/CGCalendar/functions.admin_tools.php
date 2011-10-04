@@ -147,8 +147,7 @@ function calendar_isValidFilename(&$mod,$filename)
 
 function calendar_HandleUpload(&$mod,$fldname,&$error)
 {
-  global $gCms;
-  $config =& $gCms->GetConfig();
+  $config = cmsms()->GetConfig();
   $destDir = $mod->GetPreference('uploaddirectory',$config['uploads_path']);
 
   if( !isset($_FILES) || !isset($_FILES[$fldname]) || !$_FILES[$fldname]['name'] )

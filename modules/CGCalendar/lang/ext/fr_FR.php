@@ -1,4 +1,6 @@
 <?php
+$lang['delete'] = 'Effacer';
+$lang['cd_company'] = 'Company Directory Company';
 $lang['dflt_urlprefix'] = 'Pr&eacute;fixe d&#039;URL par d&eacute;faut pour &quot;pretty URLS&quot;';
 $lang['dflt_alldayevent'] = 'Les nouveaux &eacute;v&eacute;nements sont des &eacute;v&eacute;nements &quot;jour entier (all day)&quot; par d&eacute;faut';
 $lang['dflt_starttime'] = 'Heure de d&eacute;but par d&eacute;faut pour les nouveaux &eacute;v&eacute;nements';
@@ -6,7 +8,7 @@ $lang['info_dflt_starttime'] = '<em>(S&#039;applique uniquement si les nouveaux 
 $lang['search_type'] = 'Type de recherche';
 $lang['search_any'] = 'renvoie le r&eacute;sultat sur n&#039;importe lequel des mots recherch&eacute;s';
 $lang['search_all'] = 'renvoie le r&eacute;sultat de recherche sur tous les mots recherch&eacute;s';
-$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Note : </span>aucune recherche ne peut &ecirc;tre effectu&eacute;e sur &quot;File Upload Fields&quot;.';
+$lang['info_customfields'] = '<span style=&quot;color: red;&quot;>Note :</span> les recherches ne peuvent &ecirc;tre utilis&eacute;es que dans les champs de texte. Cocher les autres types de champ n&#039;aura aucun effet sur la recherche.';
 $lang['searchable'] = 'Utilisable comme crit&egrave;re de recherche';
 $lang['help_param_editeventtemplate'] = 'Applicable uniquement pour l&#039;action Mes &Eacute;v&eacute;nements, ce param&egrave;tre permet de sp&eacute;cifier un autre gabarit d&#039;&eacute;dition d&#039;&eacute;v&eacute;nement (invoqu&eacute; lorsque l&#039;utilisateur cr&eacute;e ou &eacute;dite un &eacute;v&eacute;nement) que celui utilis&eacute; par d&eacute;faut.';
 $lang['help_param_editpage'] = 'Applicable uniquement pour l&#039;action Mes &Eacute;v&eacute;nements, ce param&egrave;tre permet de sp&eacute;cifier une autre page pour le formulaire d&#039;&eacute;dition.';
@@ -47,7 +49,7 @@ $lang['first_page'] = '<<';
 $lang['prev_page'] = '<';
 $lang['next_page'] = '>';
 $lang['last_page'] = '>>';
-$lang['page_of'] = 'Page %d de %d';
+$lang['page_of'] = 'Page %d sur %d';
 $lang['search_results'] = 'R&eacute;sultats de la Recherche du Calendrier';
 $lang['search_words'] = 'Mots Recherch&eacute;s';
 $lang['no_results_found'] = 'Aucun r&eacute;sultat trouv&eacute; ne correspondant &agrave; la demande';
@@ -106,7 +108,7 @@ $lang['max'] = 'max ';
 $lang['times'] = 'fois';
 $lang['on'] = 'on ';
 $lang['areyousure_uninstall'] = '&Ecirc;tes-vous s&ucirc;r de vouloir faire ceci ? Si vous poursuivez vous aller effacer de mani&egrave;re d&eacute;finitive toutes les donn&eacute;es associ&eacute;es &agrave; ce module.';
-$lang['post_uninstall'] = 'Le module CGCalendrier a &eacute;t&eacute; d&eacute;sinstall&eacute; et tous les &eacute;v&eacute;nements et les informations de gabarit associ&eacute;s &agrave; ce module ont &eacute;t&eacute; supprim&eacute;s.';
+$lang['post_uninstall'] = 'Le module Calendrier (CG) a &eacute;t&eacute; d&eacute;sinstall&eacute; et tous les &eacute;v&eacute;nements et les informations de gabarit associ&eacute;s &agrave; ce module ont &eacute;t&eacute; supprim&eacute;s.';
 $lang['fieldupdated'] = 'Champ mis &agrave; jour.';
 $lang['every'] = 'Tous les';
 $lang['or'] = 'ou';
@@ -236,7 +238,7 @@ $lang['error_csvfilenotfound'] = 'ERREUR&nbsp;: Impossible de trouver le fichier
 $lang['error_cantopenfile'] = 'ERREUR&nbsp;: Impossible d&#039;ouvrir le fichier';
 $lang['error_categoryexists'] = 'ERREUR&nbsp;: Une cat&eacute;gorie avec le nom %s existe d&eacute;j&agrave;';
 $lang['cal_id'] = 'Id ';
-$lang['cal_calendar'] = 'Calendrier';
+$lang['cal_calendar'] = 'Calendrier (CG)';
 $lang['cal_default_templates'] = 'Gabarits par d&eacute;faut';
 $lang['cal_description'] = 'Ajout, &eacute;dition et suppression d&#039;&eacute;v&eacute;nements';
 $lang['cal_addevent'] = 'Ajouter un &eacute;v&eacute;nement';
@@ -313,7 +315,7 @@ $lang['showfutureyears'] = 'Nombre d&#039;ann&eacute;es autoris&eacute;es dans l
 $lang['hidesummary'] = 'Le champ sommaire doit-il &ecirc;tre cach&eacute; ?';
 $lang['hidecontent'] = 'Le champ contenu doit-il &ecirc;tre cach&eacute; ?';
 $lang['category_reminder'] = 'Veuillez s&eacute;lectionner une ou plusieurs cat&eacute;gorie(s) pour cet &eacute;v&eacute;nement';
-$lang['module_example_stylesheet'] = 'CGCalendrier : exemple de CSS';
+$lang['module_example_stylesheet'] = 'Calendrier (CG) : exemple de CSS';
 $lang['error_permission'] = 'Vous avez besoin de la permission appropri&eacute;e (%s) pour acc&eacute;der &agrave; cette fonctionnalit&eacute;';
 $lang['install_postmessage'] = 'Assurez-vous de d&eacute;finir la permission &quot;Modify Calendar&quot; pour les utilisateurs qui administreront les &eacute;v&eacute;nements de calendrier';
 $lang['deletetagged'] = 'Supprimer les &eacute;v&eacute;nements s&eacute;lectionn&eacute;s';
@@ -352,7 +354,7 @@ $lang['fielddeleted'] = 'Champ supprim&eacute;';
 $lang['fields'] = 'Champs par d&eacute;faut';
 $lang['textfield'] = 'Champ texte';
 $lang['uploadfield'] = 'Champ d&#039;upload de fichier';
-$lang['description'] = '<p>Le module CGCalendrier affiche des &eacute;v&eacute;nements sur votre page. Quand le module est install&eacute;, une page d&#039;administration de calendrier est ajout&eacute;e au menu Contenu, et vous permet de g&eacute;rer vos &eacute;v&eacute;nements.</p>';
+$lang['description'] = '<p>Le module Calendrier (CG) affiche des &eacute;v&eacute;nements sur votre page. Quand le module est install&eacute;, une page d&#039;administration de calendrier est ajout&eacute;e au menu Contenu, et vous permet de g&eacute;rer vos &eacute;v&eacute;nements.</p>';
 $lang['defaultcalendarpage'] = 'Page par d&eacute;faut qui contient le calendrier. Cette page doit contenir la balise smarty qui appelle le calendrier. N&eacute;cessaire si vous utilisez les &quot;pretty URLs&quot;.';
 $lang['uploaddirectory'] = 'Dossier o&ugrave; les fichiers upload&eacute;s doivent &ecirc;tre stock&eacute;s';
 $lang['uploadfiletypes'] = 'Types de fichiers autoris&eacute;s';
@@ -367,7 +369,7 @@ $lang['help_template'] = '<p><b>Affiche le nom de l&#039;auteur :</b></p>
 <code>Auteur : {$event.authorname}</code>
 ';
 $lang['cal_help'] = '		<h3>Notice:</h3>
-		<p>Le module CGCalendrier (Calguy Calendar) Version 1.0  est un fork du module de Calendrier classique, mais CGCalendrier n&#039;est aucunement compatible avec Calendrier.
+		<p>Le module Calendrier (CG) Version 1.0  est un fork du module de Calendrier classique, mais Calendrier  (CG) n&#039;est aucunement compatible avec Calendrier.
 		<h3>Que fait ce module ?</h3>
 		<p>Ce module affiche des &eacute;v&eacute;nements sur vos pages. D&egrave;s que le module est install&eacute;, une page de gestion des &eacute;v&eacute;nements est ajout&eacute;e au menu d&#039;administration qui vous permettra de g&eacute;rer des &eacute;v&eacute;nements.</p>
 		<h3>S&eacute;curit&eacute;</h3>
@@ -551,9 +553,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>
 ';
-$lang['utma'] = '156861353.1949673112.1265210769.1286953600.1286956518.214';
-$lang['utmz'] = '156861353.1286956518.214.40.utmccn=(referral)|utmcsr=forum.cmsmadesimple.org|utmcct=/index.php/topic,48121.0.html|utmcmd=referral';
-$lang['qca'] = 'P0-1075820551-1265210768764';
+$lang['qca'] = 'P0-167338602-1304155985682';
+$lang['utma'] = '156861353.1242350738.1310284715.1310284715.1310284715.1';
 $lang['utmc'] = '156861353';
+$lang['utmz'] = '156861353.1310284715.1.1.utmccn=(referral)|utmcsr=forum.cmsmadesimple.org|utmcct=/viewtopic.php|utmcmd=referral';
 $lang['utmb'] = '156861353';
 ?>

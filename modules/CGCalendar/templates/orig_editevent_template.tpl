@@ -86,7 +86,7 @@ function toggleDisplay(elem)
 <div class="row">
   <p class="row_prompt">{$field->name}:</p>
   <p class="row_input">
-    {if isset($field->value)}{$field->value}&nbsp;{/if}
+    {if isset($field->value) && $field->type != 3}{$field->value}&nbsp;{/if}
     {$field->field}
   </p>
 </div>
