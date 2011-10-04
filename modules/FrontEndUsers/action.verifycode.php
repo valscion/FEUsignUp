@@ -41,12 +41,16 @@ if( !isset($gCms) ) exit;
 $uid = '';
 if( isset( $params['input_uid'] ) )
   {
-    $uid = $params['input_uid'];
+    $uid = (int)$params['input_uid'];
+  }
+else if( isset($params['uid']) )
+  {
+    $uid = (int)$params['uid'];
   }
 $username = '';
 if( isset( $params['input_username'] ) )
   {
-    $username = $params['input_username'];
+    $username = trim($params['input_username']);
   }
  else
    {
@@ -55,8 +59,13 @@ if( isset( $params['input_username'] ) )
 $code = '';
 if( isset( $params['input_code'] ) )
   {
-    $code = $params['input_code'];
+    $code = trim($params['input_code']);
   }
+else if( isset($params['code']) )
+  {
+    $code = trim($params['code']);
+  }
+
 if( isset( $params['error'] ) )
   {
     $this->smarty->assign('error',$params['error']);

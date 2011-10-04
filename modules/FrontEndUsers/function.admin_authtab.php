@@ -36,6 +36,7 @@
 #-------------------------------------------------------------------------
 #END_LICENSE
 if( !isset($gCms) ) return;
+if( !$this->_HasSufficientPermissions('siteprefs') ) return;
 
 $smarty->assign('formstart',$this->CGCreateFormStart($id,'admin_set_auth'));
 $smarty->assign('formend',$this->CreateFormEnd());
@@ -72,6 +73,13 @@ $smarty->assign('pageid_login',$this->GetPreference('pageid_login'));
 $smarty->assign('pageid_logout',$this->GetPreference('pageid_logout'));
 $smarty->assign('pageid_afterverify',$this->GetPreference('pageid_afterverify'));
 $smarty->assign('pageid_afterchangesettings',$this->GetPreference('pageid_afterchangesettings'));
+
+// Get the number of users installed in FEU.
+$query = 'SELECT count(id) FROM '.cms_db_prefix().'module_feusers_users';
+$db = cmsms()->GetDb();
+$nusers = $db->GetOne($query);
+$smarty->assign('total_user_count',$nusers);
+$smarty->assign('pwsalt',$this->GetPreference('pwsalt'));
 
 $cgecom = cge_utils::get_module('CGEcommerceBase');
 $selfreg = cge_utils::get_module('SelfRegistration');

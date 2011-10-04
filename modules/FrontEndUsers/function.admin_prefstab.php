@@ -165,6 +165,11 @@ if( $num )
 					       $this->Lang('remove1month'),
 					       'onclick="return confirm(\''.$this->Lang('areyousure').'\')"'));
     }
+
+$smarty->assign('forcelogout_times',$this->GetPreference('forcelogout_times'));
+$smarty->assign('forcelogout_sessionage',$this->GetPreference('forcelogout_sessionage'));
+$smarty->assign('expireusers_interval',$this->GetPreference('expireusers_interval'));
+
 $smarty->assign('endform',$this->CreateFormEnd());
 echo $this->ProcessTemplate('adminprefs.tpl');
 

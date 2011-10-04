@@ -130,28 +130,11 @@ if (isset($params['input_feusers_specific_permissions']) && $params['input_feuse
 	$this->CreatePermission('FEU Modify Templates','Modify Front-End User Templates');
       }
   }
-/*
- * WE DON'T DELETE THE FEU SPECIFIC PERMISSIONS, EVEN IF SOMEBODY TOGGLES THIS OFF.
- else
-   {
-     // sharing access permissions with Admin, so delete FEUser-specific permissions if necessary
-     if (intval($count) != 0)
-       {
-	 // delete 'em
-	 $this->RemovePermission('FEU Add Users');
-	 $this->RemovePermission('FEU Modify Users');
-	 $this->RemovePermission('FEU Remove Users');
-	 $this->RemovePermission('FEU Add Groups');
-	 $this->RemovePermission('FEU Modify Groups');
-	 $this->RemovePermission('FEU Modify Group Assignments');
-	 $this->RemovePermission('FEU Remove Groups');
-	 $this->RemovePermission('FEU Modify Site Preferences');
-	 $this->RemovePermission('FEU Modify FrontEndUserProps');
-	 $this->RemovePermission('FEU Modify Templates');
-       }
-       
-   }
-*/
+
+$this->SetPreference('require_onegroup',(int)$params['input_requireonegroup']);
+$this->SetPreference('forcelogout_times',trim($params['forcelogout_times']));
+$this->SetPreference('forcelogout_sessionage',(int)$params['forcelogout_sessionage']);
+$this->SetPreference('expireusers_interval',(int)$params['expireusers_interval']);
     
 $this->RedirectToTab($id, 'prefs');
 

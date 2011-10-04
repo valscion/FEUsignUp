@@ -44,6 +44,9 @@ if( !$this->_HasSufficientPermissions('usersngroups') )
 
 if( isset( $params['button_exportusers'] ) )
   {
+    $export_passhash = 0;
+    if( isset($params['export_passhash']) ) $export_passhash = (int)$params['export_passhash'];
+
     // we want to export a csv file do we
     // Start with an empty output (this will become the CSV file)
     $output = '';
@@ -55,7 +58,7 @@ if( isset( $params['button_exportusers'] ) )
     $db =& $this->GetDb();
 
     // Start by getting a table of each user for each group they are in
-    $uquery = 'SELECT DISTINCT u.id,u.username,u.createdate,u.expires
+    $uquery = 'SELECT DISTINCT u.id,u.username,u.password,u.createdate,u.expires
                  FROM '.cms_db_prefix().'module_feusers_users u';
 
     $dbresultu = $db->Execute( $uquery );
@@ -72,63 +75,75 @@ if( isset( $params['button_exportusers'] ) )
 	$this->RedirectToTab($id,'admin');
       }
 
-	// Output headings relevant to this group
+    // Output headings relevant to this group
     set_time_limit(9999);
-	$output_heading = '';
-	// todo - output something sensible for groupname, userid, username, createdate, expires
-	$output_heading .= '##userid'.",".'username'.",".'createdate'.",".'expires'.",".'groupname';
-	$groups = Array();
-	$fields = Array();
-	while( $urow = $dbresultu->FetchRow() )
+    $output_heading = '';
+    {
+      $columns = array('##userid','username','createdate','expires','groupname');
+      // todo - output something sensible for groupname, userid, username, createdate, expires
+      if( $export_passhash )
 	{
-	        $line = array();
-		$line[] = $urow['id'];
-		$line[] = $urow['username'];
-		$line[] = $urow['createdate'];
-		$line[] = $urow['expires'];
+	  $columns = array('##userid','username','passwordhash','createdate','expires','groupname');
+	}
+      $output_heading .= implode(',',$columns);
+    }
 
-		$gquery = 'SELECT DISTINCT 	g.id, g.groupname
+    $groups = Array();
+    $fields = Array();
+    while( $urow = $dbresultu->FetchRow() )
+      {
+	$line = array();
+	$line[] = $urow['id'];
+	$line[] = $urow['username'];
+	if( $export_passhash )
+	  {
+	    $line[] = $urow['password'];
+	  }
+	$line[] = $urow['createdate'];
+	$line[] = $urow['expires'];
+	
+	$gquery = 'SELECT DISTINCT 	g.id, g.groupname
 				FROM '.cms_db_prefix().'module_feusers_belongs b
 				LEFT JOIN '.cms_db_prefix().'module_feusers_groups g
 				  ON  g.id = b.groupid
 				WHERE b.userid = ?
 				ORDER BY g.groupname';
-		$dbresultg = $db->Execute( $gquery, array($urow['id']) );
-		if( !$dbresultg || ($dbresultg->RecordCount() == 0) )
-		{
-			$output .= implode(',',$line)."\n";
-			continue;
-		}
-
-		$first_group = true;
-		$ugroups = array();
-		while( $grow = $dbresultg->FetchRow() )
-		{
-			$ugroups[] = $grow['groupname'];
-			if (!isset( $groups[ $grow['groupname'] ] ))
-			{
-				// Get the list of property names for this group in the correct order
-				$fquery = "SELECT name FROM ".cms_db_prefix()."module_feusers_grouppropmap
+	$dbresultg = $db->Execute( $gquery, array($urow['id']) );
+	if( !$dbresultg || ($dbresultg->RecordCount() == 0) )
+	  {
+	    $output .= implode(',',$line)."\n";
+	    continue;
+	  }
+	
+	$first_group = true;
+	$ugroups = array();
+	while( $grow = $dbresultg->FetchRow() )
+	  {
+	    $ugroups[] = $grow['groupname'];
+	    if (!isset( $groups[ $grow['groupname'] ] ))
+	      {
+		// Get the list of property names for this group in the correct order
+		$fquery = "SELECT name FROM ".cms_db_prefix()."module_feusers_grouppropmap
 						WHERE group_id = ?
 						ORDER BY sort_key";
-				$dbresultf = $db->Execute( $fquery, array($grow['id']) );
-				if( !$dbresultf || ($dbresultf->RecordCount() == 0) )
-				{
-					echo $db->ErrorMsg();
-					exit();
-				}
-				// now iterate through this group properties
-				while ( $frow = $dbresultf->FetchRow() )
-				{
-					if (!isset(  $fields[ $frow['name'] ] ))
-					{
-						$output_heading .= ",".'"'.$frow['name'].'"';
-						$fields[ $frow['name'] ] = 'true';
-					}
-				}
-				$groups[ $grow['groupname'] ] ='true';
-			}
-		}
+		$dbresultf = $db->Execute( $fquery, array($grow['id']) );
+		if( !$dbresultf || ($dbresultf->RecordCount() == 0) )
+		  {
+		    echo $db->ErrorMsg();
+		    exit();
+		  }
+		// now iterate through this group properties
+		while ( $frow = $dbresultf->FetchRow() )
+		  {
+		    if (!isset(  $fields[ $frow['name'] ] ))
+		      {
+			$output_heading .= ",".'"'.$frow['name'].'"';
+			$fields[ $frow['name'] ] = 'true';
+		      }
+		  }
+		$groups[ $grow['groupname'] ] ='true';
+	      }
+	  }
 		$line[] = implode(':',$ugroups);
 
 		// For this user, get all their fields and use a right join to "fill in the blanks"

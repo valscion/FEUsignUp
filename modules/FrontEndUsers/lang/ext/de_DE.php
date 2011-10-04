@@ -1,37 +1,51 @@
 <?php
-$lang['info_paidreg_settings'] = 'The following settings only apply if using self registration and allowing for paid registration';
+$lang['info_sessiontimeout'] = 'Geben Sier hier die Anzahl von Sekunden an, nach deren Ablauf inaktive Benutzer automatisch von der Webseite abgemeldet werden';
+$lang['prompt_expireusers_interval'] = 'Benutzerablauf-Intervall';
+$lang['info_expireusers_interval'] = 'Specify a value (in seconds) that indicates how often the system should force users whos session has expired to be logged out.  T&quot;his is an optimization to save database queries.  If left empty or set to 0 expiry will be performed on every request.';
+$lang['msg_settingschanged'] = 'Ihre Einstellungen wurden aktualisiert';
+$lang['forcedlogouttask_desc'] = 'Benutzer in regelm&auml;&szlig;igen Zeitabst&auml;nden abmelden';
+$lang['prompt_forcelogout_times'] = 'Zeiten, zu denen der Benutzer automatisch abgemeldet wird';
+$lang['info_forcelogout_times'] = 'Geben Sie hier eine durch Kommata getrennte Liste von Zeiten wie zum Beispiel HH:MM,HH:MM an, in denen die Benutzer automatisch abgemeldet werden. Hinweis: Note, this uses the psuedocron mechanism so you must be sure that the times entered here will coincide reasonably with your &quot;pseudocron granularity&quot; and that sufficient requests will occur to your website to ensure that pseudocron is executed.';
+$lang['prompt_forcelogout_sessionage'] = 'Benutzer ausschlie&szlig;en, die aktiv waren in <em>(Minuten)</em>';
+$lang['info_forcelogout_sessionage'] = 'Wird dieser Wert angegeben, wird jeder Benutzer, der in diesem Zeitraum aktiv war, nicht automatisch abgemeldet';
+$lang['areyousure_delete'] = 'Wollen Sie wirklich den Benutzer %s l&ouml;schen';
+$lang['error_invalidfileextension'] = 'Die hochgeladene Datei entspricht nicht der erlaubten Dateitypen';
+$lang['postuninstall'] = 'Alle dem FrontEndUsers-Modul zugeordneten Daten wurden gel&ouml;scht';
+$lang['info_ecomm_paidregistration'] = 'Wird dies aktiviert, wird das Modul auf Ereignisse achten, die durch die Ecommerce Suite ausgel&ouml;st werden. Die folgenden Einstellungen haben nur dann eine Auswirkung, wenn diese Einstellung aktiviert wird.';
+$lang['prompt_ecomm_paidregistration'] = 'Auf Bestellungen achten';
+$lang['info_paidreg_settings'] = 'Die folgenden Einstellungen werden nur dann angewendet, wenn sich Benutzer selbst registrieren k&ouml;nnen und bezahlte Registrierungen erlaubt sind.';
 $lang['none'] = 'Kein(er)';
 $lang['delete_user'] = 'Benutzer l&ouml;schen';
-$lang['expire_user'] = 'Expire User';
-$lang['prompt_action_ordercancelled'] = 'Action to perform when a subscription order is cancelled';
-$lang['prompt_action_orderdeleted'] = 'Action to perform when a subscription order is deleted';
+$lang['expire_user'] = 'Abgelaufene Benutzer';
+$lang['prompt_action_ordercancelled'] = 'Aktion, die ausgef&uuml;hrt wird, wenn die Bestellung eines Abonnements abgebrochen wird';
+$lang['prompt_action_orderdeleted'] = 'Aktion, die ausgef&uuml;hrt wird, wenn die Bestellung eines Abonnements gel&ouml;scht wird';
 $lang['ecommerce_settings'] = 'eCommerce-Einstellungen';
-$lang['securefieldmarker'] = 'Secure Field Marker';
-$lang['securefieldcolor'] = 'Secure Field Color';
-$lang['prompt_encrypt'] = 'Store this data encrypted in the database';
-$lang['error_notsupported'] = 'The chosen option is not supported given your current configuration';
-$lang['audit_user_created'] = 'User automatically created';
-$lang['info_auto_create_unknown'] = 'If a user is authenticated by an external authentication module but is not known in the FrontEndUsers module should an FEU account be created automatically?';
-$lang['prompt_auto_create_unknown'] = 'Automatically Create Unknown Users';
+$lang['securefieldmarker'] = 'Kennzeichnung f&uuml;r sichere Felder';
+$lang['securefieldcolor'] = 'Farbe f&uuml;r sichere Felder';
+$lang['prompt_encrypt'] = 'Diese Daten in der Datenbank verschl&uuml;sselt speichern';
+$lang['error_notsupported'] = 'Die gew&auml;hlte Option wird von Ihrer aktuellen Konfiguration nicht unterst&uuml;tzt';
+$lang['audit_user_created'] = 'Benutzer wurde automatisch erstellt';
+$lang['info_auto_create_unknown'] = 'Soll f&uuml;r einen Benutzer, der &uuml;ber ein externes Authentifizierungs-Modul angemeldet wurde, aber dem FrontEndUsers-Modul nicht bekannt ist, automatisch ein FEU-Konto erstellt werden?';
+$lang['prompt_auto_create_unknown'] = 'Automatisch unbekannten Benutzer erstellen';
 $lang['display_settings'] = 'Anzeige-Einstellungen';
-$lang['info_std_auth_settings'] = 'The following settings are only applicable if using the &quot;Builtin Authentication&quot;.';
-$lang['info_support_lostun'] = 'Selecting No will disable the ability for a user to request lost login information, irrespective of other settings';
-$lang['info_support_lostpw'] = 'Selecting No will disable the ability for a user to a password reset, irrespective of other settings';
-$lang['prompt_support_lostun'] = 'Allow users to request their username';
-$lang['prompt_support_lostpw'] = 'Allow users to request a password change';
-$lang['auth_settings'] = 'Authentication Settings';
-$lang['authentication'] = 'Builtin Authentication';
-$lang['auth_builtin'] = 'FEU Standard Authentication';
-$lang['auth_module'] = 'Authentication Module/Method';
-$lang['info_auth_module'] = 'The FrontendUsers module supports using alternate authentication methods, with varying capabilities.  Some functionality will not function or be disabled when not using the built in authentication method';
-$lang['error_user_nonunique_field_value'] = 'The value specified for %s is already in use by another user';
-$lang['unique'] = 'Unique';
-$lang['error_nonunique_field_value'] = 'The value specified for %s (%s) is not unique';
-$lang['prompt_force_unique'] = 'Force values of this property to be unique across all user accounts';
-$lang['help_returnlast'] = 'Used with the login and logout forms, this parameter if specified will indicate that the user should be returned to the page (by url) that the user was viewing before the action occurred.  This parameter will override the redirect preferences, and the returnto parameter.';
-$lang['help_noinline'] = 'Used with one of the forms, this parameter specifies that the forms should not be placed inline, instead the resulting output after form submission will replace the default content block';
-$lang['title_reset_session'] = 'Login Session Timeout Warning';
-$lang['msg_reset_session'] = 'Your login session is about to expire, please click &quot;&quot;Ok&quot; to confirm your activity on this website.';
+$lang['info_std_auth_settings'] = 'Die folgenden Einstellungen werden nur verwendet, wenn Sie die &quot;Interne Authentifizierung&quot; verwenden.';
+$lang['info_support_lostun'] = 'Die Einstellung &quot;Nein&quot; deaktiviert die M&ouml;glichkeit f&uuml;r die Benutzer, ein Anfrage nach Zusendung der Anmeldedaten zu stellen (unabh&auml;ngig von anderen Einstellungen)';
+$lang['info_support_lostpw'] = 'Die Einstellung &quot;Nein&quot; deaktiviert die M&ouml;glichkeit f&uuml;r die Benutzer, ein Zur&uuml;cksetzen des Passworts anzufordern (unabh&auml;ngig von anderen Einstellungen)';
+$lang['prompt_support_lostun'] = 'Benutzern eine Anfrage nach Ihren Benutzernamen erlauben';
+$lang['prompt_support_lostpw'] = 'Benutzern eine Anfrage zur &Auml;nderungen des Passworts erlauben';
+$lang['auth_settings'] = 'Authentifizierungs-Einstellungen';
+$lang['authentication'] = 'Interne Authentifizierung';
+$lang['auth_builtin'] = 'FEU-Standard-Authentifizierung';
+$lang['auth_module'] = 'Authentifizierungs-Modul/Methode';
+$lang['info_auth_module'] = 'Das FrontendUsers-Modul unterst&uuml;tzt die Anmeldung &uuml;ber alternative Authentifizierungs-Methoden, mit unterschiedlichen M&ouml;glichkeiten. Jedoch stehen dann einige Funktionen nicht zur Verf&uuml;gung oder werden deaktiviert, wenn nicht die eingebaute Authentifizierungs-Methode verwendet wird';
+$lang['error_user_nonunique_field_value'] = 'Der f&uuml;r %s festgelegte Wert wird bereits von einem anderen Benutzer verwendet';
+$lang['unique'] = 'Eindeutig';
+$lang['error_nonunique_field_value'] = 'Der f&uuml;r %s festgelegte Wert (%s) ist nicht eindeutig';
+$lang['prompt_force_unique'] = 'Werte f&uuml;r diese Eigenschaft sollen in allen Benutzerkonten eindeutig sein';
+$lang['help_returnlast'] = 'Wird mit An- und Abmelde-Formularen verwendet. Mit diesem Parameter kann festgelegt werden, dass der Webseitenbesucher nach der Anmeldung auf die Seite (URL) weitergeleitet werden, die sie vor dieser Aktion angesehen haben. Dieser Parameter &uuml;berschreibt s&auml;mliche Weiterleitungseinstellungen und -Parameter.';
+$lang['help_noinline'] = 'Wird mit einem der Formulare verwendet. Dieser Parameter legt fest, ob die Formulare inline angezeigt werden sollen, anstatt dass die Ergebnisausgabe nach &Uuml;bermittlung des Formulars den Standard-Inhaltsblock ersetzt.';
+$lang['title_reset_session'] = 'Warnung vor dem Ablauf der Anmelde-Session';
+$lang['msg_reset_session'] = 'Die Zeit f&uuml;r Ihre aktuelle Anmeldung auf dieser Webseite ist abgelaufen. Bitte klicken Sie auf &quot;Ok&quot;, um zu best&auml;tigen, dass Sie noch auf dieser Webseite aktiv sind.';
 $lang['ok'] = 'OK';
 $lang['resetsession_template'] = 'Session-Template zur&uuml;cksetzen';
 $lang['info_name'] = 'Dies ist der Feldname, der in Smarty f&uuml;r die Adressierung verwendet wird. Er darf nur alphanumerische Zeichen und Unterstriche (_) enthalten.';
@@ -58,7 +72,7 @@ $lang['session_settings'] = 'Einstellungen f&uuml;r Sessions und Cookies';
 $lang['field_settings'] = 'Feld-Einstellungen';
 $lang['error_lostun_nonrequired'] = 'Die Kennzeichnung f&uuml;r vergessene Benutzernamen kann nur bei Pflichtfeldern verwendet werden.';
 $lang['prop_textarea_wysiwyg'] = 'In diesem Textbereich die Verwendung eines WYSIWYG-Editors erlauben';
-$lang['info_cookiestoremember'] = '<strong>Hinweis:</strong> F&uuml;r die Verschl&uuml;sselung werden die mcrypt-Funktionen verwendet. Auf Ihrem Account scheint diese jedoch nicht vorhanden zu sein. Kontaktieren Sie daher Ihren Server-Administrator.';
+$lang['info_cookiestoremember'] = '<strong>Hinweis:</strong> F&uuml;r die Verschl&uuml;sselung werden die mcrypt-Funktionen verwendet. Auf Ihrem Host scheint diese jedoch nicht vorhanden zu sein. Kontaktieren Sie daher Ihren Server-Administrator.';
 $lang['editing_user'] = 'Benutzer-Bearbeitung';
 $lang['noinline'] = 'Keine Inline-Formulare verwenden';
 $lang['info_lostun'] = 'Klicken Sie hier, wenn Sie sich nicht mehr an die Details Ihrer Anmeldung erinnern k&ouml;nnen';
@@ -84,7 +98,7 @@ $lang['lostunconfirm_premsg'] = 'Die Daten zum Auffinden verlorener Passw&ouml;r
 $lang['your_username_is'] = 'Ihr Benutzername ist';
 $lang['lostunconfirm_postmsg'] = 'Wir empfehlen Ihnen, diese Information an sicherer Stelle aufzubewahren.';
 $lang['prompt_after_change_settings'] = 'Seiten-ID/-Alias der Seite, auf die nach dem &Auml;ndern der Einstellungen gesprungen werden soll';
-$lang['prompt_after_verify_code'] = 'Seiten-ID/-Alias der Seite, auf die nach der Codepr&uuml;fung gesprungen werden soll *';
+$lang['prompt_after_verify_code'] = 'Seiten-ID/-Alias der Seite, auf die nach der Code-Pr&uuml;fung gesprungen werden soll *';
 $lang['lostun_details_template'] = 'Details-Template bei vergessenem Benutzernamen';
 $lang['lostun_confirm_template'] = 'Best&auml;tigungs-Template bei vergessenem Benutzernamen';
 $lang['error_nonuniquematch'] = 'FEHLER: Mehr als ein Benutzer-Konto entspricht den gesuchten Eigenschaften';
@@ -100,7 +114,7 @@ $lang['userhistory'] = 'Benutzer-Geschichte';
 $lang['export'] = 'Exportieren';
 $lang['clear'] = 'L&ouml;schen';
 $lang['prompt_exportuserhistory'] = 'Benutzergeschichte in eine ASCII-Datei exportieren';
-$lang['prompt_clearuserhistory'] = 'Datens&auml;tze der Benutzergeschichte l&ouml;schen';
+$lang['prompt_clearuserhistory'] = 'Datens&auml;tze der Benutzergeschichte l&ouml;schen, die mindestens';
 $lang['title_lostusername'] = 'Haben Sie Ihre Zugangsdaten vergessen?';
 $lang['title_rssexport'] = 'Gruppen-Definition (und Eigenschaften) als XML-Datei exportieren';
 $lang['title_userhistorymaintenance'] = 'Verwaltung der Benutzergeschichten';
@@ -145,9 +159,9 @@ $lang['import_complete_msg'] = 'Datenimport komplett';
 $lang['prompt_linesprocessed'] = 'Zeilen verarbeitet';
 $lang['prompt_errors'] = 'Fehler aufgetreten';
 $lang['prompt_recordsadded'] = 'Datens&auml;tze hinzugef&uuml;gt';
-$lang['error_nogroupproprelns'] = 'Konnte keine Eigenschaften f&uuml;r die Gruppe %s finden';
-$lang['error_noresponsefromserver'] = 'Konnte keine Antwort vom SMTP-Server bekommen';
-$lang['error_importfilenotfound'] = 'Die vorgegebene Datei (%s) konnte nicht gefunden werden';
+$lang['error_nogroupproprelns'] = 'Keine Eigenschaften f&uuml;r die Gruppe %s gefunden';
+$lang['error_noresponsefromserver'] = 'Keine Antwort vom SMTP-Server erhalten';
+$lang['error_importfilenotfound'] = 'Die Datei (%s) konnte nicht gefunden werden';
 $lang['error_importfieldvalue'] = 'Ung&uuml;ltiger Wert f&uuml;r das Listenfeld oder das Feld zur Mehrfachauswahl %s';
 $lang['error_importfieldlength'] = 'Das Feld %s &uuml;berschreitet die maximal m&ouml;gliche L&auml;nge';
 $lang['error_importusers'] = 'Import-Fehler (Zeile %s): %s';
@@ -155,15 +169,15 @@ $lang['error_propertydefns'] = 'Konnte die Eigenschaftsdefinition nicht abrufen 
 $lang['error_problemsettinginfo'] = 'Problem beim Setzen der Benutzerinformation';
 $lang['error_importrequiredfield'] = 'Konnte keine Spalte finden, die mit dem erforderlichen Feld %s &uuml;bereinstimmt';
 $lang['error_nogroupproperties'] = 'Konnte f&uuml;r die festgelegte Gruppe keine Eigenschaften finden';
-$lang['error_importfileformat'] = 'Das Format der zu importierenden Datei ist falsch';
+$lang['error_importfileformat'] = 'Die zu importierenden Datei hat das falsche Format';
 $lang['error_couldnotopenfile'] = 'Konnte die Datei nicht &ouml;ffnen';
 $lang['info_importusersfileformat'] = '<h4>Infomationen zum Format der zu importierenden Datei</h4>
 <p>Die zu importierende Datei muss im ASCII-Format vorliegen. Die einzelnen Werte m&uuml;ssen durch Kommata getrennt sein. Jede Zeile in dieser Datei entspricht dem Datensatz eines Benutzers (mit Ausnahme der Kopfzeile, mehr dazu weiter unten). Jede Zeile MUSS die gleiche Anzahl an Feldern enthalten. Auch die Reihenfolge der Felder MUSS in jeder Zeile gleich sein.</p>
 <h5>Die Kopfzeile</h5>
 <ul>
 <li>Die erste Zeile der Datei muss mit zwei Rauten (\#) beginnen. In dieser Zeile werden die verwendeten Felder in der Datei definiert. Die Namen dieser Felder sind besonders wichtig. Ein paar der Felder sind Pflichtfelder (im folgenden beschrieben). Die anderen Feldnamen m&uuml;ssen mit den Namen der zugeordneten Eigenschaften der jeweiligen Benutzergruppe &uuml;bereinstimmen, der die Benutzer hinzugef&uuml;gt werden sollen.</li>
-<li>Stimmen die Felder nicht mit allen, der Benutzergruppe (der die Benutzer hinzugef&uuml;gt werden sollen) zugeordneten Pflichtfeldern &uuml;berein, wird der Import misslingen.</li>
-<li>Die zu importierende Datei kann Felder enthalten, in denen optionale Eigenschaften der festgelegten Gruppe enthalten sind.</li>
+<li>Stimmen die Felder nicht mit allen, der Benutzergruppe (der die Benutzer hinzugef&uuml;gt werden sollen) zugeordneten Pflichtfeldern &uuml;berein, wird der Import fehlschlagen.</li>
+<li>Die zu importierende Datei kann Felder enthalten, in denen optionale Eigenschaften der festgelegten Benutzergruppe enthalten sind.</li>
 <li>Beim Import werden Felder ignoriert, die entweder unbekannt sind oder auf Eigenschaften verweisen, die f&uuml;r die festgelegte Benutzergruppe nicht aktiviert sind.</li>
 </ul>
 <h5>Die Daten in den Spalten</h5>
@@ -210,12 +224,20 @@ $lang['error_norepeatedlogins'] = 'Dieser Benutzer ist bereits angemeldet';
 $lang['error_captchamismatch'] = 'Der Text aus dem Bild wurde nicht richtig eingegeben';
 $lang['prompt_allow_repeated_logins'] = 'Den Benutzern erlauben, sich mehr als einmal anzumelden';
 $lang['prompt_allowed_image_extensions'] = 'Namenserweiterungen f&uuml;r Bilder, die der Benutzer hochladen darf';
+$lang['event_help_OnRefreshUser'] = '<h3>OnRefreshUser</h3>
+<p>An event generated when the user session is refreshed.</p>
+<h4>Parameters:</h4>
+<ul>
+  <li><em>id</em> - The User id</li>
+</ul>
+';
 $lang['event_help_OnDeleteUser'] = '<h3>OnDeleteUser<h3>
 <p>Ausf&uuml;hren, wenn ein Benutzerkonto gel&ouml;scht wurde</p>
 <h4>Parameter</h4>
 <ul>
 <li><em>username</em> - der Benutzername</li>
 <li><em>id</em> - die Benutzer-ID</li>
+<li><em>props</em> - Ein Hash, der mit den Eigenschaften des Benutzers gef&uuml;llt wurde</li>
 </ul> 
 ';
 $lang['event_help_OnCreateUser'] = '<h3>OnCreateUser<h3>
@@ -280,13 +302,14 @@ $lang['event_info_OnLogin'] = 'Ausf&uuml;hren, wenn sich ein Benutzer im System 
 $lang['event_info_OnLogout'] = 'Ausf&uuml;hren, wenn sich ein Benutzer im System abmeldet';
 $lang['event_info_OnExpireUser'] = 'Ausf&uuml;hren, wenn eine Benutzer-Sitzung abl&auml;uft';
 $lang['event_info_OnCreateUser'] = 'Ausf&uuml;hren, wenn ein neuer Benutzer erstellt wurde';
+$lang['event_info_OnRefreshUser'] = 'An event generated when the user session is refreshed';
 $lang['event_info_OnUpdateUser'] = 'Ausf&uuml;hren, wenn die Informationen zu einem Benutzer aktualisiert wurden';
 $lang['event_info_OnDeleteUser'] = 'Ausf&uuml;hren, wenn ein Benutzerkonto gel&ouml;scht wurde';
 $lang['event_info_OnCreateGroup'] = 'Ausf&uuml;hren, wenn eine Benutzergruppe erstellt wurde';
 $lang['event_info_OnUpdateGroup'] = 'Ausf&uuml;hren, wenn eine Benutzergruppe aktualisiert wurde';
 $lang['event_info_OnDeleteGroup'] = 'Ausf&uuml;hren, wenn eine Benutzergruppe gel&ouml;scht wurde';
 $lang['backend_group'] = 'Administrations-Gruppe';
-$lang['info_star'] = '* Die folgenden Makros k&ouml;nnen in diesen Feldern verwendet werden: {$username},{$group}. Wenn Sie das {$group}-Makro verwenden, ersetzt das System den Namen der ersten Benutzergruppe, der der Benutzer angeh&ouml;rt und leitet ihn auf diese Seite weiter.';
+$lang['info_star'] = '* Die folgenden Felder sind komplette Smarty-Templates.<br />Neben den anderen, bereits existierenden Smarty-Variablen stehen Ihnen jetzt die Variablen {$username} und {$group} zur Verf&uuml;gung. <em>(Die Variable {$group} enth&auml;lt die erste Benutzergruppe, der der Benutzer angeh&ouml;rt.)</em>.';
 $lang['info_admin_password'] = 'Bearbeiten Sie dieses Feld, um das Passwort des Benutzers zur&uuml;ckzusetzen.';
 $lang['info_admin_repeatpassword'] = 'Bearbeiten Sie dieses Feld, um das Passwort des Benutzers zur&uuml;ckzusetzen.';
 $lang['error_username_exists'] = 'Ein Benutzer mit diesem Benutzernamen existiert bereits.';
@@ -299,12 +322,12 @@ $lang['error_invalidemailaddress'] = 'Ung&uuml;ltige Email-Adresse';
 $lang['error_noemailaddress'] = 'F&uuml;r dieses Benutzerkonto wurde keine Emailadresse gefunden.';
 $lang['error_problemseettinginfo'] = 'Problem beim Setzen der Benutzerinformationen';
 $lang['error_settingproperty'] = 'Problem beim Setzen der Eigenschaften';
-$lang['user_added'] = 'Benutzer %s = %s hinzugef&uuml;gt';
-$lang['user_deleted'] = 'Benutzer mit der uid=%s gel&ouml;scht';
+$lang['user_added'] = 'Benutzer %s = %s wurde hinzugef&uuml;gt';
+$lang['user_deleted'] = 'Benutzer mit der uid=%s wurde gel&ouml;scht';
 $lang['propertyfilter'] = 'Eigenschaft';
 $lang['valueregex'] = 'Wert (regul&auml;rer Ausdruck)';
-$lang['warning_effectsfieldlength'] = 'Warnung: Diese Felder beeinflussen die Gr&ouml;&szlig;e der Eingabefelder in Formularen.  Die Verringerung dieser Zahl ist daher auf einer bereits existierenden Seite nicht ratsam.';
-$lang['confirm_submitprefs'] = 'Wollen Sie wirklich die Einstellungen &auml;ndern?';
+$lang['warning_effectsfieldlength'] = 'Warnung: Diese Felder beeinflussen die Gr&ouml;&szlig;e der Eingabefelder in Formularen. Die Verringerung dieser Zahl ist daher auf einer bereits existierenden Seite nicht ratsam.';
+$lang['confirm_submitprefs'] = 'Wollen Sie wirklich die Moduleinstellungen &auml;ndern?';
 $lang['error_emailalreadyused'] = 'Diese Emailadresse ist bereits in Verwendung.';
 $lang['prompt_usecookiestoremember'] = 'Cookies f&uuml;r die Speicherung der Anmelde-Details verwenden';
 $lang['prompt_cookiename'] = 'Der Name des Cookies';
@@ -331,7 +354,7 @@ $lang['prompt_exportcsv'] = 'Benutzer in eine CSV-Datei exportieren';
 $lang['exportcsv'] = 'Exportieren';
 $lang['importcsv'] = 'Importieren';
 $lang['admin'] = 'Administrator';
-$lang['editprop'] = 'Eigenschaft bearbeiten';
+$lang['editprop'] = 'Eigenschaft <em>%s</em> bearbeiten';
 $lang['maxlength'] = 'Maximale L&auml;nge';
 $lang['created'] = 'Erstellt';
 $lang['sortby'] = 'Sortieren nach';
@@ -377,12 +400,12 @@ $lang['error_accountexpired'] = 'Dieses Konto ist abgelaufen';
 $lang['error_improperemailformat'] = 'Ungenaue Formatierung der Email-Adresse';
 $lang['error_invalidexpirydate'] = 'Ung&uuml;ltiges Ablaufdatum';
 $lang['error_problemsettingproperty'] = 'Fehler beim Setzen der Eigenschaft %s f&uuml;r den Benutzer $s';
-$lang['error_invalidgroupid'] = 'Ung&uuml;ltige Benutzer-ID %s';
-$lang['hiddenfieldmarker'] = 'Kennzeichnung des verborgenen Feldes';
-$lang['hiddenfieldcolor'] = 'Farbe des verborgenen Feldes';
+$lang['error_invalidgroupid'] = 'Ung&uuml;ltige Gruppen-ID %s';
+$lang['hiddenfieldmarker'] = 'Kennzeichnung f&uuml;r verborgene Felder';
+$lang['hiddenfieldcolor'] = 'Farbe f&uuml;r verborgene Felder';
 $lang['hidden'] = 'Verborgen';
-$lang['error_duplicatename'] = 'Eine Eigenschaft mit diesem Namen wurde bereits definiert.';
-$lang['error_noproperties'] = 'Keine Eigenschaften definiert';
+$lang['error_duplicatename'] = 'Eine Eigenschaft mit diesem Namen existiert bereits.';
+$lang['error_noproperties'] = 'Es wurden noch keine Eigenschaften definiert.';
 $lang['error_norelations'] = 'F&uuml;r diese Benutzergruppe wurden keine Eigenschaften ausgew&auml;hlt.';
 $lang['nogroups'] = 'Es wurden noch keine Gruppen definiert.';
 $lang['groupsfound'] = 'Benutzergruppen gefunden';
@@ -420,7 +443,7 @@ $lang['msg_currentlyloggedinas'] = 'Willkommen';
 $lang['logout'] = 'Abmelden';
 $lang['prompt_newgroupname'] = 'Diesen Gruppennamen verwenden';
 $lang['prompt_changesettings'] = 'Meine Einstellungen &auml;ndern';
-$lang['error_loginfailed'] = 'Ihre Anmeldung ist gescheitert - ung&uuml;ltiger Benutzername oder ung&uuml;ltiges Passwort?';
+$lang['error_loginfailed'] = 'Ihre Anmeldung ist fehlgeschlagen - ung&uuml;ltiger Benutzername oder ung&uuml;ltiges Passwort?';
 $lang['login'] = 'Anmelden';
 $lang['prompt_signin_button'] = 'Beschriftung des Anmelde-Buttons';
 $lang['prompt_username'] = 'Benutzername';
@@ -434,7 +457,7 @@ $lang['defaults'] = 'Standard';
 $lang['template'] = 'Template ';
 $lang['error_usernotfound'] = 'Konnte keine Informationen f&uuml;r diesen Benutzer finden';
 $lang['error_usernametaken'] = 'Dieser Benutzername (%s) wird bereits verwendet.';
-$lang['prompt_smtpvalidate'] = 'Soll SMTP verwendet werden, um Email-Adressen auf ihre G&uuml;ltigkeit zu pr&uuml;fen?';
+$lang['prompt_smtpvalidate'] = 'Soll SMTP verwendet werden, um Email-Adressen auf G&uuml;ltigkeit zu pr&uuml;fen?';
 $lang['prompt_minpwlen'] = 'Minimale L&auml;nge des Passworts';
 $lang['prompt_maxpwlen'] = 'Maximale L&auml;nge des Passworts';
 $lang['prompt_minunlen'] = 'Minimale L&auml;nge des Benutzernamens';
@@ -451,7 +474,7 @@ $lang['edituser'] = 'Benutzer bearbeiten';
 $lang['valid'] = 'G&uuml;ltig';
 $lang['username'] = 'Benutzername';
 $lang['status'] = 'Status ';
-$lang['error_membergroups'] = 'Dieser Benutzer ist kein Mitglied einer Benutzergruppe.';
+$lang['error_membergroups'] = 'Dieser Benutzer ist noch kein Mitglied einer Benutzergruppe.';
 $lang['error_properties'] = 'Keine Eigenschaften';
 $lang['error_dup_properties'] = 'Sie haben versucht, Eigenschaften doppelt zu importieren';
 $lang['value'] = 'Wert';
@@ -476,7 +499,7 @@ $lang['1year'] = '1 Jahr';
 $lang['never'] = 'Niemals';
 $lang['postinstallmessage'] = 'Das Modul wurde installiert.<br/>Stellen Sie sicher, dass die Berechtigung &quot;Modify FrontEndUser Properties&quot; gesetzt wurde. Zus&auml;tzlich wird die Installation des Captcha-Moduls empfohlen. Nach dessen Installation wird bei der Anmeldung erg&auml;nzend zu Benutzernamen und Passwort der Inhalt eines Captcha-Bildes abgefragt. Dies soll helfen, Brute-force-Attacken zu verhindern. <strong>Hinweis:</strong> Diese Funktionalit&auml;t kann mit dem Parameter nocaptcha deaktiviert werden, auch wenn das Captcha-Modul installiert ist.';
 $lang['password'] = 'Passwort';
-$lang['repeatpassword'] = 'Noch einmal';
+$lang['repeatpassword'] = 'Wiederholung Passwort';
 $lang['error_groupname_exists'] = 'Eine Benutzergruppe mit diesem Namen existiert bereits.';
 $lang['editgroup'] = 'Benutzergruppe bearbeiten';
 $lang['submit'] = 'Absenden';
@@ -490,13 +513,13 @@ $lang['id'] = 'ID';
 $lang['name'] = 'Name ';
 $lang['error_cantaddprop'] = 'Problem beim Hinzuf&uuml;gen einer Eigenschaft';
 $lang['error_cantaddgroupreln'] = 'Problem beim Hinzuf&uuml;gen einer Gruppenbeziehung';
-$lang['error_cantaddgroup'] = 'Problem beim Hinzuf&uuml;gen einer Gruppe';
-$lang['error_cantassignuser'] = 'Problem beim Hinzuf&uuml;gen eines Benutzers zu einer Gruppe';
+$lang['error_cantaddgroup'] = 'Problem beim Hinzuf&uuml;gen einer Benutzergruppe';
+$lang['error_cantassignuser'] = 'Problem beim Hinzuf&uuml;gen eines Benutzers zu einer Benutzergruppe';
 $lang['error_couldnotdeleteproperty'] = 'Problem beim L&ouml;schen einer Eigenschaft';
 $lang['error_couldnotfindemail'] = 'Konnte keine Email-Adresse finden';
 $lang['error_destinationnotwritable'] = 'Sie haben keine Schreibberechtigung f&uuml;r das Zielverzeichnis.';
 $lang['error_invalidparams'] = 'Ung&uuml;ltige Parameter';
-$lang['error_nogroups'] = 'Konnte keine Gruppen finden';
+$lang['error_nogroups'] = 'Konnte keine Benutzergruppen finden';
 $lang['applyfilter'] = 'Anwenden';
 $lang['filter'] = 'Filter ';
 $lang['userfilter'] = 'Benutzername (regul&auml;rer Ausdruck)';
@@ -536,15 +559,15 @@ $lang['help'] = '<h3>Was macht dieses Modul?</h3>
 <li><p>Nach der Installation k&ouml;nnen Sie unter dem Men&uuml; &quot;Benutzerverwaltung&quot; auf die Administration des FrontEndUsers-Moduls zugreifen.</p></li>
 <li>
 <p>Zun&auml;chst m&uuml;ssen Sie Eigenschaften f&uuml;r die Benutzer definieren (mindestens eine!). Eigenschaften sind Felddefinitionen, mit denen Sie den Typ der zu erfassenden Informationen und deren Beschr&auml;nkungen festlegen k&ouml;nnen wie zum Beispiel: Name, Alter, Stadt, Bundesland, Staat, Emailadresse usw.</p>
-<p><b>Hinweis:</b> F&uuml;r den Benutzernamen und das Passwort m&uuml;ssen Sie keine Eigenschaften festlegen; dies wird bereits vom Modul erledigt.</b>
+<p><b>Hinweis:</b> F&uuml;r den Benutzernamen (oder Email-Adresse) und das Passwort m&uuml;ssen Sie keine Eigenschaften festlegen; dies wird bereits vom Modul erledigt.</p>
+<p><b>Hinweis:</b> Bei neuen Installationen des FEU-Moduls ist voreingestellt, dass die Email-Adresse des Benutzers sein Benutzername ist. Dies kann in der Moduladministration ge&auml;ndert werden. Wenn Sie diese Option verwenden, m&uuml;ssen Sie keine Eigenschaft &quot;Email-Adresse&quot; erstellen.</p>
 </li>
 <li><p>Als N&auml;chstes sollten Sie eine oder mehrere Benutzergruppen erstellen. Wenn Sie eine Gruppe erstellen, werden Sie nach dem Benutzergruppennamen, einer Beschreibung sowie den der Benutzergruppe zuzuordnenden Eigenschaften und dessen Sortierung gefragt. Optional sind auch Pflicht- oder verborgene Felder m&ouml;glich <i>(auch off ist g&uuml;ltig)</i></p></li>
 <li><p><b>Hinweis:</b> Bevor Sie weiter machen, sollten Sie pr&uuml;fen, ob die Einstellungen korrekt gesetzt sind.</p></li>
 <li><p>Anschlie&szlig;end sollten Sie ein paar Benutzer erstellen. Benutzer werden in zwei Schritten hinzugef&uuml;gt. Wenn Sie einen Benutzer erstellen, werden Sie nach dem Benutzernamen und dem Passwort sowie nach einem Ablaufdatum f&uuml;r diesen Benutzer gefragt. Dann m&uuml;ssen Sie noch die Gruppen ausw&auml;hlen, in welchen der Benutzer Mitglied sein soll. Klicken Sie dann auf &quot;Weiter&quot;</p>
 <p><em>Hinweis: </em>Das ist ein sehr arbeitsintensiver und langweiliger Prozess. Es ist daher einfacher, wenn Sie sich die Benutzer selbst registrieren lassen (zum Beispiel mit dem SelfRegistration-Modul). Sie m&uuml;ssen die Benutzer dann nur noch einer oder mehreren Benutzergruppen zuordnen. Aber erstellen Sie bitte f&uuml;r Testzwecke mindestens einen Benutzer.</p></li>
-<li><p>Nachdem das System alle f&uuml;r diesen Benutzer notwendigen Felder bestimmt hat, wird Ihnen ein Formular mit den erforderlichen Informationen &uuml;ber den Benutzer angezeigt. Mit der Komplettierung dieses Formulars wird das Hinzuf&uuml;gen eines Benutzers abgeschlossen. </p>
-<p><em>Hinweis: </em>FrontendUsers ist standardm&auml;&szlig;ig so eingestellt, dass die Email-Adresse der Benutzername ist. Wenn Sie das nicht m&ouml;chten, sollten Sie dies in den Einstellungen &auml;ndern.</p></li>
-<li><p>Jetzt k&ouml;nnen Sie das FrontEndUsers-Modul auf Ihrer Seite nutzen. Hierzu m&uuml;ssen Sie einfach nur {cms_module module=&quot;FrontEndUsers&quot;} in Ihre Seite oder Template einf&uuml;gen.</p></li>
+<li><p>Nachdem das System alle f&uuml;r diesen Benutzer notwendigen Felder bestimmt hat, wird Ihnen ein Formular mit den erforderlichen Informationen &uuml;ber den Benutzer angezeigt. Mit der Komplettierung dieses Formulars wird das Hinzuf&uuml;gen eines Benutzers abgeschlossen. </p></li>
+<li><p>Jetzt k&ouml;nnen Sie das FrontEndUsers-Modul auf Ihrer Webseite nutzen. Hierzu m&uuml;ssen Sie einfach nur {cms_module module=&quot;FrontEndUsers&quot;} in Ihre Seite oder Template einf&uuml;gen.</p></li>
 </ul>
 <h3>Smarty-Funktionen</h3>
 <p>&Uuml;ber Smarty und das $feu_smarty-Objekt kann auf die Datenbank des FrontEndUsers-Modul zugegriffen werden.</p>
@@ -564,22 +587,42 @@ $lang['help'] = '<h3>Was macht dieses Modul?</h3>
 <p>Beispiel:<br/><code>{$feu_smarty->get_dropdown_text(&#039;age_range&#039;,$onepropvalue)}</code></p>
 </li>
 
-<li><strong><code>{$feu_smarty->get_multiselect_text($propname,$propvalue,$assign)}</code></strong>
+<li><strong><code>{$feu_smarty->get_multiselect_text($propname,$propvalue,$assign)}</code>
+</strong>
 <p>Diese Funktion gibt ein Array mit den Texten zur&uuml;ck, die den mit Kommata getrennten Liste der Optionswerte entspricht.</li>
 <p>Beispiel:<br/><code>{$feu_smarty->get_multiselect_text(&#039;favorite_foods&#039;,$onepropvalue,&#039;favorite_foods&#039;)}<br/>{$favorite_foods|@print_r}</code></p>
 </li>
-</ul>
 
+<li><strong>code>{$feu_smarty->get_user_expiry($uid[,$assign])}</code></strong>
+<p>Diese Funktion gibt einen Unix-Zeitstempel zur&uuml;ck, an dem das angegebene uid-Konto abl&auml;uft. Es wird false zur&uuml;ckgegeben, wenn die uid nicht gefunden werden kann oder ein anderer Fehler auftritt.</p>
+<p>Example:<br/><code>{$feu_smarty->get_user_expiry(25,&#039;expiry&#039;)}<br/>{$expiry|cms_date_format}</code></p>
+</li>
+
+<li><strong>code>{$feu_smarty->user_expired($uid[,$assign])}</code></strong>
+<p>Diese Funktion gibt eine Ganzzahl zur&uuml;ck, die anzeigt, ob das vorgegebene Konto abgelaufen ist. Es wird false zur&uuml;ckgegeben, wenn die uid nicht gefunden werden kann oder ein anderer Fehler auftritt.</p>
+<p>Example:<br/><code>{$feu_smarty->user_expired(25,&#039;expired&#039;)}<br/>{if $expired}UID 25 kann sich nicht mehr auf der Webseite anmelden{/if}</code></p>
+</li>
+</ul>
+<h3>Eintr&auml;ge zur Privatsph&auml;re:</h3>
+<p>Dieses Modul erfasst die IP-Adresse der Benutzer und speichert diese Daten in der Benutzerhistorie. Au&szlig;erdem kann der Administrator festlegen, ob Cookies verwendet werden sollen. Es werden jedoch keine pers&ouml;nlichen Informationen in den Cookies gespeichert, sondern lediglich ein eindeutiger Benutzer- und ein Session-Identifikator.</p>
 <h3>Support</h3>
 <p>Dieses Modul beinhaltet keinen kommerziellen Support. Sie k&ouml;nnen jedoch &uuml;ber folgende M&ouml;glichkeiten Hilfe zu dem Modul erhalten:</p>
 <ul>
-<li>F&uuml;r die letzte Version dieses Moduls, FAQs, dem Versand eines Fehlerreports oder dem Kauf kommerziellen Support besuchen sie bitte calguys Homepage unter <a href="http://techcom.dyndns.org">techcom.dyndns.org</a>.</li>
+<li>F&uuml;r die letzte Version dieses Moduls, FAQs, dem Versand eines Fehlerreports oder dem Kauf kommerziellen Support besuchen sie bitte calguys Homepage unter <a href="http://calguy1000.com">calguy1000.com</a>.</li>
 <li>Eine weitere Diskussion zu diesem Modul ist auch in den Foren von <a href="http://forum.cmsmadesimple.org">CMS Made Simple</a> zu finden.</li>
 <li>Der Autor calguy1000, ist h&auml;ufig im <a href="irc://irc.freenode.net/#cms">CMS IRC Channel</a> zu finden.</li>
 <li>Letztlich erreichen sie den Autor auch &uuml;ber eine direkte Email.</li>  
 </ul>
 <h3>Parameter</h3>
 <ul>
+<li><em>(optional)</em> action=&quot;default&quot;<li>
+<p>Aktionen:
+<ul>
+<li><em>default</em> - die voreingestellte Aktion, die die normalen Formulareigenschaften aktiviert.</li>
+<li><em>reset_session</em> - gibt ein Javascript-kontrolliertes Template aus, &uuml;ber das die Benutzer-Session manuell oder automatisch kontrolliert werden kann. Dieses Template kann verwendet, um den Benutzer an den Ablauf der Session zu erinnern und auf dessen Voreinstellungen zur&uuml;ckzusetzen. Normalerweise ist diese Methode nicht erforderlich, da jede Seite, die angezeigt wird, dies bereits erledigt. Wenn Sie jedoch Seiten haben, auf der es sehr viel zu lesen gibt, ist dies eine sehr n&uuml;tzliche L&ouml;sung.</li>
+<li><em>viewuser</em> - zeigt einen Bericht f&uuml;r einen einzelnen Benutzer an, erg&auml;nzend muss der uid-Parameter verwendet werden.</li>
+</ul>
+</p>
 <li><em>(optional)</em> form=&quot;name&quot;</li>
 <p>Formulare:
 <ul>
@@ -593,14 +636,12 @@ $lang['help'] = '<h3>Was macht dieses Modul?</h3>
 </p>
 <li><em>(optional)</em> returnto=&quot;page&quot;</li>
 <p>Wird mit den Formularen zur An- und Abmelde- sowie zur &Auml;nderung von Einstellungen verwendet. Dieser Parameter enth&auml;lt die ID oder den Alias einer Seite, auf die der Benutzer weitergeleitet wird, wenn das Formular erfolgreich ausgef&uuml;llt wurde.</p>
-<li><em>(optional)</em> only_groups=&quot;group1, group2, group3&quot;</li>
-<p>Wird mit dem Anmelde-Formular verwendet. Es k&ouml;nnen sich nur die Benutzer anmelden, die Mitglieder der festgelegten Gruppe(n) sind.</p>
-<li><em>(optional)</em> lostun_group=&quot;group&quot;</li>
+<li><em>(optional)</em> only_groups=&quot;Gruppe1, Gruppe2, Gruppe3&quot;</li>
+<p>Wird mit den Anmelde-Formularen verwendet. Es k&ouml;nnen sich nur die Benutzer anmelden, die Mitglieder der festgelegten Gruppe(n) sind.</p>
+<li><em>(optional)</em> lostun_group=&quot;Gruppe&quot;</li>
 <p>Bei Verwendung in Verbindung mit dem Formular f&uuml;r vergessene Benutzernamen kann mit diesem Parameter eine Gruppe festgelegt werden, der diese Benutzer zugeordnet werden sollen.</p>
 <li><em>(optional)</em> nocaptcha=&quot;1&quot;</li>
 <p>Wird mit den Anmelde-Formularen verwendet. Damit werden die Captchas in den Formularen deaktiviert. Wurde das Captcha-Modul installiert, ist f&uuml;r eine erfolgreiche Anmeldung standardm&auml;&szlig;ig die Eingabe des Inhaltes eines Captcha-Bildes erforderlich. Dies ist eine Sicherheitsma&szlig;nahme, um Brute-force-Attacken vorzubeugen.</p>
-<li><em>(optional)</em> action=null</li>
-<p>Der einzig m&ouml;gliche Wert f&uuml;r diesen Parameter ist &quot;viewuser&quot;</p>
 <li><em>(optional)</em> uid=null</li>
 <p>Ist in Verbindung mit der Aktion viewuser zu verwenden. Mit diesem Parameter kann festgelegt werden, welcher Benutzer die Details angezeigt bekommt.</p>
 </ul>
@@ -626,10 +667,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>';
-$lang['qca'] = 'P0-75091478-1268421814072';
-$lang['utmz'] = '156861353.1281729480.37.23.utmcsr=cmsmadesimple.de|utmccn=(referral)|utmcmd=referral|utmcct=/';
-$lang['utma'] = '156861353.728989452.1268567475.1281729480.1281732242.38';
+Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p>
+<h3>Sponsors</h3>
+<p>There have been many sponsors for this module, some of these are listed below:</p>
+<ul.>
+ <li><a href="http://www.matterhornmarketing.com">Matterhorn Marketing</a></li>
+ <li><a href="http://www.bpti.eu">Balkan Institute of Advanced Technology</a></li>
+</ul>';
+$lang['utma'] = '156861353.72018012.1309112017.1309112017.1309112017.1';
+$lang['utmz'] = '156861353.1309112017.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
 $lang['utmc'] = '156861353';
 $lang['utmb'] = '156861353';
 ?>

@@ -120,7 +120,7 @@ else
 $parms = array();
 $parms['id'] = $this->LoggedInId();
 $parms['username'] = $params['feu_input_username'];
-$parms['ip'] = getenv('REMOTE_ADDR');
+$parms['ip'] = cge_utils::get_real_ip();
 $this->SendEvent( 'OnLogin', $parms );
 $this->_SendNotificationEmail('OnLogin',$parms);
 

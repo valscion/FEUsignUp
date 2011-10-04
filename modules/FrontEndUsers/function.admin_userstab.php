@@ -81,6 +81,10 @@
 	    {
 	      $this->SetPreference('current_sort', $params['filter_sortby'] );
 	    }
+	  if( isset( $params['filter_viewprops']) )
+	    {
+	      $this->SetPreference('current_viewprops', serialize($params['filter_viewprops']));
+	    }
 	  if( isset( $params['filter_propertysel'] ) )
 	    {
 	      $this->SetPreference('current_propsel', $params['filter_propertysel'] );
@@ -95,8 +99,10 @@
 	  $currloggedinonly = $this->GetPreference('current_loggedinonly', 0);
       $curlimit = $this->GetPreference('current_limit', 100);
       $cursort  = $this->GetPreference('current_sort', '');
+      $viewprops = unserialize($this->GetPreference('current_viewprops'));
       $curpropsel = $this->GetPreference('current_propsel', 'none');
       $curpropval = $this->GetPreference('current_propval', ''); 
+      $extraprops = '';
 	
       // get a group list for the filter
       // it should be ready to go right into the dropdown (cool eh)
@@ -115,11 +121,13 @@
       $defns1 = $this->GetPropertyDefns();
       $defns = array();
       $defns['None'] = 'none';
+      $alldefns = array();
       if( is_array($defns1) )
 	{
 	  foreach( $defns1 as $def )
 	    {
 	      $defns[$def['prompt']] = $def['name'];
+	      $alldefns[$def['name']] = $def['prompt'];
 	    }
 	}
 	
@@ -143,6 +151,8 @@
       $smarty->assign( 'filter_group',
 			       $this->CreateInputDropDown( $id, 'filter_group', $groups, -1,
 							     $curgroup));
+      $smarty->assign('alldefns',$alldefns);
+      $smarty->assign('viewprops',$viewprops);
       $smarty->assign( 'prompt_userfilter', $this->Lang('userfilter'));
       $smarty->assign( 'filter_regex', 
 			       $this->CreateInputText( $id, 'filter_regex',
@@ -187,14 +197,43 @@
       if( !is_array($users) )
 	{
 	  // an error occurred
-	  $db =& $this->GetDb();
+	  $db = $this->GetDb();
 	  $this->_DisplayErrorPage ($id, $params, $returnid,
-				      $db->ErrorMsg() );
+				    $db->ErrorMsg() );
 // 	  return;
 	}
 
       // get the total number of users
       $numusers = $this->CountUsersInGroup( $curgroup );
+
+      // get the selected properties.
+      if( is_array($viewprops) && count($viewprops) )
+	{
+	  if( count($users) )
+	    {
+	      $uids = array();
+	      foreach( $users as $row )
+		{
+		  $uids[] = $row['id'];
+		}
+
+	      $query = "SELECT A.id,";
+	      $flds = array();
+	      $conds = array();
+	      for( $i = 0; $i < count($viewprops); $i++ )
+		{
+		  $prop = $viewprops[$i];
+		  $nm = 'j'.$i;
+		  $flds[]  = "$nm.data as $prop";
+		  $conds[] = cms_db_prefix()."module_feusers_properties AS $nm ON A.id = $nm.userid AND ($nm.title = '$prop')";
+		}
+	      $query .= implode(',',$flds).' FROM '.cms_db_prefix().'module_feusers_users A';
+	      $query .= ' LEFT JOIN '.implode(' LEFT JOIN ',$conds);
+	      $query .= ' WHERE A.id IN ('.implode(',',$uids).')';
+	      $tmp = $db->GetArray($query);
+	      $extraprops = cge_array::to_hash($tmp,'id');
+	    }
+	}
 
       $rowarray = array();
       $rowclass = "row1";
@@ -240,14 +279,14 @@
 										    $this->Lang ('edit'), '', '', 'systemicon'),
 				       array ('user_id' => $row['id'] ));
 		  if( $row['loggedin'] )
-			  {
-				  $onerow->logoutlink =
-					  $this->CreateLink ($id,'admin_logout',$returnid,
-								 $gCms->variables['admintheme']->DisplayImage('icons/system/back.gif',
-								 $this->Lang('prompt_logout'),'','','systemicon'),
-						array('user_id'=>$row['id']));
-			  }
-
+		    {
+		      $onerow->logoutlink =
+			$this->CreateLink ($id,'admin_logout',$returnid,
+					   $gCms->variables['admintheme']->DisplayImage('icons/system/back.gif',
+											$this->Lang('prompt_logout'),'','','systemicon'),
+					   array('user_id'=>$row['id']));
+		    }
+		  
 		}
 	      
 	      if( $this->_HasSufficientPermissions('removeusers') )
@@ -257,9 +296,21 @@
 				       $gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif',
 										    $this->Lang ('delete'), '', '', 'systemicon'),
 				       array ('user_id' => $row['id']),
-				       $this->Lang ('areyousure'));
+				       $this->Lang ('areyousure_delete',$row['username']));
 		}
 	      
+	      if( is_array($viewprops) && count($viewprops) )
+		{
+		  $onerow->extra = array();
+		  foreach( $viewprops as $one )
+		    {
+		      if( isset($extraprops[$onerow->id][$one]) )
+			{
+			  $onerow->extra[$one] = $extraprops[$onerow->id][$one];
+			}
+		    }
+		}
+
 	      $rowarray[] = $onerow;
 	      ($rowclass == "row1" ? $rowclass = "row2" : $rowclass = "row1");
 	    }

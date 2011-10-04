@@ -307,8 +307,8 @@ foreach( $properties as $prop )
 	global $gCms;
 	$destDir1 = $gCms->config['uploads_path'].DIRECTORY_SEPARATOR;
 	$destDir1 .= $this->GetPreference('image_destination_path','feusers').DIRECTORY_SEPARATOR;
-	$destDir2 = $gCms->config['uploads_url'].DIRECTORY_SEPARATOR;
-	$destDir2 .= $this->GetPreference('image_destination_path','feusers').DIRECTORY_SEPARATOR;
+	$destDir2 = $gCms->config['uploads_url'].'/';
+	$destDir2 .= $this->GetPreference('image_destination_path','feusers').'/';
 	$file1 = $destDir1.$val;
 	$file2 = $destDir2.$val;
 	if( is_readable( $file1 ) && is_file($file1) )

@@ -49,7 +49,6 @@ $this->Audit( 0, $this->Lang('friendlyname'),
 $parms = array();
 $parms['username'] = $username;
 $parms['id'] = $uid;
-$this->SendEvent( 'OnLogout', $parms );
 $this->_SendNotificationEmail('OnLogout',$parms);
 
 // we're logged out

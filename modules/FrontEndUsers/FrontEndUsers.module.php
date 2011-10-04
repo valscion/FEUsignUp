@@ -63,6 +63,7 @@ class FrontEndUsers extends CGExtensions
 
   var $dflt_logoutformtemplate = '
 <!-- Logout form template -->
+{if isset($message)}<div class="message">{$message}</div>{/if}
   <p>{$prompt_loggedin}&nbsp;{$username}</p> 
   <p><a href="{$url_logout}" title="{$mod->Lang(\'info_logout\')}">{$mod->Lang(\'logout\')}</a></p>
 <!-- Logout form template -->
@@ -145,7 +146,7 @@ class FrontEndUsers extends CGExtensions
    ---------------------------------------------------------*/
   function GetVersion()	
   {
-    return '1.12.13';
+    return '1.15.1';
   }
 
  
@@ -225,7 +226,7 @@ class FrontEndUsers extends CGExtensions
   function GetDependencies()
   {
     return array( 'CMSMailer' => '1.73.9',
-		  'CGExtensions' => '1.24' );
+		  'CGExtensions' => '1.25.2' );
   }
 
 
@@ -309,13 +310,11 @@ class FrontEndUsers extends CGExtensions
     $this->smarty->assign('link_logout',
 			  $this->CreateLink($id,"logout",$returnid,
 					    $this->Lang('logout')));
-  //nuno-dev-Pretty Url's
-	 $prettyurl_logout = 'feu/logout/'.$returnid;
-	 $logout_feu = $this->CreateLink($id, 'logout', $returnid,  '',
+    $prettyurl_logout = 'feu/logout/'.$returnid;
+    $logout_feu = $this->CreateLink($id, 'logout', $returnid,  '',
 				    array(), '', true, false, '', false, $prettyurl_logout);
-	
-	$this->smarty->assign('url_logout', $logout_feu);
-	//end
+    
+    $this->smarty->assign('url_logout', $logout_feu);
 
     $page = $this->ProcessTemplateFromData($this->GetPreference('pageid_changesettings'));
     if( $page )
@@ -400,21 +399,24 @@ class FrontEndUsers extends CGExtensions
   }
 
 
- function GetPageId($alias) {		
-    if ($alias=="") return false;
-    $db =& $this->GetDb();
-    $query = "SELECT content_id FROM ".cms_db_prefix()."content WHERE content_alias = '".str_replace("'",'_',$alias)."'";
-    $dbresult = $db->Execute($query);
-    if ($dbresult && $dbresult->RecordCount() > 0)	{
-      $row = $dbresult->FetchRow();
-      return $row['content_id'];
-    }
-    return false;
+  /*---------------------------------------------------------
+   get_tasks()
+   ---------------------------------------------------------*/
+  function get_tasks()
+  {
+    $tmp = $this->GetPreference('forcelogout_times');
+    if( $tmp != '' )
+      {
+	$obj = new FEUForcedLogoutTask();
+	return $obj;
+      }
+    $tmp = null;
+    return $tmp;
   }
 
 
- function _HasSufficientPermissions( $perm = '' )
- {
+  function _HasSufficientPermissions( $perm = '' )
+  {
    if ($this->GetPreference('feusers_specific_permissions','0') == '1')
      {
        $p1 = $this->CheckPermission( 'FEU Add Users' );
@@ -585,7 +587,6 @@ class FrontEndUsers extends CGExtensions
   {
     if( isset( $params['defaults'] ) )
       {
-	
 	$fn = dirname(__FILE__).'/templates/orig_forgotpassword1.tpl';
 	$this->SetTemplate('feusers_forgotpasswordform', file_get_contents($fn) );
 
@@ -1014,19 +1015,11 @@ class FrontEndUsers extends CGExtensions
     
     // get the group memberships
     $groups = $this->GetMemberGroupsArray( $params['user_id'] );
-// todo, users may (optionally) not be part of any gruops
-//     if( $groups == false )
-//       {
-// 	$this->_DisplayErrorPage ($id, $params, $returnid, $this->Lang('error_membergroups') );
-// 	return;
-//       }
 
     // populate the params with the appropriate stuff
     // that we just loaded
     $params['input_username'] = $user['username'];
     $params['input_expiresdate'] = $user['expires'];
-//     $params['input_password'] = $user['password'];  // the password row is md5 hashed, don't bother displaying it
-//     $params['input_repeatpassword'] = $user['password'];
     $userprops = '';
     foreach( $props as $prop )
     {
@@ -1066,8 +1059,7 @@ class FrontEndUsers extends CGExtensions
     
     // make sure the username fits the rules
     if( $checkusername )
-      {
-	
+      {	
 	$message = $this->Lang('error_invalidusername');
 	if( $this->GetPreference('username_is_email',0) == 1 )
 	  {
@@ -1271,8 +1263,6 @@ EOT;
 	$image_width = $this->GetPreference('thumbnail_size',75);
       }
 
-    $allowed_extensions=$this->GetPreference('allowed_image_extensions',
-					     '.gif,.png,.jpg');
     $maxfilesize = $this->GetPreference('max_upload_size',10*1024*1024);
     if( !isset($_FILES[$id.$fldprefix.$fldname]) || !isset( $_FILES ) )
       {
@@ -1291,6 +1281,26 @@ EOT;
       preg_replace('/[^a-zA-Z0-9\.\$\%\'\`\-\@\{\}\~\!\#\(\)\&\_\^]/', '',
        str_replace (array (' ', '%20'), array ('_', '_'), $file['name']));
     
+    // check the filename
+    $allowed_extensions=$this->GetPreference('allowed_image_extensions',
+					     '.gif,.png,.jpg');
+    $tmp = explode( ',', $allowed_extensions);
+    if( !is_array($tmp) )
+      {
+	return array(false,$this->Lang('error_invalidfileextension'));
+      }
+    $found = false;
+    foreach( $tmp as $ext )
+      {
+	if( endswith( $file['name'], $ext ) )
+	  {
+	    $found = true;
+	    break;
+	  }
+      }
+    if( !$found )
+	return array(false,$this->Lang('error_invalidfileextension'));
+
     // set the destination name
     $ext = strchr($file['name'],'.');
     $destname = $uid.'_'.$fldname.$ext;
@@ -1393,6 +1403,7 @@ EOT;
     $cmsmailer->IsHTML(false);
     $cmsmailer->Send();
   }
+
 
   function _params_to_session(&$params, $key = 'feu_params')
   {
@@ -1649,6 +1660,13 @@ EOT;
   }
 
 
+  function GetLoggedInUsers( $not_active_since = '' )
+  {
+    $this->_load();
+    return $this->usermanip->GetLoggedInUsers($not_active_since);
+  }
+
+
   function GetUserInfo( $uid )
   {
     $this->_load();
@@ -1834,10 +1852,10 @@ EOT;
   }
 
   
-  function Logout($uid = '') 
+  function Logout($uid = '',$message = 'logout') 
   {
     $this->_load();
-    return $this->usermanip->Logout($uid);
+    return $this->usermanip->Logout($uid,$message);
   }
 
   
@@ -2014,6 +2032,7 @@ function SetPropertyDefn( $name, $newname, $prompt, $length, $type, $maxlength =
       {
       case 'contentblocks':
       case 'content_attributes':
+      case 'tasks':
 	return TRUE;
       default:
 	return FALSE;
@@ -2080,6 +2099,7 @@ function SetPropertyDefn( $name, $newname, $prompt, $length, $type, $maxlength =
     return '';
   }
 			
+  public function can_cache_output() { return FALSE; }
 } // class
 
 

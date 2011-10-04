@@ -237,6 +237,9 @@ if( file_exists( $fn ) )
     $this->SetPreference('cookiename',0);
     $this->SetPreference('notification_subject',$this->Lang('feu_event_notification'));
     $this->SetPreference('expireage_months',60);
+   
+    $config = cmsms()->GetConfig();
+    $this->SetPreference('pwsalt',substr(str_shuffle(md5(time().$config['root_url'].__FILE__)),0,5));
 
     // Events
     $this->CreateEvent( 'OnLogin' );
@@ -246,8 +249,9 @@ if( file_exists( $fn ) )
     $this->CreateEvent( 'OnDeleteUser' );
     $this->CreateEvent( 'OnUpdateUser' );
     $this->CreateEvent( 'OnCreateGroup' );
-    $this->CreateEvent('OnUpdateGroup');
+    $this->CreateEvent( 'OnUpdateGroup');
     $this->CreateEvent( 'OnDeleteGroup' );
+    $this->CreateEvent(' OnRefreshUser' );
 
     $this->AddEventHandler( 'Core', 'ContentPostRender', false );
 

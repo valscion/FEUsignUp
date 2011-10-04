@@ -422,4 +422,43 @@
     <li>Fixes to user editing.</li>
   </ul>
 </li>
+<li>1.12.13 - March, 2011
+  <ul>
+    <li>Fixes problem with image fields when editing a user.</li>
+  </ul>
+</li>
+<li>1.12.15 - May, 2011
+  <ul>
+    <li>Numerous small bug fixes.</li>
+  </ul>
+</li>
+<li>1.12.16 - May, 2011
+  <ul>
+    <li>Bug fixes wrt lost password functionality.</li>
+  </ul>
+</li>
+<li>1.13 - June, 2011
+  <ul>
+    <li>Fixes a minor bug in the Logout() method.</li>
+    <li>Adds the ability to force logout users at specified times.</li>
+    <li>Modifies the behavior of the (default) change settings form to display the logout form when completed.</li>
+    <li>Adds a preference to specify a (minimum) time interval between expiry actions.  This should save a few queries for most requests.</li>
+    <li>Adds a preference to specify a time interval between user checkins touching the database.  This should save a few more db queries for most requests.</li>
+  </ul>
+</li>
+<li>1.14 - July, 2011
+  <ul>
+    <li>Adds the ability to adjust the password salt (only if there are no users).</li>
+    <li>Improvemetns to the CSV export/import routines.</li>
+  </ul>
+</li>
+<li>1.15 - July, 2011
+  <ul>
+    <li>Adds the ability to add additional properties to the view.</li>
+  </ul>
+</li>
+<li>1.15.1 - August 2011
+ <ul>
+   <li>Minor bug fix.</li>
+ </ul>
 </ul>

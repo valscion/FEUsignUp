@@ -10,6 +10,14 @@
   <p class="pageinput">{$input_importuserstogroup}</p>
 </div>
 <div class="pageoverflow">
+  <p class="pagetext">{$mod->Lang('ignore_userid')}:</p>
+  <p class="pageinput">
+    <input type="checkbox" name="{$actionid}import_ignore_userid" value="1"/>
+    <br/> 
+    {$mod->Lang('info_ignore_userid')}
+  </p>
+</div>
+<div class="pageoverflow">
    <p class="pagetext">{$prompt_importusersfile}:</p>
    <p class="pageinput">{$input_importusersfile}</p>
 </div>
@@ -22,8 +30,18 @@
 <fieldset>
 <legend>{$legend_exportusers}</legend>
 <div class="pageoverflow">
+  <p class="pagetext">{$mod->Lang('export_passhash')}:</p>
+  <p class="pageinput">
+    <input type="checkbox" name="{$actionid}export_passhash" value="1"/>
+    <br/>
+    {$mod->Lang('info_export_passhash')}
+  </p>
+</div>
+<div class="pageoverflow">
   <p class="pagetext">{$prompt_exportusers}:</p>
-  <p class="pageinput">{$input_exportusers}</p>
+  <p class="pageinput">
+    {$input_exportusers}
+  </p>
 </div>
 </fieldset>
 

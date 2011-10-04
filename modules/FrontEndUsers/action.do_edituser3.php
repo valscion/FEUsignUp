@@ -63,18 +63,6 @@ if( isset($params['cancel']) )
 
 $user_id = (int)$params['user_id'];
 
-// get the field info
-$fldinfo = array();
-foreach( $params as $k => $v )
-{
-  if( preg_match('/^hidden_/', $k ) )
-    {
-      $fldname = substr( $k, strlen('hidden_'));
-      $propinfo = explode(';',$v);
-      $fldinfo[$fldname] = $propinfo;
-    }
-}
-
 // get field definitions.
 $defns = $this->GetPropertyDefns();
 
@@ -108,12 +96,18 @@ foreach( $params as $k => $v )
     }
 }
 
+
 // now merge form values for each of the fields
-foreach( $fieldlist as $fldname => $passed_value )
+foreach( $groupprops as $fldname => $reln )
 {
   $v = '';
   switch($defns[$fldname]['type']) 
     {
+    case '6': // image
+      // we'll handle setting the value for this below.... this is just a placeholder.
+      $v = '::image::'; 
+      break;
+
     case '8': // date
       if( isset($params['input_'.$fldname.'Month']) )
 	{
@@ -142,11 +136,12 @@ foreach( $fieldlist as $fldname => $passed_value )
     }
 }
 
+
 // now validate
 foreach( $fieldlist as $name => $value )
 {
-  $defn =& $defns[$name];
-  $reln =& $groupprops[$name];
+  $defn = $defns[$name];
+  $reln = $groupprops[$name];
 
   // process empty required fields
   // we don't care about empty optional ones
@@ -155,6 +150,7 @@ foreach( $fieldlist as $name => $value )
       // process empty required fields
       if( $defn['type'] == 6 )
 	{
+	  // image uploads?
 	  if( (!isset($_FILES[$id.'input_'.$name]) || $_FILES[$id.'input_'.$name]['size'] == 0) &&
 	      $value == '')
 	    {
@@ -275,6 +271,7 @@ if( isset( $params['input_expiresdate'] ) )
     $expiresdate = $params['input_expiresdate'];
   }
 
+
 // and Set the user
 $ret = $this->SetUser( $user_id, $username, $password, $expiresdate );
 if( $ret[0] == false )
@@ -314,11 +311,16 @@ foreach( $fieldlist as $k => $v )
 	  if( $result[0] == false )
 	    {
 	      $params['error'] = 1;
-	      $params['message'] = $this->Lang('error').'&nbsp;'.$result;
+	      $params['message'] = $this->Lang('error').'&nbsp;'.$result[1];
 	      $this->myRedirect( $id, 'do_edituser2', $returnid, $params, true );
 	      return;
 	    }
 	  $v = $result[1];
+	}
+      else if( isset($params['hidden_'.$k]) )
+	{
+	  // image was not uploaded, use the old value.
+	  $v = trim($params['hidden_'.$k]);
 	}
     }
 
@@ -342,7 +344,7 @@ $event_params['id'] = $user_id;
 $this->SendEvent('OnUpdateUser',$event_params);
 $this->_SendNotificationEmail('OnUpdateUser',$event_params);
 
-$this->RedirectToTab($id, 'users' );
+$this->RedirectToTab($id, 'users' ); 
 
 // EOF
 ?>

@@ -1,4 +1,25 @@
 <?php
+$lang['prompt_viewprops'] = 'Selecteer extra eigenschappen om weer te geven';
+$lang['view'] = 'Weergeven';
+$lang['info_ignore_userid'] = 'Wanneer aangevinkt zal de import routine proberen gebruikers onafhankelijk van de UserID kolom toe te voegen. Wanneer een gebruiker bestaat met dezelfde naam, zal een foutmelding worden weergegeven.';
+$lang['ignore_userid'] = 'Sla UserID kolom over bij importeren';
+$lang['export_passhash'] = 'Exporteer de wachtwoord hash naar het bestand';
+$lang['info_export_passhash'] = 'De wachtwoord hash is enkel nuttig als de wachtwoordversleutelingscode op de importerende hosts identiek is aan degene op de exporterende host';
+$lang['error_adjustsalt'] = 'De wachtwoordversleutelingscode kan niet worden aangepast';
+$lang['prompt_pwsalt'] = 'Wachtwoordversleuteling';
+$lang['info_pwsalt'] = 'FrontEndUsers voegt versleuteling toe aan wachtwoorden. De sleutel wordt gegegeneerd tijdens de installatie. Deze sleutel kan niet worden gewijzigd. De versleutelingscode kan leeg zijn bij oude installaties.';
+$lang['advanced_settings'] = 'Uitgebreide instellingen';
+$lang['info_sessiontimeout'] = 'Geef het aantal seconden op voordat een inactieve gebruiker automatisch moet worden afgemeld van de website';
+$lang['prompt_expireusers_interval'] = 'Interval gebruikersverloop';
+$lang['info_expireusers_interval'] = 'Geef een waarde op (in seconden) die aangeeft hoe vaak het systeem moet controleren welke gebruikerssessie zijn verlopen en afgemeld moeten worden. Dit is een optimalisatei om databasequery&#039;s te besparen. Als u dit veld leeg laat of 0 invoert dan zal het worden uitgevoerd bij iedere aanvraag.';
+$lang['msg_settingschanged'] = 'Uw instellingen zijn succesvol bijgewerkt';
+$lang['forcedlogouttask_desc'] = 'Verplicht gebruikers om af te melden op regelmatige intervallen';
+$lang['prompt_forcelogout_times'] = 'Tijd voor gedwongen afmelden';
+$lang['info_forcelogout_times'] = 'Geef een lijst met kommagescheiden waarden van tijden op (bijvoorbeeld: HH:MM,HH:MM) waarop gebruiker geforceerd afgemeld worden. Opmerking: dit gebruikt het pseudocron mechanisme en u moet zeker zijn dat de ingevoerde tijden zullen samenvallen met uw &#039;pseudocron granularity&#039; en dat dergelijke aanvragen zullen worden uitgevoerd op uw website om te controleren of de pseudocron is uitgevoerd.';
+$lang['prompt_forcelogout_sessionage'] = 'Sluit gebruikers uit die actief zijn geweest in de laatste <em>(minuten)</em>';
+$lang['info_forcelogout_sessionage'] = 'Als dit is opgegeven, zullen gebruikers die actief waren in dit aantal moeten niet worden gedwongen om af te melden';
+$lang['areyousure_delete'] = 'Weet u zeker dat u deze gebruiker wilt verwijderen %s';
+$lang['error_invalidfileextension'] = 'Het ge&uuml;ploade bestand is een niet toegestaan bestandstype';
 $lang['postuninstall'] = 'Alle bijbehorende data van de FrontEndUsers module is verwijderd';
 $lang['info_ecomm_paidregistration'] = 'Indien ingeschakeld zal deze module samenwerken met de E-commerce suite. De volgende instellingen werken alleen wanneer deze instelling is ingeschakeld.';
 $lang['prompt_ecomm_paidregistration'] = 'Volgorde voor sorteren van gebeurtenissen';
@@ -55,7 +76,7 @@ $lang['months'] = 'maanden';
 $lang['prompt_expireage'] = 'Standaard gebruiker verloopperiode';
 $lang['notification_settings'] = 'Notificatie instellingen';
 $lang['property_settings'] = 'Eigenschap instellingen';
-$lang['redirection_settings'] = 'Doorstuur instellingen';
+$lang['redirection_settings'] = 'Verwijzingsinstellingen';
 $lang['general_settings'] = 'Algemene instellingen';
 $lang['session_settings'] = 'Sessie en cookie instellingen';
 $lang['field_settings'] = 'Veldinstellingen';
@@ -214,6 +235,13 @@ $lang['error_norepeatedlogins'] = 'Deze gebruiker is reeds ingelogd';
 $lang['error_captchamismatch'] = 'De tekst van de afbeelding is niet correct ingevoerd';
 $lang['prompt_allow_repeated_logins'] = 'Sta gebruikers toe meer dan een keer aan te melden';
 $lang['prompt_allowed_image_extensions'] = 'Bestandstypen die gebruikers mogen uploaden';
+$lang['event_help_OnRefreshUser'] = '<h3>OnRefreshUser</h3>
+<p>Er wordt een gebeurtenis gegenereerd wanneer een gebruikerssessie wordt vernieuwd.</p>
+<h4>Parameters:</h4>
+<ul>
+  <li><em>id</em> - De gebruikersid</li>
+</ul>
+';
 $lang['event_help_OnDeleteUser'] = '<h3>OnDeleteUser<h3>
 <p>An event generated when a user is deleted</p>
 <h4>Parameters</h4>
@@ -283,6 +311,7 @@ $lang['event_info_OnLogin'] = 'Er is een gebeurtenis gegenereerd toen een gebrui
 $lang['event_info_OnLogout'] = 'Er is een gebeurtenis gegenereerd toen een gebruiker zich afmelde op het systeem';
 $lang['event_info_OnExpireUser'] = 'Er is een gebeurtenis gegenereerd toen een gebruikerssessie verliep';
 $lang['event_info_OnCreateUser'] = 'Er is een gebeurtenis gegenereerd toen een nieuwe gebruiker is aangemaakt';
+$lang['event_info_OnRefreshUser'] = 'Er is een gebeurtenis gegenereerd toen de sessie van de gebruiker werd vernieuwd';
 $lang['event_info_OnUpdateUser'] = 'Er is een gebeurtenis gegenereerd toen de gebruikersinformatie is bijgewerkt';
 $lang['event_info_OnDeleteUser'] = 'Er is een gebeurtenis gegenereerd toen een gebruikersaccount is verwijderd';
 $lang['event_info_OnCreateGroup'] = 'Er is een gebeurtenis gegenereerd toen een gebruikergroep werd aangemaakt';
@@ -325,8 +354,8 @@ $lang['error_problem_upload'] = 'Er was een probleem met het ge&uuml;ploade best
 $lang['error_missingusername'] = 'U hebt geen gebruikersnaam ingevoerd';
 $lang['error_missingemail'] = 'U hebt uw e-mailadres niet ingevoerd';
 $lang['error_missingpassword'] = 'U hebt geen wachtwoord ingevoerd';
-$lang['frontenduser_logout'] = 'Frontend User Uitloggen';
-$lang['frontenduser_loggedin'] = 'Frontend User Inloggen';
+$lang['frontenduser_logout'] = 'Frontendgebruiker afgemeld';
+$lang['frontenduser_loggedin'] = 'Frondtendgebruiker aangemeld';
 $lang['editprop_infomsg'] = '<font color=&quot;red&quot;><b>WEES VOORZICHTG</b> Wanneer u eigenschappen van een veld die in gebruik is wijzigt dan kan u deze website schade toebrengen! <i>(met name als u veldafmetingen kleiner maakt)</i></font>';
 $lang['info_smtpvalidate'] = 'Deze functionaliteit werkt niet op Windows';
 $lang['msg_dontcreateusername'] = 'Maak geen veld aan voor de eigenschap gebruikersnaam of wachtwoord. Deze eigenschappen zijn al reeds ingebouwd in de FrontEndUsers module.';
@@ -653,9 +682,9 @@ Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p
  <li><a href="http://www.matterhornmarketing.com">Matterhorn Marketing</a></li>
  <li><a href="http://www.bpti.eu">Balkan Institute of Advanced Technology</a></li>
 </ul>';
-$lang['utma'] = '156861353.309482405.1295986369.1300304438.1300383712.85';
-$lang['utmz'] = '156861353.1300304438.84.25.utmcsr=forum.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/viewtopic.php';
-$lang['qca'] = 'P0-1346119953-1295986368908';
+$lang['utma'] = '156861353.1152840231.1312877699.1312877699.1312930185.2';
+$lang['utmz'] = '156861353.1312877699.1.1.utmcsr=forum.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/viewtopic.php';
+$lang['qca'] = 'P0-1408926661-1309528475256';
 $lang['utmb'] = '156861353';
 $lang['utmc'] = '156861353';
 ?>

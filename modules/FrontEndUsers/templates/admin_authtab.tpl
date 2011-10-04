@@ -242,6 +242,18 @@
 </div>
 </fieldset>
 
+<fieldset>
+  <legend>{$mod->Lang('advanced_settings')}</legend>
+  <div class="pageoverflow">
+    <p class="pagetext">{$mod->Lang('prompt_pwsalt')}:</p>
+    <p class="pageinput">
+      <input type="text" name="{$actionid}pwsalt" value="{$pwsalt}" size="5" maxlength="5" {if $total_user_count gt 0}readonly="readonly"{/if}/>
+      <br/>
+      {$mod->Lang('info_pwsalt')}
+    </p>
+  <div>
+</fieldset>
+
 <div class="pageoverflow">
   <p class="pagetext"></p>
   <p class="pageinput">

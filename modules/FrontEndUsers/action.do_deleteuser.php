@@ -106,8 +106,7 @@ $this->SendEvent( 'OnDeleteUser', $parms );
 $this->_SendNotificationEmail('OnDeleteUser',$parms);
 
 // and log it
-$this->Audit( 0, $this->Lang('friendlyname'),
-	      $this->Lang('user_deleted',$params['user_id']) );
+$this->Audit( 0, $this->Lang('friendlyname'),'Deleted User '.$params['user_id']);
 
 $this->RedirectToTab($id, 'users' );
 

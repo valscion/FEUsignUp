@@ -1,5 +1,25 @@
 <?php
-$lang['info_ecomm_paidregistration'] = 'Om sl&aring;tt p&aring;, s&aring; vil denne modulen lytte p&aring; handlinger fra Ecommerce suiten. De f&oslash;lgende instilllingene har kun effekt om denne instillingen er p&aring;sl&aring;tt.';
+$lang['info_ignore_userid'] = 'Om valgt s&aring; vil importrutinen fors&oslash;ke &aring; legge til brukere uavhengig av brukerid kolonnen. Hvis en bruker eksisterer allerede med navnet som er angitt i importfilen, vil en feilmelding bli generert';
+$lang['ignore_userid'] = 'Ignorer UserID kolonnen ved import';
+$lang['export_passhash'] = 'Eksporter passord hash til filen';
+$lang['info_export_passhash'] = 'Passordet hash er bare nyttig hvis passord salt p&aring; import-verten er identisk med eksport-verten';
+$lang['error_adjustsalt'] = 'Passord salt kan ikke endres';
+$lang['prompt_pwsalt'] = 'Passord salt';
+$lang['info_pwsalt'] = 'FrontEndUsers salter alle passord med denne n&oslash;kkelen som er opprettet ved installasjon. N&aring;r brukerne har blitt lagt til databasen s&aring; kan salt ikke endres. Saltet kan v&aelig;re tomt for eldre installasjoner.';
+$lang['advanced_settings'] = 'Avanserte innstillinger';
+$lang['info_sessiontimeout'] = 'Angi antall sekunder f&oslash;r en inaktiv bruker automatisk blir logget ut av nettstedet';
+$lang['prompt_expireusers_interval'] = 'Bruker utl&oslash;ps intervall';
+$lang['info_expireusers_interval'] = 'Angi en verdi (i sekunder) som viser hvor ofte systemet skal tvinge brukere hvor sesjonen har utl&oslash;pt &aring; bli logget ut. Dette er en optimalisering for &aring; lagre databasesp&oslash;rringer. Dersom satt tomt eller satt til 0 - utl&oslash;p vil bli utf&oslash;rt p&aring; hver foresp&oslash;rsel.';
+$lang['msg_settingschanged'] = 'Dine innstillinger ble vellykket lagret';
+$lang['forcedlogouttask_desc'] = 'Tving brukere til &aring; logge ut p&aring; gitte intervaller';
+$lang['prompt_forcelogout_times'] = 'Tider for tvunget utlogging';
+$lang['info_forcelogout_times'] = 'Angi en kommaseparert liste med tider som HH:MM,HH:MM hvor brukerne vil bli tvangs utlogget. Merk, bruker dette psuedocron mekanismen s&aring; du m&aring; v&aelig;re sikker p&aring; at de tidene oppgitt her vil falle rimelig sammen med &quot;pseudocron granularitet&quot; og at nok foresp&oslash;rsler vil oppst&aring; til ditt nettsted for &aring; sikre at pseudocron utf&oslash;res.';
+$lang['prompt_forcelogout_sessionage'] = 'Ekskludere brukere som har v&aelig;rt aktive i <em>(minutter)</em>';
+$lang['info_forcelogout_sessionage'] = 'Hvis spesifisert, vil alle brukere som har v&aelig;rt aktive i dette antallet sekunder ikke bli tvangs utlogget';
+$lang['areyousure_delete'] = 'Er du sikker p&aring; at du vil slette brukeren %s';
+$lang['error_invalidfileextension'] = 'Den opplastede filen passer ikke til listen med tillatte filtyper';
+$lang['postuninstall'] = 'Alle data assosiert med FrontEndUsers modulen har blitt slettet';
+$lang['info_ecomm_paidregistration'] = 'Om sl&aring;tt p&aring;, s&aring; vil denne modulen lytte p&aring; handlinger fra Ecommerce suiten. De f&oslash;lgende innstillingene har kun effekt om denne innstillingen er p&aring;sl&aring;tt.';
 $lang['prompt_ecomm_paidregistration'] = 'Lytt p&aring; Order handlinger';
 $lang['info_paidreg_settings'] = 'De f&oslash;lgende innstillingene gjelder bare hvis du bruker Selvregistrering(Self Registration) og tillater Betalt p&aring;melding';
 $lang['none'] = 'Ingen';
@@ -13,7 +33,7 @@ $lang['securefieldcolor'] = 'Sikkert felt farge';
 $lang['prompt_encrypt'] = 'Lagre disse data kryptert i databasen';
 $lang['error_notsupported'] = 'Den valgte opsjonen er ikke st&oslash;ttet med din n&aring;v&aelig;rende konfigurasjon';
 $lang['audit_user_created'] = 'Bruker automatisk opprettet';
-$lang['info_auto_create_unknown'] = 'Om en bruker er identifisert av en ekstern identifikasjonsmodul men ikke er kjent i FrontEndUsers modulen - skal da en FEU-konto opprettes automatisk?';
+$lang['info_auto_create_unknown'] = 'Om en bruker er identifisert av en ekstern identifikasjonsmodul, men ikke er kjent i FrontEndUsers modulen - skal da en FEU-konto opprettes automatisk?';
 $lang['prompt_auto_create_unknown'] = 'Opprett automatisk ukjente brukere';
 $lang['display_settings'] = 'Visningsinnstillinger';
 $lang['info_std_auth_settings'] = 'Den f&oslash;lgende innstillingen er kun gyldig om &quot;Innebygd identifikasjon&quot; er benyttet.';
@@ -30,7 +50,7 @@ $lang['error_user_nonunique_field_value'] = 'Verdien oppgitt for %s er allerede 
 $lang['unique'] = 'Unik';
 $lang['error_nonunique_field_value'] = 'Verdien som er oppgitt for %s (%s) er ikke unik';
 $lang['prompt_force_unique'] = 'Tving verdier for denne egenskapen til &aring; unik p&aring; tvers av alle kontoer';
-$lang['help_returnlast'] = 'Om benyttet med innlogging og utloggingskjemaene vil denne parameter, om den er spesifisert, indikere at brukeren skal sendes tilbake til siden (etter url) som brukeren var p&aring; f&oslash;r handlingen hendte. Denne parameter vil overstyre omdirigering preferansene, og returnto parameteren.';
+$lang['help_returnlast'] = 'Om benyttet med innlogging- og utlogging-skjemaene vil denne parameter, om den er spesifisert, indikere at brukeren skal sendes tilbake til siden (etter url) som brukeren var p&aring; f&oslash;r handlingen hendte. Denne parameter vil overstyre omdirigering preferansene, og returnto parameteren.';
 $lang['help_noinline'] = 'Benyttet med en av skjemaene, denne parameter spesifiserer at skjemaene ikke skal plasseres inline. Istedet skal de resulterende utdataene etter innsending av skjemaet erstatte standard innholdsblokken';
 $lang['title_reset_session'] = 'Innloggings sessionstidsutl&oslash;psadvarsel';
 $lang['msg_reset_session'] = 'Din innloggingsession er i ferd med &aring; utl&oslash;pe, vennligst klikk  OK  for &aring; bekrefte din tilstedev&aelig;relse p&aring; dette nettstedet.';
@@ -212,6 +232,13 @@ $lang['error_norepeatedlogins'] = 'Denne brukeren er allerede innlogget';
 $lang['error_captchamismatch'] = 'Teksten fra bildet ble ikke skrevet riktig';
 $lang['prompt_allow_repeated_logins'] = 'Tillater brukere &aring; logge inn mer en en gang';
 $lang['prompt_allowed_image_extensions'] = 'Bilde filendelser som brukere f&aring;r lov &aring; laste opp';
+$lang['event_help_OnRefreshUser'] = '<h3>OnRefreshUser</h3>
+<p>An event generated when the user session is refreshed.</p>
+<h4>Parameters:</h4>
+<ul>
+  <li><em>id</em> - The User id</li>
+</ul>
+';
 $lang['event_help_OnDeleteUser'] = '<h3>OnDeleteUser<h3>
 <p>En hendelse/event generert n&aring;r en bruker slettes</p>
 <h4>Parametere</h4>
@@ -281,6 +308,7 @@ $lang['event_info_OnLogin'] = 'En hendelse som genereres n&aring;r en bruker log
 $lang['event_info_OnLogout'] = 'En hendelse som genereres n&aring;r en bruker logger seg ut av systemet';
 $lang['event_info_OnExpireUser'] = 'En hendelse som genereres n&aring;r en bruker-session har utl&oslash;pt';
 $lang['event_info_OnCreateUser'] = 'En hendelse generert n&aring;r en bruker er opprettet';
+$lang['event_info_OnRefreshUser'] = 'En hendelse som genereres n&aring;r en bruker-session er oppfrisket';
 $lang['event_info_OnUpdateUser'] = 'En hendelse generert n&aring;r en brukers info er oppdatert';
 $lang['event_info_OnDeleteUser'] = 'En hendelse generert n&aring;r en brukerkonto er slettet';
 $lang['event_info_OnCreateGroup'] = 'En hendelse generert n&aring;r en brukergruppe er opprettet';
@@ -304,14 +332,14 @@ $lang['user_added'] = 'Bruker lagt til %s = %s';
 $lang['user_deleted'] = 'Bruker slettet uid=%s';
 $lang['propertyfilter'] = 'Egenskaper';
 $lang['valueregex'] = 'Verdi (regular expression)';
-$lang['warning_effectsfieldlength'] = 'Advarsel: Disse feltene p&aring;virker st&oslash;rrelsen p&aring; inntastingsfeltene i skjemaer. &Aring; minske disse verdiene p&aring; et eksisterende nettsted er ikke &aring; anbefale';
+$lang['warning_effectsfieldlength'] = 'Advarsel: Disse feltene p&aring;virker st&oslash;rrelsen p&aring; inndatafeltene i skjemaer. &Aring; minske disse verdiene p&aring; et eksisterende nettsted er ikke &aring; anbefale';
 $lang['confirm_submitprefs'] = 'Er du sikker p&aring; at du vil endre denne modulens innstillinger?';
 $lang['error_emailalreadyused'] = 'E-postadressen er allerede i bruk';
 $lang['prompt_usecookiestoremember'] = 'Bruk informasjonskapsler(cookies) for &aring; huske innloggingsdetaljer';
 $lang['prompt_cookiename'] = 'Navnet p&aring; informasjonskapselen(cookie)';
 $lang['prompt_allow_duplicate_emails'] = 'Tillat identiske e-postadresser';
 $lang['prompt_username_is_email'] = 'E-postadresse er brukernavn';
-$lang['info_cookie_keepalive'] = 'Fors&oslash;k &aring; holde innloggingen ved live ved &aring; benytte en informasjonskapel <em>(informasjonskapselen vil bli tilbakesatt n&aring;r du er aktiv p&aring; nettstedet)</em>';
+$lang['info_cookie_keepalive'] = 'Fors&oslash;k &aring; holde innloggingen ved live ved &aring; benytte en informasjonskapsel <em>informasjonskapselen vil bli tilbakesatt n&aring;r du er aktiv p&aring; nettstedet)</em>';
 $lang['info_allow_duplicate_emails'] = '(tillat flere brukere med samme e-postadresse)';
 $lang['info_username_is_email'] = '(brukers e-postadresse er deres brukernavn -- ikke sett dette sammen med &quot;Tillat identiske e-postadresser&quot;!)';
 $lang['prompt_allow_duplicate_reminders'] = 'Tillat flere &quot;glemt passord&quot; p&aring;minnelser?';
@@ -431,7 +459,7 @@ $lang['prompt_rememberme'] = 'Husk meg p&aring; denne datamaskinen';
 $lang['register'] = 'Registrer';
 $lang['forgotpw'] = 'Glemt passordet?';
 $lang['lostusername'] = 'Har du glemt innloggingsdetaljene?';
-$lang['defaults'] = 'Standard';
+$lang['defaults'] = 'Tilbakestill til standard';
 $lang['template'] = 'Mal';
 $lang['error_usernotfound'] = 'Kunne ikke finne informasjon om denne brukeren';
 $lang['error_usernametaken'] = 'Det brukernavnet (%s) er allerede i bruk';
@@ -477,11 +505,11 @@ $lang['1year'] = '1 &Aring;r';
 $lang['never'] = 'Aldri';
 $lang['postinstallmessage'] = 'Vellykket installasjon av modulen.<br/>Husk &aring; aktivisere  &quot;Modify FrontEndUser Properties permission.&quot;
 I tillegg, anbefaler vi deg &aring; installere Captcha modulen.  Om denne er installert, en gyldighetstest av et captchabilde vil kreves i tillegg til brukernavn og passord for &aring; logge inn. Meningen med dette er &aring; hindre brute force angrep.  <strong>Merk:</strong> Parameteren nocaptcha kan benyttes for &aring; sl&aring; av denne funksjonen selv om Captcha modulen er installert.&quot;';
-$lang['password'] = 'Passord';
+$lang['password'] = 'Nytt passord';
 $lang['repeatpassword'] = 'Gjenta';
 $lang['error_groupname_exists'] = 'En gruppe med det navnet eksisterer allerede';
 $lang['editgroup'] = 'Rediger gruppe';
-$lang['submit'] = 'Registrer';
+$lang['submit'] = 'Lagre';
 $lang['cancel'] = 'Avbryt';
 $lang['delete'] = 'Slett';
 $lang['confirm_editgroup'] = 'Er du sikker p&aring; at dette er korrekte valg for denne gruppen?\n&Aring; sl&aring; en egenskap av/off vil ikke slette noen innlegg i egenskap-tabellen for denne gruppen/brukeren.  Egenskapen vil i stedet bli utilgjengelig.';
@@ -517,8 +545,8 @@ $lang['logout_template'] = 'Mal for utlogging';
 $lang['login_template'] = 'Mal for innlogging';
 $lang['preferences'] = 'Preferanser';
 $lang['users'] = 'Brukere';
-$lang['friendlyname'] = 'Frontend User Administrasjon';
-$lang['moddescription'] = 'Administrer Frontend Users';
+$lang['friendlyname'] = 'Frontend brukere';
+$lang['moddescription'] = 'Administrer Frontend brukere';
 $lang['defaultfrontpage'] = 'Standard forside';
 $lang['lastaccessedpage'] = 'Siste viste side';
 $lang['otherpage'] = 'Annen side: ';
@@ -652,9 +680,9 @@ Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p
  <li><a href="http://www.matterhornmarketing.com">Matterhorn Marketing</a></li>
  <li><a href="http://www.bpti.eu">Balkan Institute of Advanced Technology</a></li>
 </ul>';
-$lang['utmz'] = '156861353.1288991067.3364.78.utmccn=(referral)|utmcsr=cmsmadesimple.org|utmcct=/about-link/special-fans-listing/|utmcmd=referral';
-$lang['utma'] = '156861353.179052623084110100.1210423577.1290034209.1290107730.3395';
-$lang['qca'] = '1210971690-27308073-81952832';
-$lang['utmb'] = '156861353.1.10.1290107730';
+$lang['qca'] = 'P0-536849115-1307983495210';
+$lang['utma'] = '156861353.1728621158.1311531024.1311531024.1311531024.1';
+$lang['utmz'] = '156861353.1311531024.1.1.utmcsr=forum.cmsmadesimple.org|utmccn=(referral)|utmcmd=referral|utmcct=/';
 $lang['utmc'] = '156861353';
+$lang['utmb'] = '156861353.4.10.1311531024';
 ?>

@@ -36,7 +36,7 @@
 #-------------------------------------------------------------------------
 #END_LICENSE
 
-$db =& $this->GetDb();
+$db = $this->GetDb();
 switch( $oldversion )
   {
   case '0.1.0':
@@ -242,7 +242,6 @@ switch( $oldversion )
   case '1.4.4':
   case '1.5':
     {
-      $db =& $this->GetDb();
       $dict = NewDataDictionary($db);
       $sqlarray = $dict->AlterColumnSQL(cms_db_prefix()."module_feusers_propdefn", "prompt C(255) NOT NULL");
       $dict->ExecuteSQLArray($sqlarray);
@@ -252,7 +251,6 @@ switch( $oldversion )
   case '1.5.2':
   case '1.5.3':
     {
-      $db =& $this->GetDb();
       $dict = NewDataDictionary($db);
       $sqlarray = $dict->AlterColumnSQL(cms_db_prefix().'module_feusers_loggedin', "sessionid C(255)");
       $dict->ExecuteSQLArray($sqlarray);
@@ -260,7 +258,6 @@ switch( $oldversion )
 
   case '1.5.4':
     {
-      $db =& $this->GetDb();
       $dict = NewDataDictionary($db);
       $sqlarray = $dict->AddcolumnSQL(cms_db_prefix()."module_feusers_propdefn",
 				      "attribs C(255)");
@@ -302,7 +299,6 @@ switch( $oldversion )
   case '1.9.1':
   case '1.9.2':
     {
-      $db =& $this->GetDb();
       $dict = NewDataDictionary($db);
       $sqlarray = $dict->AddcolumnSQL(cms_db_prefix()."module_feusers_propdefn",
 				      "force_unique I1");
@@ -314,7 +310,6 @@ switch( $oldversion )
   case '1.10.2':
   case '1.10.3':
     {
-      $db =& $this->GetDb();
       $dict = NewDataDictionary($db);
       $sqlarray = $dict->AddcolumnSQL(cms_db_prefix()."module_feusers_propdefn",
 				      "encrypt I1");
@@ -331,6 +326,31 @@ switch( $oldversion )
       $this->RemoveEventHandler('CGEcommerceBase','OrderDeleted');
       $this->RemoveEventHandler('Core','ModuleInstalled');
       $this->RemoveEventHandler('Core','ModuleUninstalled');
+    }
+
+  case '1.12.3':
+  case '1.12.4':
+  case '1.12.5':
+  case '1.12.6':
+  case '1.12.7':
+  case '1.12.8':
+  case '1.12.9':
+  case '1.12.10':
+  case '1.12.11':
+  case '1.12.12':
+  case '1.12.13':
+    {
+      $dict = NewDataDictionary($db);
+      $sqlarray = $dict->AddcolumnSQL(cms_db_prefix()."module_feusers_propdefn","encrypt I1");
+      $dict->ExecuteSQLArray($sqlarray);
+    }
+
+  case '1.12.14':
+  case '1.12.15':
+  case '1.12.16':
+  case '1.12.17':
+    {
+      $this->CreateEvent( 'OnRefreshUser' );
     }
   } // switch
 ?>

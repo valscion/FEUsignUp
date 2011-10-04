@@ -57,6 +57,16 @@ else
     if( !$uid ) return;
     $username = $this->LoggedInName();
 
+    $smarty = cmsms()->GetSmarty();
+    if( isset($params['message']) )
+      {
+	$smarty->assign('message',trim($params['message']));
+      }
+    if( isset($params['error']) )
+      {
+	$smarty->assign('error',trim($params['error']));
+      }
+
     $cge = $this->GetModuleInstance('CGExtensions');
     if( $cge && isset($params['returnlast']) )
       {
@@ -69,41 +79,44 @@ else
     $groups = $this->GetMemberGroupsArray( $uid );
     $groupname = $this->GetGroupName( $groups[0]['groupid'] );
 
-    $this->smarty->assign('prompt_loggedin',
+    $smarty->assign('prompt_loggedin',
 			  $this->Lang('msg_currentlyloggedinas'));
-    $this->smarty->assign('userid', $uid);
-    $this->smarty->assign('username', $username);
-
-    $this->smarty->assign('link_logout',
-			  $this->CreateFrontendLink($id,$returnid,"logout",
-						    $this->Lang('logout')));
-   //nuno-dev-Pretty Url's
-	$prettyurl_logout = 'feu/logout/'.$returnid;
-	$logout_feu = $this->CreateLink($id, 'logout', $returnid,  '',
-				    array(), '', true, false, '', false, $prettyurl_logout);
-	
-	$this->smarty->assign('url_logout', $logout_feu);
-	//end
+    $smarty->assign('userid', $uid);
+    $smarty->assign('username', $username);
 
     $parms = array();
-    $parms['form'] = 'changesettings';
-    $parms['returnto'] = $returnid;
+    if( isset($params['returnto']) )
+      {
+	$parms['returnto'] = $params['returnto'];
+      }
     if( isset($params['lang']) )
     {
       $parms['lang'] = $params['lang'];
     }
+    $smarty->assign('link_logout',
+			  $this->CreateFrontendLink($id,$returnid,"logout",
+						    $this->Lang('logout'), $parms));
+   // nuno-dev-Pretty Url's
+    $prettyurl_logout = 'feu/logout/'.$returnid;
+    $logout_feu = $this->CreateLink($id, 'logout', $returnid,  '',
+				    $parms, '', true, false, '', false, $prettyurl_logout);
+    
+    $smarty->assign('url_logout', $logout_feu);
+    //end
 
+    $parms['form'] = 'changesettings';
     $page = $this->ProcessTemplateFromData($this->GetPreference('pageid_changesettings'));
     if( $page )
     {
+      $parms['returnto'] = $returnid;
       $pageid = ContentManager::GetPageIDFromAlias( $page );
       if( $pageid == false )
       {
-        $this->smarty->assign('link_changesettings','<!-- Error could not determine page from alias/id -->');
+        $smarty->assign('link_changesettings','<!-- Error could not determine page from alias/id -->');
       }
       else 
       {
-        $this->smarty->assign('link_changesettings',
+        $smarty->assign('link_changesettings',
 			      $this->CreateLink( $id, 'default', $pageid,
 						 $this->Lang('prompt_changesettings'),
 						 $parms));
@@ -111,13 +124,13 @@ else
 						$parms, '',
 						true, false, '', false);
 	
-	$this->smarty->assign('url_changesettings',$changesettings_feu);
+	$smarty->assign('url_changesettings',$changesettings_feu);
 	//end
       }
     }
     else
     {
-       $this->smarty->assign('link_changesettings',
+       $smarty->assign('link_changesettings',
 			  $this->CreateLink($id,'default',$returnid,
 					    $this->Lang('prompt_changesettings'),
 					    $parms));
@@ -125,14 +138,14 @@ else
 						$parms, '',
 						true, false, '', false);
 	
-	$this->smarty->assign('url_changesettings',$changesettings_feu);
+	$smarty->assign('url_changesettings',$changesettings_feu);
     }
     $props = $this->GetUserProperties( $this->LoggedInId() );
     if( $props !== false )
       {
 	foreach( $props as $p )
 	  {
-	    $this->smarty->assign($p['title'],$p['data']);
+	    $smarty->assign($p['title'],$p['data']);
 	  }
       }
     echo $this->ProcessTemplateFromDatabase('feusers_logoutform');

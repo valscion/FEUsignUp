@@ -1,4 +1,69 @@
 <?php
+$lang['areyousure_delete'] = 'Are you sure you want to delete the user %s';
+$lang['error_invalidfileextension'] = 'The uploaded file does not match the list of allowed file types';
+$lang['postuninstall'] = 'All data associated with the FrontEndUsers module has been deleted';
+$lang['info_ecomm_paidregistration'] = 'If enabled, this module will listen to events from the Ecommerce suite.  The following settings only have effect if this setting is enabled.';
+$lang['prompt_ecomm_paidregistration'] = 'Listen to Order Events';
+$lang['info_paidreg_settings'] = 'The following settings only apply if using self registration and allowing for paid registration';
+$lang['none'] = 'None';
+$lang['delete_user'] = 'Delete User';
+$lang['expire_user'] = 'Expire User';
+$lang['prompt_action_ordercancelled'] = 'Action to perform when a subscription order is cancelled';
+$lang['prompt_action_orderdeleted'] = 'Action to perform when a subscription order is deleted';
+$lang['ecommerce_settings'] = 'Ecommerce Settings';
+$lang['securefieldmarker'] = 'Secure Field Marker';
+$lang['securefieldcolor'] = 'Secure Field Color';
+$lang['prompt_encrypt'] = 'Store this data encrypted in the database';
+$lang['error_notsupported'] = 'The chosen option is not supported given your current configuration';
+$lang['audit_user_created'] = 'User automatically created';
+$lang['info_auto_create_unknown'] = 'If a user is authenticated by an external authentication module but is not known in the FrontEndUsers module should an FEU account be created automatically?';
+$lang['prompt_auto_create_unknown'] = 'Automatically Create Unknown Users';
+$lang['display_settings'] = 'Display Settings';
+$lang['info_std_auth_settings'] = 'The following settings are only applicable if using the &quot;Builtin Authentication&quot;.';
+$lang['info_support_lostun'] = 'Selecting No will disable the ability for a user to request lost login information, irrespective of other settings';
+$lang['info_support_lostpw'] = 'Selecting No will disable the ability for a user to a password reset, irrespective of other settings';
+$lang['prompt_support_lostun'] = 'Allow users to request their username';
+$lang['prompt_support_lostpw'] = 'Allow users to request a password change';
+$lang['auth_settings'] = 'Authentication Settings';
+$lang['authentication'] = 'Builtin Authentication';
+$lang['auth_builtin'] = 'FEU Standard Authentication';
+$lang['auth_module'] = 'Authentication Module/Method';
+$lang['info_auth_module'] = 'The FrontendUsers module supports using alternate authentication methods, with varying capabilities.  Some functionality will not function or be disabled when not using the built in authentication method';
+$lang['error_user_nonunique_field_value'] = 'The value specified for %s is already in use by another user';
+$lang['unique'] = 'Unique';
+$lang['error_nonunique_field_value'] = 'The value specified for %s (%s) is not unique';
+$lang['prompt_force_unique'] = 'Force values of this property to be unique across all user accounts';
+$lang['help_returnlast'] = 'Used with the login and logout forms, this parameter if specified will indicate that the user should be returned to the page (by url) that the user was viewing before the action occurred.  This parameter will override the redirect preferences, and the returnto parameter.';
+$lang['help_noinline'] = 'Used with one of the forms, this parameter specifies that the forms should not be placed inline, instead the resulting output after form submission will replace the default content block';
+$lang['title_reset_session'] = 'Login Session Timeout Warning';
+$lang['msg_reset_session'] = 'Your login session is about to expire, please click &quot;&quot;Ok&quot; to confirm your activity on this website.';
+$lang['ok'] = 'Ok';
+$lang['resetsession_template'] = 'Reset Session Template';
+$lang['info_name'] = 'This is the field name, to be used for addressing in smarty.  It must consist of only alphanumeric characters and underscores.';
+$lang['visitors_tab'] = 'Visitors';
+$lang['feu_groups_prompt'] = 'Select one or more FEU groups that are allowed to view this page';
+$lang['error_mustselect_group'] = 'A group must be selected';
+$lang['selectone'] = 'Select One';
+$lang['start_year'] = 'Start Year';
+$lang['end_year'] = 'End Year';
+$lang['date'] = 'Date';
+$lang['prompt_thumbnail_size'] = 'Thumbnail Size';
+$lang['OnUpdateGroup'] = 'On User Group Modified';
+$lang['error_toomanyselected'] = 'Too many users are selected for bulk operations.... Please trim it to 250 or less';
+$lang['confirm_delete_selected'] = 'Are you sure you want to delete the selected users?';
+$lang['delete_selected'] = 'Delete Selected';
+$lang['prompt_randomusername'] = 'Generate random username when adding new users';
+$lang['months'] = 'months';
+$lang['prompt_expireage'] = 'Default user expiry period';
+$lang['notification_settings'] = 'Notification Settings';
+$lang['property_settings'] = 'Property Settings';
+$lang['redirection_settings'] = 'Redirection Settings';
+$lang['general_settings'] = 'General Settings';
+$lang['session_settings'] = 'Session and Cookie Settings';
+$lang['field_settings'] = 'Field Settings';
+$lang['error_lostun_nonrequired'] = 'The lostusername flag can only be used on required fields';
+$lang['prop_textarea_wysiwyg'] = 'Allow use of wysiwyg on this text area';
+$lang['info_cookiestoremember'] = '<strong>Note: </strong> This uses the mcrypt functions for encryption purposes, and they could not be detected on your install.   Please contact your server administrator.';
 $lang['editing_user'] = 'Editing User';
 $lang['noinline'] = 'Do not inline forms';
 $lang['info_lostun'] = 'Paina t&auml;st&auml;, jos et muista kirjautumistietojasi';
@@ -213,6 +278,7 @@ $lang['event_info_OnCreateUser'] = 'Suoritetaan kun uusi k&auml;ytt&auml;j&auml;
 $lang['event_info_OnUpdateUser'] = 'Suoritetaan kun k&auml;ytt&auml;j&auml;n tietoja p&auml;ivitet&auml;&auml;n';
 $lang['event_info_OnDeleteUser'] = 'Suoritetaan kun k&auml;ytt&auml;j&auml;n tili poistetaan';
 $lang['event_info_OnCreateGroup'] = 'Suoritetaan kun ryhm&auml; luodaan';
+$lang['event_info_OnUpdateGroup'] = 'An event generated when a user group is updated';
 $lang['event_info_OnDeleteGroup'] = 'Suoritetaan kun ryhm&auml; poistetaan';
 $lang['backend_group'] = 'Backend Group';
 $lang['info_star'] = '* Seuraavia makroja voidaan k&auml;ytt&auml;&auml;: {$username},{$group}. When using the {$group} macro, the system will subsitute the name of the first member group that the user belongs to, and will redirect to that page.';
@@ -332,6 +398,7 @@ $lang['length'] = 'Pituus';
 $lang['lengthcomment'] = '<br>(Merkkej&auml; teksti kent&auml;ss&auml;)';
 $lang['seloptions'] = 'Alasvetovalikon valinnat, jokainen arvo omalla rivill&auml;&auml;n. Arvo voidaan erottaa = merkill&auml;, esim Nainen=N
 ';
+$lang['radiooptions'] = 'Radiobutton labels, separated by line breaks. Values can be separated from text with a = character. i.e: Female=f';
 $lang['prompt'] = 'Kehote';
 $lang['prompt_type'] = 'Tyyppi';
 $lang['type'] = 'Tyyppi';
@@ -340,6 +407,7 @@ $lang['usedinlostun'] = 'Ask in Lost<br/>Username';
 $lang['text'] = 'Teksti';
 $lang['checkbox'] = 'Valintalaatikko';
 $lang['multiselect'] = 'Monivalinta&quot;lista';
+$lang['radiobuttons'] = 'Radio Buttons';
 $lang['image'] = 'Kuva';
 $lang['email'] = 'Email-osoite';
 $lang['textarea'] = 'Tekstialue';
@@ -449,138 +517,6 @@ $lang['defaultfrontpage'] = 'Oletus etusivu';
 $lang['lastaccessedpage'] = 'Viimeksi k&auml;yty sivu';
 $lang['otherpage'] = 'Toinen sivu: ';
 $lang['captcha_title'] = 'Sy&ouml;t&auml; kuvassa n&auml;kyv&auml; teksti';
-$lang['changelog'] = '<ul>
-<li>0.0.1 - October, 2005 - Initial NRPT (Not Ready for Prime Time) release</li>
-<li>0.1.0 - October, 2005 - Initial release</li>
-<li>0.1.1 - October, 2005 - Fixed issues with properties</li>
-<li>0.1.2 - October, 2005 - Added forgotten password functionality</li>
-<li>0.1.3 - November, 2005
-    <p>Added the ability to specify a redirect page on login, logout, forgot password, and change settings, and added the returnto and form parameters to the user side of things, also did a couple lf little cleanups.  This version requires v0.11 and above for certain.</p></li>
-<li>0.1.4 - November, 2005 - Very minor change with respect to a forgotten and no longer needed function call</li>
-<li>0.1.5 - November, 2005
-    <p>Another very minor change, added some text to the PostInstall message.</p></li>
-<li>0.1.6 - January, 2006
-    <p>Changes to the permission model, and minor bug fixes to the preferences.  Also some php5 fixes but I am sure that there are more out there.</p></li>
-<li>0.1.7 - January, 2006
-    <p>Many thanks to <b>katon</b> for adding the textarea and dropdown property types.</p>
-    <p>Fixes to the property adding to fix problems with spaces in property names (we no longer let that happen).</p>
-</li>
-<li><p>1.0.0 - February, 2006<p>
-    <p>Added filtering and row limiting to the admin panel. This will have big benefits to those that are using this module for high trafic, and high user sites.</p>
-    <p>Added sorting to the admin panel</p>
-    <p>Added max length ability to text and email fields</p>
-    <p>Fixed a small problem with the default group not being checked when adding a user</p>
-    <p>Save filter settings in preferences, and the active tab too.</p>
-    <p>Delete user properties when a property is deleted <em>Note</em>, not when it is disabled in the edit group dialog</p>
-    <p>Add confirmation message in edit groups.</p>
-    <p>Added a couple more confirmation messages.</p>
-    <p>Added CSV Export option</p>
-    <p>Todo - Add preferences for username and password fieldlength</p>
-</li>
-<li>1.0.1 - March, 2006
-    <p>Added the ability to check for duplicate email addresses</p>
-    <p>Fix problem where expiry date was being modified when admin modified user settings</p>
-    <p>Add a confirmation message to the preferences submit button</p>
-    <p>Fixed a minor bug when couting the number of users in a group</p>
-    <p>Fixes to the size of username and password fields, and maxlength</p>
-    <p>Added advanced filtering on properties</p>
-    <p>Changes to labeling in add or edit user</p>
-    <p>Fixes to problems with inline and non inline forms, the password is never sent on the get line</p>
-    <p>Changed to require CMS 0.12-beta2 at a minimum (for safety purposes)</p>
-</li>
-<li>1.0.2 - March, 2006
-    <p>More field length fixes</p>
-</li>
-<li>1.0.3 - March, 2006
-    <p>Export to smarty all of the user properties when they are logged in</p>
-</li>
-<li>1.0.4 - May, 2006
-    <p>Fixes to the export code</p>
-    <p>Code cleanup (alphabetize functions)</p>
-    <p>Minor fixes and enhancements (recommended by nils73) for dealing with the change password stuff.</p>
-    <p>Removed the requirement for CMS 0.12, and put it back to 0.11.2</p>
-    <p>Added the \&#039;silent\&#039; form</p>
-    <p>Cleaned up database access stuff for performance reasons (hopefully)</p>
-    <p>Added copyright info</p>
-    <p>Added macros for redirecto to a user specific page on login or logout</p>
-    <p>Tweaks to the admin preferences tab</p>
-</li>
-<li>1.0.5 - May, 2006
-    <p>Fixed a problem with expiry dates</p>
-    <p>Start splitting the code up into several files</p>
-<li>1.0.6 - May, 2006
-    <p>Fixed a problem with editing dropdowns</p>
-</li>
-<li>1.1.0 - May, 2006
-    <p>Events</p>
-    <p>Optionally disallow repeated logins</p>
-    <p>Export the user id to smarty</p>
-    <p>Added optionally \{$group\} for the pages to jump to on login</p>
-</li>
-<li>1.1.1 - Sept, 2006
-    <p>Fixed a bug when a user was editing his settings with \&#039;allow duplicate emails\&#039; was off</p>
-    <p>Changed the dropdown table to 255 characters</p>
-    <p>Minor cleanups</p>
-</li>
-<li>1.1.2 - Dec, 2006
-    <p>Fixes (hopefuly) to the adodb/adodb-lite DATETIME issue</p>
-    <p>Add captcha support to the login screen (optional), thanks dittman</p>
-    <p>Fixes to cancel handling on the lost password and change settings screens</p>
-    <p>Fixes to user expiry (more DBTimestamp issues), thanks again dittman</p>
-    <p>Option to allow FEUsers to have its own set of permissions asside from the admin permissions.  Thanks _SjG_</p>
-    <p>Option to allow duplicate password reminder requests and to specify text on the signin button.  Thanks _SjG_</p>
-    <p>General cleanup of functions that were not being used and notices/warnings</p>
-    <p>Added the only_groups param for login forms.  Thanks wishy</p>
-    <p>Fixes to the length of the email field in the change password form</p>
-    <p>Fixes to the email validation stuff</p>
-</li>
-    <li>1.2.0 - April, 2007
-    <p>elijahlofgren - Fixes to captcha support, and some template cleanups.</p>
-    <p>Add support for multi select lists</p>
-    <p>Template cleanups (more of em)</p>
-    <p>Add support for value=key stuff in the dropdown and multi select lists.</p>
-    <p>better checking of the &quot;at least one group required&quot; stuff</p>
-    <p>Output more smarty variables on the user settings page, to allow people to modify the template to something that is more accessibile</p>
-    <p>Split into more files for performance</p>
-    <p>You can now not delete a group that still has users</p>
-    <p>Now handle regex problems better in the admin section users tab</p>
-    <p>Email fields, when specified as optional, make em actually optional</p>
-    <p>Add support for image uploads, this is a big feature.  Images are scaled to a maximum size in one dimension, and stored as files in a configurable directory under the uploads_path.</p>
-    <p>Captcha mode is now on by default, unless you use the nocaptcha parameter in the tag.</p>
-    <p>Fixes to CSV export... it was assuming the db_prefix is cms_</p>
-    <p>Import Users from CSV</p>
-    <p>Fixes to the install and uninstall methods, and now the allow_repeated_logins preference should work</p>
-    <p>Adds proper user history tracking.  Now track failed logins, logins, expiries, and logouts, on a per user basis.</p>
-    <p>Fixes to the cancel button of the user settings page, if the user settings form is on a different page.</p>
-    <p>Fixes to the cancel button of the forgot password page, if the forgot password form is on a different page.</p>
-    <p>Minor fixes to behaviour oaf the preferences panels.</p>
-</li>
-<li>1.2.1 - June, 2007
-	<p>A cookie is now used to keep track of login state between sessions, however the cookie does not last any longer than the timeout specified in the user settings.</p>
-	<p>Added the ability for an administrator to logout users</p>
-	<p>Added the ability to filter by logged in status</p>
-	<p>Added the ability for read-only properties.</p>
-	<p>Added more variables in each object in the changesettings form</p>
-</li>
-<li>
-	<p>1.2.2 - June, 2007</p>
-	<p>tsw - Added event OnUpdateUser which gets called when user (or admin) updates user info</p>
-        
-</li>
-<li>1.3 - October, 2007
-<p>Added support for &#039;remember me&#039; so that login information is stored in a cookie.  And support for a form to allow that cookie to be reset.</p>
-<p>No longer support non alphanumeric characters in property names.</p>
-<p>Numerous small bugfixes.</p>
-<p>Require CMS 1.2 or greater.</p>
-</li>
-<li>1.3.1 - November, 2007
-<p>Fixes problems with parameters not being cleaned in the change settings dialog on the front end.</p>
-<p>Fixes an updrade issue in the database schema</p>
-<p>Fixes an issue in a GetSmarty() call that was apparently causing people difficulties with the login form.</p>
-<p>Add a preference that allows admins to specify a page to redirect to after the forgot password validation form is complete.</p>
-<p>Fixes a problem with hidden properties being lost after a user changed their settings.</p>
-<p>The Forgot Password and Lost Username forms are now inline</p>
-</ul>';
 $lang['help'] = '<h3>What Does This Do?</h3>
 <p>This module allows management and administration of front end users <i>(users who have no admin accesss)</i>.  It allows creation of user groups, and user accounts and allows users to login and logout.  it can be used in conjunction with the CustomContent module to display different content to different users once they have logged in</p>
 <h3>Features</h3>
@@ -640,6 +576,9 @@ of the license for the full disclaimer.</p>
 <h3>Copyright and License</h3>
 <p>Copyright &amp;copy; 2005, Robert Campbel <a href="mailto:calguy1000@hotmail.com">&amp;lt;calguy1000@hotmail.com&amp;gt;</a>. All Rights Are Reserved.</p>
 <p>This module has been released under the <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU Public License</a>. You must agree to this license before using the module.</p>';
-$lang['utma'] = '156861353.1959547193.1213865783.1215201910.1215340163.28';
-$lang['utmz'] = '156861353.1214056345.10.4.utmccn=(referral)|utmcsr=dev.cmsmadesimple.org|utmcct=/forum/forum.php|utmcmd=referral';
+$lang['utma'] = '156861353.913577157.1292870007.1307520540.1307523385.15';
+$lang['utmz'] = '156861353.1302546643.10.5.utmcsr=feedburner|utmccn=Feed: cmsmadesimple/blog (CMS Made Simple)|utmcmd=feed';
+$lang['qca'] = 'P0-584376928-1292870006667';
+$lang['utmc'] = '156861353';
+$lang['utmb'] = '156861353';
 ?>

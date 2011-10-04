@@ -1,4 +1,26 @@
 <?php
+$lang['prompt_viewprops'] = 'Choisissez une propri&eacute;t&eacute; compl&eacute;mentaire &agrave; afficher';
+$lang['view'] = 'Vue';
+$lang['info_ignore_userid'] = 'If checked the import routine will attempt to add users independant of the userid column.  If a user with the name specified in the import file already exists, an error will be generated';
+$lang['ignore_userid'] = 'Ignore UserID Column on Import';
+$lang['export_passhash'] = 'Export the password hash to the file';
+$lang['info_export_passhash'] = 'The password hash is only useful if the password salt on the import host is identical to that of the export host';
+$lang['error_adjustsalt'] = 'The password salt cannot be adjusted';
+$lang['prompt_pwsalt'] = 'Password Salt';
+$lang['info_pwsalt'] = 'FrontEndUsers salts all passwords with this key which is created upon install.  Once users have been added to the database the salt cannot be changed. The salt may be empty for older installs.';
+$lang['advanced_settings'] = 'R&eacute;glages avanc&eacute;s';
+$lang['info_sessiontimeout'] = 'Sp&eacute;cifier le nombre de secondes avant qu&#039;un utilisateur inactif soir d&eacute;connect&eacute; automatiquement du site';
+$lang['prompt_expireusers_interval'] = 'User Expiry Interval';
+$lang['info_expireusers_interval'] = 'Specify a value (in seconds) that indicates how often the system should force users whos session has expired to be logged out.  T&quot;his is an optimization to save database queries.  If left empty or set to 0 expiry will be performed on every request.';
+$lang['msg_settingschanged'] = 'Vos r&eacute;glages ont &eacute;t&eacute; mis &agrave; jour avec succ&egrave;s';
+$lang['forcedlogouttask_desc'] = 'Oblige les utilisateurs &agrave; se d&eacute;connecter &agrave; des intervalles de temps r&eacute;guliers';
+$lang['prompt_forcelogout_times'] = 'Times for forced logout';
+$lang['info_forcelogout_times'] = 'Specify a comma separated list of times like HH:MM,HH:MM where users will be forcibly logged out. Note, this uses the psuedocron mechanism so you must be sure that the times entered here will coincide reasonably with your &quot;pseudocron granularity&quot; and that sufficient requests will occur to your website to ensure that pseudocron is executed.';
+$lang['prompt_forcelogout_sessionage'] = 'Exclude users that have been active in <em>(minutes)</em>';
+$lang['info_forcelogout_sessionage'] = 'If specified, any users that have been active in this number of seconds will not be forcibly logged out';
+$lang['areyousure_delete'] = 'Etes vous s&ucirc;r(e) de vouloir supprimer l&#039;utilisateur : %s';
+$lang['error_invalidfileextension'] = 'Le type de fichier upload&eacute; ne semble pas faire partie des fichiers autoris&eacute;s';
+$lang['postuninstall'] = 'Toutes les donn&eacute;es associ&eacute;es au module FrontEndUsers ont &eacute;t&eacute; effac&eacute;es';
 $lang['info_ecomm_paidregistration'] = 'Si activ&eacute;, ce module va &eacute;couter les &eacute;v&eacute;nements de la suite Ecommerce.
 Dans ce cas, les param&egrave;tres suivants sont effectifs.';
 $lang['prompt_ecomm_paidregistration'] = 'Ecouter les &eacute;v&eacute;nements des commandes';
@@ -99,7 +121,7 @@ $lang['admin_logout'] = 'D&eacute;connect&eacute; par un administrateur';
 $lang['prompt_loggedinonly'] = 'Affiche uniquement les utilisateurs connect&eacute;s';
 $lang['prompt_logout'] = 'D&eacute;connecter cet utilisateur';
 $lang['user_properties'] = 'Propri&eacute;t&eacute;s de l&#039;utilisateur';
-$lang['userhistory'] = 'Historique de l&#039;utilisateur';
+$lang['userhistory'] = 'Historique des utilisateurs';
 $lang['export'] = 'Exporter';
 $lang['clear'] = 'Vider';
 $lang['prompt_exportuserhistory'] = 'Exporter en ASCII l&#039;historique utilisateur qui a moins de&nbsp;';
@@ -214,6 +236,13 @@ $lang['error_norepeatedlogins'] = 'Cet utilisateur est d&eacute;j&agrave; connec
 $lang['error_captchamismatch'] = 'Le texte de cette image n&#039;a pas &eacute;t&eacute; entr&eacute; correctement';
 $lang['prompt_allow_repeated_logins'] = 'Autoriser les utilisateurs &agrave; &ecirc;tre connect&eacute;s plus d&#039;une fois&nbsp;';
 $lang['prompt_allowed_image_extensions'] = 'Extensions des fichiers d&#039;images que les utilisateurs sont autoris&eacute;s &agrave; t&eacute;l&eacute;charger&nbsp;';
+$lang['event_help_OnRefreshUser'] = '<h3>OnRefreshUser</h3>
+<p>An event generated when the user session is refreshed.</p>
+<h4>Parameters:</h4>
+<ul>
+  <li><em>id</em> - The User id</li>
+</ul>
+';
 $lang['event_help_OnDeleteUser'] = '<h3>OnDeleteUser<h3>
 <p>Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand un utilisateur est supprim&eacute;</p>
 <h4>Param&egrave;tres</h4>
@@ -284,6 +313,7 @@ $lang['event_info_OnLogin'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;
 $lang['event_info_OnLogout'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand un utilisateur se d&eacute;connecte';
 $lang['event_info_OnExpireUser'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand une session expire';
 $lang['event_info_OnCreateUser'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand un utilisateur est cr&eacute;&eacute;';
+$lang['event_info_OnRefreshUser'] = 'An event generated when the user session is refreshed';
 $lang['event_info_OnUpdateUser'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand un utilisateur est mis &agrave; jour (par lui-m&ecirc;me ou par un admin)';
 $lang['event_info_OnDeleteUser'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand un utilisateur est supprim&eacute;';
 $lang['event_info_OnCreateGroup'] = 'Un &eacute;v&eacute;nement est g&eacute;n&eacute;r&eacute; quand un groupe est cr&eacute;&eacute;';
@@ -487,7 +517,7 @@ $lang['password'] = 'Mot de passe';
 $lang['repeatpassword'] = 'Re-tapez le mot de passe';
 $lang['error_groupname_exists'] = 'Un groupe du m&ecirc;me nom existe d&eacute;j&agrave;';
 $lang['editgroup'] = '&Eacute;diter le groupe';
-$lang['submit'] = 'Envoyer';
+$lang['submit'] = 'Valider';
 $lang['cancel'] = 'Annuler';
 $lang['delete'] = 'Supprimer';
 $lang['confirm_editgroup'] = '&Ecirc;tes-vous s&ucirc;r(e) que cette propri&eacute;t&eacute; est correcte pour ce groupe&nbsp;?\nD&eacute;sactiver une propri&eacute;t&eacute; n&#039;effacera pas les entr&eacute;es dans la table des propri&eacute;t&eacute;s pour ce groupe/utilisateur. Tout au plus, les propri&eacute;t&eacute;s ne seront pas disponibles.';
@@ -629,4 +659,9 @@ $lang['help'] = '<h3>Que fait ce module ?</h3>
  <li><a href="http://www.matterhornmarketing.com">Matterhorn Marketing</a></li>
  <li><a href="http://www.bpti.eu">Balkan Institute of Advanced Technology</a></li>
 </ul>';
+$lang['qca'] = 'P0-167338602-1304155985682';
+$lang['utma'] = '156861353.345184427.1311352692.1313690169.1313783424.6';
+$lang['utmc'] = '156861353';
+$lang['utmz'] = '156861353.1313783424.6.6.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=cmsms';
+$lang['utmb'] = '156861353.1.10.1313783424';
 ?>

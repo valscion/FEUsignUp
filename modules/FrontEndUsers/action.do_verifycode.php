@@ -72,7 +72,7 @@ if( !isset($gCms) ) exit;
     if( $result[0] == FALSE )
       {
 	$params['error'] = 1;
-	$params['message'] = $result[1];
+	$params['message'] = $this->Lang('error_tempcodenotfound');
 	$this->myRedirect( $id, 'verifycode', $returnid, $params );
 	return;
       }

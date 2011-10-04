@@ -140,7 +140,7 @@ class feu_user_query
 
 	case feu_user_query_opt::MATCH_PASSWORD:
 	  $where[]  = 'u.password = ?';
-	  $qparms[] = md5($opt->get_expr());
+	  $qparms[] = $opt->get_expr();
 	  break;
 	  
 	case feu_user_query_opt::MATCH_EXPIRES_LT:

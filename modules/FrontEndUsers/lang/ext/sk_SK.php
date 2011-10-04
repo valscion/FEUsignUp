@@ -1,4 +1,5 @@
 <?php
+$lang['postuninstall'] = 'All data associated with the FrontEndUsers module has been deleted';
 $lang['info_ecomm_paidregistration'] = 'If enabled, this module will listen to events from the Ecommerce suite.  The following settings only have effect if this setting is enabled.';
 $lang['prompt_ecomm_paidregistration'] = 'Listen to Order Events';
 $lang['info_paidreg_settings'] = 'The following settings only apply if using self registration and allowing for paid registration';
@@ -294,7 +295,7 @@ $lang['error_problemseettinginfo'] = 'Probl&eacute;m s nastaven&iacute;m už&iac
 $lang['error_settingproperty'] = 'Probl&eacute;m s nastaven&iacute;m vlasnosti';
 $lang['user_added'] = 'Už&iacute;vateľ pridal %s = %s';
 $lang['user_deleted'] = 'Už&iacute;vateľ vymazal  uid=%s';
-$lang['propertyfilter'] = 'Vlasnosť';
+$lang['propertyfilter'] = 'Vlastnosť';
 $lang['valueregex'] = 'Hodnota (regul&aacute;rny v&yacute;raz)';
 $lang['warning_effectsfieldlength'] = 'Varovanie: Tieto polia ovplynia veľkosť vstupn&yacute;ch pol&iacute; formul&aacute;rov. Zn&iacute;žen&iacute;m tohto č&iacute;sla na existuj&uacute;cej str&aacute;nke nedoporučujeme.';
 $lang['confirm_submitprefs'] = 'Ste si ist&yacute;, že chcete zmeniť nastavenia modulu?';
@@ -346,7 +347,7 @@ $lang['error_invalidcode'] = 'Vložen&yacute; bol nespr&aacute;vny k&oacute;d, s
 $lang['error_tempcodenotfound'] = 'Dočasn&yacute; k&oacute;d pre va&scaron;e už&iacute;vateľsk&eacute; meno nebolo n&aacute;jden&eacute; v datab&aacute;ze';
 $lang['forgotpassword_verifytemplate'] = '&Scaron;abl&oacute;na formul&aacute;ra pre verifik&aacute;ciu';
 $lang['forgotpassword_emailtemplate'] = '&Scaron;abl&oacute;na formul&aacute;ra pre zabudnut&eacute; heslo';
-$lang['error_resetalreadysent'] = 'Vy alebo niekto in&yacute; požiadal o resetovanie hesla pre tento &uacute;čet. Ďal&scaron;ie in&scaron;trukcie n&aacute;jdete vo svojej e-mailovej schr&aacute;nky.';
+$lang['error_resetalreadysent'] = 'Ďal&scaron;ie in&scaron;trukcie n&aacute;jdete vo svojej e-mailovej schr&aacute;nky.';
 $lang['error_dberror'] = 'Problem s datab&aacute;zov';
 $lang['message_forgotpwemail'] = 'T&uacute;to spr&aacute;vu ste dostali, pretože niekto požiadal o obnovenie zabudnut&eacute;ho hesla k v&aacute;&scaron;mu &uacute;čtu na na&scaron;ej str&aacute;nke. Pokiaľ je to tak, postupujte podľa niž&scaron;ie uveden&yacute;ch in&scaron;trukci&iacute;. Pokiaľ netu&scaron;&iacute;te o čo ide, tak tento e-mail pros&iacute;m ignorujte.';
 $lang['prompt_code'] = 'K&oacute;d';
@@ -576,9 +577,9 @@ of the license for the full disclaimer.</p>
 <h3>Copyright and License</h3>
 <p>Copyright &copy; 2005, Robert Campbel <a href="mailto:calguy1000@hotmail.com"><calguy1000@hotmail.com></a>. All Rights Are Reserved.</p>
 <p>This module has been released under the <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU Public License</a>. You must agree to this license before using the module.</p>';
-$lang['utma'] = '156861353.1064856217.1281704360.1292861162.1292942715.11';
-$lang['utmz'] = '156861353.1292942715.11.12.utmccn=(referral)|utmcsr=dev.cmsmadesimple.org|utmcct=/|utmcmd=referral';
-$lang['qca'] = 'P0-799401210-1281704360909';
+$lang['qca'] = 'P0-1907880641-1299582843050';
+$lang['utma'] = '156861353.736973811.1299582844.1301839304.1301920797.12';
+$lang['utmz'] = '156861353.1301839304.11.10.utmccn=(referral)|utmcsr=dev.cmsmadesimple.org|utmcct=/|utmcmd=referral';
 $lang['utmb'] = '156861353';
 $lang['utmc'] = '156861353';
 ?>

@@ -1,4 +1,5 @@
 <?php
+$lang['postuninstall'] = 'Tutti i dati associati con il modulo FrontEndUsers saranno cancellati';
 $lang['info_ecomm_paidregistration'] = 'Se abilitato, questo modulo aspetta per eventi dalla suite Ecommerce.  La seguente configurazione ha effetto solo se questo &egrave; abilitato.';
 $lang['prompt_ecomm_paidregistration'] = 'Pronto per eventi di Order';
 $lang['info_paidreg_settings'] = 'La configurazione seguente si applica solo con l&#039;uso di Self Registration e permettendo la registrazione a pagamento';
@@ -17,8 +18,8 @@ $lang['info_auto_create_unknown'] = 'Se un utente &egrave; authenticato da un mo
 $lang['prompt_auto_create_unknown'] = 'Automaticamente crea utenti Sconosciuti';
 $lang['display_settings'] = 'Configurazioni di visualizzazione';
 $lang['info_std_auth_settings'] = 'Le seguenti configurazioni sono solo applicabili con l&#039;uso di &quot;Autenticazioni interne&quot;.';
-$lang['info_support_lostun'] = 'Selecting No will disable the ability for a user to request lost login information, irrespective of other settings';
-$lang['info_support_lostpw'] = 'Selecting No will disable the ability for a user to a password reset, irrespective of other settings';
+$lang['info_support_lostun'] = 'Selezionando No disabiliter&agrave; l&#039;abilit&agrave; per uno user di richiedere le informazioni per la perdita del login, a prescindere da altre impostazioni';
+$lang['info_support_lostpw'] = 'Selezionando No disabiliter&agrave; l&#039;abilit&agrave; per uno user di reimpostare la password, a prescindere da altre impostazioni';
 $lang['prompt_support_lostun'] = 'Permette agli utenti di richiedere il loro username';
 $lang['prompt_support_lostpw'] = 'Permette agli utenti di richiedere un cambiamento di password';
 $lang['auth_settings'] = 'Configurazioni di autenticazione';
@@ -275,7 +276,7 @@ $lang['event_info_OnCreateUser'] = 'Un evento generato quando viene creato un nu
 $lang['event_info_OnUpdateUser'] = 'Un evento generato quando le informazioni utente sono aggiornate';
 $lang['event_info_OnDeleteUser'] = 'Un evento generato quando viene cancellato un account utente';
 $lang['event_info_OnCreateGroup'] = 'Un evento generato quando viene creato un nuovo gruppo';
-$lang['event_info_OnUpdateGroup'] = 'An event generated when a user group is updated';
+$lang['event_info_OnUpdateGroup'] = 'Un evento generato quando un gruppo &egrave; aggiornato';
 $lang['event_info_OnDeleteGroup'] = 'Un evento generato quando viene cancellato un gruppo';
 $lang['backend_group'] = 'Gruppo di Backend';
 $lang['info_star'] = '* Le seguenti macro possono essere usate in questo campi: {$username},{$group}. Quando usate la macro {$group}, il sistema sostituir&agrave; il nome del primo gruppo utenti a cui appartiene l&#039;utente e redirezioner&agrave; a quella pagina.';
@@ -642,8 +643,9 @@ Or read it <a href="http://www.gnu.org/licenses/licenses.html#GPL">online</a></p
  <li><a href="http://www.matterhornmarketing.com">Matterhorn Marketing</a></li>
  <li><a href="http://www.bpti.eu">Balkan Institute of Advanced Technology</a></li>
 </ul>';
-$lang['utma'] = '156861353.974349155.1299072468.1299072468.1299072468.1';
+$lang['utma'] = '156861353.974349155.1299072468.1302003201.1303465107.4';
+$lang['qca'] = 'P0-1868709163-1302003200778';
 $lang['utmb'] = '156861353';
 $lang['utmc'] = '156861353';
-$lang['utmz'] = '156861353.1299072468.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
+$lang['utmz'] = '156861353.1303465107.4.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)';
 ?>

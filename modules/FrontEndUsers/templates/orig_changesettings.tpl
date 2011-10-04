@@ -24,6 +24,6 @@
   </table>
   </center>
  {/if}
- {$hidden}{$hidden2}{$submit}{$cancel}
+ {$hidden}{$hidden2}{$submit}
 {$endform}
 <!-- change settings template -->

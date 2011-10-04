@@ -69,7 +69,7 @@ class feu_smarty
 	$users[] = array('id'=>$oneuser['id'],'username'=>$oneuser['username']);
       }
     global $gCms;
-    $smarty =& $gCms->GetSmarty();
+    $smarty = $gCms->GetSmarty();
     $smarty->assign($assign,$users);
     return;
   }

@@ -38,25 +38,25 @@
 
 class UserManipulator
 {
-  var $mod;
+  private $mod;
 
   //
   // Internals
   //
 
-  function UserManipulator( &$the_module )
+  public function __construct( &$the_module )
   {
     $this->mod =& $the_module;
   }
 
 
-  function &GetDb()
+  protected function &GetDb()
   {
     return $this->mod->GetDb();
   }
 
 
-  function &GetModule()
+  protected function &GetModule()
   {
     return $this->mod;
   }
@@ -66,7 +66,7 @@ class UserManipulator
   // ======================================================================
   //
 
-  function AddGroupPropertyRelation( $grpid, $propname, $sortkey, $lostun, $val )
+  public function AddGroupPropertyRelation( $grpid, $propname, $sortkey, $lostun, $val )
   {
     return array(FALSE,"Function not implemented");
   }
@@ -81,7 +81,7 @@ class UserManipulator
   //! \return An array, the first element is a boolean which indicates success or failure, the
   //!    second element (optional) contains an error message in the event of an error.
   //!
-  function AddPropertyDefn( $name, $prompt, $type, $length )
+  public function AddPropertyDefn( $name, $prompt, $type, $length )
   {
     return array(FALSE,"Not Implemented");
   }
@@ -96,7 +96,7 @@ class UserManipulator
   //!    (true on success, false on error).  The second element (optional) is an error string in the 
   //!    event of an error.
   //!
-  function AddGroup( $name, $description )
+  public function AddGroup( $name, $description )
   {
     return array(FALSE,"Function not defined");
   }
@@ -112,7 +112,7 @@ class UserManipulator
   //!    (true on success, false on error).  The second element (optional) is an error string in the 
   //!    event of an error, or the userid otherwise
   //!
-  function AddUser( $name, $password, $expires )
+  public function AddUser( $name, $password, $expires )
   {
     return array(FALSE,"Function not defined");
   }
@@ -124,13 +124,13 @@ class UserManipulator
   //!\param  gid  The group id for the new association
   //!\return true on success, false otherwise
   //!
-  function AssignUserToGroup( $uid, $gid )
+  public function AssignUserToGroup( $uid, $gid )
   {
     return false;
   }
 
   //! Check if the group specified has the required permission
-  function CheckGroupPermission( $gid, $perm )
+  public function CheckGroupPermission( $gid, $perm )
   {
     return false;
   }
@@ -141,29 +141,29 @@ class UserManipulator
   //!\params password The password to test
   //!\return true if passwords match, false otherwise.
   //!
-  function CheckPassword($username,$password) 
+  public function CheckPassword($username,$password) 
   {
     return false;
   }
 
   //! Check if the user has the specified permission
-  function CheckUserPermission( $perm )
+  public function CheckUserPermission( $perm )
   {
     return false;
   }
 
-  function CheckUserPermissionByUid( $uid, $perm )
+  public function CheckUserPermissionByUid( $uid, $perm )
   {
     return false;
   }
 
-  function CountTempCodeRecords()
+  public function CountTempCodeRecords()
   {
     return 0;
   }
 
   
-  function DeleteAllGroupPropertyRelations( $grpid )
+  public function DeleteAllGroupPropertyRelations( $grpid )
   {
     return array(FALSE,"Function not implemented");
   }
@@ -172,7 +172,7 @@ class UserManipulator
   //!
   //! \return true on success, false otherwise
   //!
-  function DeleteAllUserProperties() 
+  public function DeleteAllUserProperties() 
   {
     return false;
   }
@@ -182,7 +182,7 @@ class UserManipulator
   //! \param userid
   //! \return true on success, false otherwise
   //!
-  function DeleteAllUserPropertiesFull($userid) 
+  public function DeleteAllUserPropertiesFull($userid) 
   {
     return false;
   }
@@ -195,23 +195,23 @@ class UserManipulator
   //!    (true on success, false on error).  The second element (optional) is an error string in the 
   //!    event of an error.
   //!
-  function DeleteGroupFull( $id )
+  public function DeleteGroupFull( $id )
   {
     return array(FALSE,"Function not defined");
   }
 
-  function DeleteGroupPropertyRelation( $grpid, $propname )
+  public function DeleteGroupPropertyRelation( $grpid, $propname )
   {
     return array(FALSE,"Function not implemented");
   }
 
-  function DeletePropertyDefn( $name )
+  public function DeletePropertyDefn( $name )
   {
     return false;
   }
 
   //! Delete all property definitions (use with caution)
-  function DeletePropertyDefns()
+  public function DeletePropertyDefns()
   {
     return array(FALSE,"Not Implemented");
   }
@@ -220,7 +220,7 @@ class UserManipulator
   //! \note This is a deprecated function as it relies on the userid being set in the _GET
   //! variable.
   //!
-  function DeleteUser($id)  
+  public function DeleteUser($id)  
   {
     return false;
   }
@@ -234,7 +234,7 @@ class UserManipulator
   //!\return array, the first element of the array is a boolean indicating success or failure.
   //!   if the first element is false, then the second element will contain an error message.
   //!
-  function DeleteUserFull( $uid )
+  public function DeleteUserFull( $uid )
   {
     return array(FALSE,"No function defined");
   }
@@ -248,7 +248,7 @@ class UserManipulator
   //! \param all   Optionally delete all properties for this user  
   //! \returns true on success, false othwerisen
   //!
-  function DeleteUserProperty($title,$all=false) 
+  public function DeleteUserProperty($title,$all=false) 
   {
     return false;
   }
@@ -260,19 +260,19 @@ class UserManipulator
   //!\param all (optional) Delete all properties for the specified userid.
   //!\return true on success, false otherwise.
   //!
-  function DeleteUserPropertyFull($title,$userid,$all=false) 
+  public function DeleteUserPropertyFull($title,$userid,$all=false) 
   {
     return false;
   }
 
   /* expirycode is a strtotime string */
-  function ExpireTempCodes($expirycode)
+  public function ExpireTempCodes($expirycode)
   {
     return false;
   }
 
   //! Expire any and all users that have been away for too long
-  function ExpireUsers() 
+  public function ExpireUsers() 
   {
     return false;
   }
@@ -281,7 +281,7 @@ class UserManipulator
   //!
   //!\return Email address, or false
   //!
-  function GetEmail($userid) 
+  public function GetEmail($userid) 
   {
     return false;
   }
@@ -290,7 +290,7 @@ class UserManipulator
   //!
   //!\ return username, or false
   //!
-  function GenerateRandomUsername( $prefix = 'user' )
+  public function GenerateRandomUsername( $prefix = 'user' )
   {
     return false;
   }
@@ -299,7 +299,7 @@ class UserManipulator
   //!
   //! \return groupid or false
   //!
-  function GetGroupID($groupname)
+  public function GetGroupID($groupname)
   {
     return false;
   }
@@ -316,7 +316,7 @@ class UserManipulator
   //! \param associative array, or array with first element of false, second element contains error message
   //! \return an associative array with group info, or false
   //!
-  function GetGroupInfo( $gid )
+  public function GetGroupInfo( $gid )
   {
     return false;
   }
@@ -325,7 +325,7 @@ class UserManipulator
   //!
   //! \return an associative array containing group names as keys, and id's as values
   //!
-  function GetGroupList()
+  public function GetGroupList()
   {
     return array();
   }
@@ -337,7 +337,7 @@ class UserManipulator
   //!
   //! \returns an array of groupinfo associations
   //!
-  function GetGroupListFull()
+  public function GetGroupListFull()
   {
     return array();
   }
@@ -346,7 +346,7 @@ class UserManipulator
   //!
   //! \return group name, or false
   //!
-  function GetGroupName($groupid) 
+  public function GetGroupName($groupid) 
   {
     return false;
   }
@@ -355,12 +355,12 @@ class UserManipulator
   //!
   //! \return group description, or false
   //!
-  function GetGroupDesc($groupid)
+  public function GetGroupDesc($groupid)
   {
     return false;
   }
 
-  function GetGroupPropertyRelations( $grpid )
+  public function GetGroupPropertyRelations( $grpid )
   {
     return array(FALSE,"Function not implemented");
   }
@@ -372,7 +372,7 @@ class UserManipulator
   //!
   //! \return a comma delimited list of group names, or "none"
   //!
-  function GetMemberGroups($userid)
+  public function GetMemberGroups($userid)
   {
     return false;
   }
@@ -385,24 +385,24 @@ class UserManipulator
   //! \param userid The userid to test
   //! \return false on error, otherwise, an array of groupinfo records.
   //!
-  function GetMemberGroupsArray($userid)
+  public function GetMemberGroupsArray($userid)
   {
     return false;
   }
 
   //! Get a single property definition by name
-  function GetPropertyDefn( $name )
+  public function GetPropertyDefn( $name )
   {
     return FALSE;
   }
 
   //! Get an array of property definitions
-  function GetPropertyDefns()
+  public function GetPropertyDefns()
   {
     return array(FALSE,"Not Implemented");
   }
 
-  function GetPropertyGroupRelations( $title )
+  public function GetPropertyGroupRelations( $title )
   {
     return array(FALSE,"Function not implemented");
   }
@@ -411,7 +411,7 @@ class UserManipulator
   //!
   //! \return UserID, or false
   //!
-  function GetUserID($username) 
+  public function GetUserID($username) 
   {
     return false;
   }
@@ -431,7 +431,7 @@ class UserManipulator
   //! \return an array, the first element contains return status (true/false), the second element
   //!    is either an array containing the details above, or an error message.
   //!
-  function GetUserInfo( $uid )
+  public function GetUserInfo( $uid )
   {
     return array(FALSE,"Function not defined");
   }
@@ -440,7 +440,7 @@ class UserManipulator
   //!
   //!\return The matching username, or false
   //!
-  function GetUserName($userid) 
+  public function GetUserName($userid) 
   {
     return false;
   }
@@ -453,7 +453,7 @@ class UserManipulator
   //! \param defaultvalue A value to return if the property does not exist for that user
   //! \return The property value, or false.
   //!
-  function GetUserProperty($title,$defaultvalue=false) 
+  public function GetUserProperty($title,$defaultvalue=false) 
   {
     return false;
   }
@@ -465,7 +465,7 @@ class UserManipulator
   //! \param defaultvalue The value to return if this property does not exist for this user
   //! \return The property value, or false.
   //!
-  function GetUserPropertyFull($title,$userid, $defaultvalue=false) 
+  public function GetUserPropertyFull($title,$userid, $defaultvalue=false) 
   {
     return false;
   }
@@ -479,7 +479,7 @@ class UserManipulator
   //! \return an array of user information (see GetUserInfo), or false
   //! \sa GetUserInfo
   //!
-  function GetFullUsersInGroup($groupid)
+  public function GetFullUsersInGroup($groupid)
   {
     return false;
   }
@@ -493,7 +493,7 @@ class UserManipulator
   //! \return an array of user information (see GetUserInfo), or false
   //! \sa GetUserInfo
   //!
-  function GetUsersInGroup( $groupid = '' )
+  public function GetUsersInGroup( $groupid = '' )
   {
     return false;
   }
@@ -510,12 +510,12 @@ class UserManipulator
   //!      title  = The property title
   //!      data   = The property data
   //!
-  function GetUserProperties($uid)
+  public function GetUserProperties($uid)
   {
     return false;
   }
 
-  function GetUserTempCode( $uid )
+  public function GetUserTempCode( $uid )
   {
     return array(FALSE,"Function not implemented");
   }
@@ -525,27 +525,27 @@ class UserManipulator
   //! \param gid The desired group id
   //! \return boolean
    //!
-  function GroupExistsByID( $gid )
+  public function GroupExistsByID( $gid )
   {
     return false;
   }
 
-  //! A function that tests wether a group with the name exists
+  //! A public function that tests wether a group with the name exists
   //!
   //! \param gid The desired group name
   //! \return boolean
    //!
-  function GroupExistsByName( $name )
+  public function GroupExistsByName( $name )
   {
     return false;
   }
 
-  function GetExpiryDate( $uid )
+  public function GetExpiryDate( $uid )
   {
     return false;
   }
 
-  function IsAccountExpired( $uid )
+  public function IsAccountExpired( $uid )
   {
     return true;
   }
@@ -560,7 +560,7 @@ class UserManipulator
   //! \return an array, the first element of the array indicuates success or failure
   //!    the second element is the error message, if an error occurred
   //!
-  function IsValidEmailAddress( $email )
+  public function IsValidEmailAddress( $email )
   {
     return array(FALSE,"Function not defined");
   }
@@ -570,7 +570,7 @@ class UserManipulator
   //!\param  password The password to test.
   //!\return true if the password is valid, false otherwise
   //!
-  function IsValidPassword( $password )
+  public function IsValidPassword( $password )
   {
     return false;
   }
@@ -580,13 +580,13 @@ class UserManipulator
   //!\param username The username to be tested
   //!\return boolean true/false
   //!
-  function IsValidUsername( $username )
+  public function IsValidUsername( $username )
   {
     return false;
   }
 
   //! Tests wether the current user is logged in or not.
-  function LoggedIn() 
+  public function LoggedIn() 
   {
     if ($this->LoggedInId()==false) return false; else return true;
   }
@@ -596,13 +596,13 @@ class UserManipulator
   //! \returns a string representing the email address of the currently logged in user
   //!   if noone is logged in, then an empty string is returned
   //!
-  function LoggedInEmail() 
+  public function LoggedInEmail() 
   {
     return "";
   }
 
   //! Return the userid of the currently logged in user
-  function LoggedInId() 
+  public function LoggedInId() 
   {
     return false;
   }
@@ -612,12 +612,12 @@ class UserManipulator
   //! \returns a string representing the username of the currently logged in user
   //!   if noone is logged in, then an empty string is returned
   //!
-  function LoggedInName() 
+  public function LoggedInName() 
   {
     return false;
   }
 
-  function Login( $username, $password, $groups = '', $md5pw = false,
+  public function Login( $username, $password, $groups = '', $md5pw = false,
 		  $force_logout = false)
   {
     return array(FALSE,"Function not implemented");
@@ -625,7 +625,7 @@ class UserManipulator
 
 
   //! Logout the current user
-  function Logout() 
+  public function Logout() 
   {
     return false;
   }
@@ -636,7 +636,7 @@ class UserManipulator
   //! \param groupid The groupid to test
   //! \return true if an association exists, false otherwise
   //!
-  function MemberOfGroup($userid,$groupid) 
+  public function MemberOfGroup($userid,$groupid) 
   {
     return false;
   }
@@ -650,12 +650,12 @@ class UserManipulator
   //!\return array, the first element contains exit status (boolean), the second element
   //!   (optional) returns an error message, if an error occurred.
   //!
-  function RemoveUserFromGroup( $uid, $gid )
+  public function RemoveUserFromGroup( $uid, $gid )
   {
     return array(FALSE,"Function not defined");
   }
 
-  function RemoveUserTempCode( $uid )
+  public function RemoveUserTempCode( $uid )
   {
     return false;
   }
@@ -668,12 +668,12 @@ class UserManipulator
   //!\return An array, the first element is a boolean which indicates success or failure, the
   //!  second element (optional) contains an error message in the event of an error.
   //!
-  function SetGroup( $gid, $name, $desc )
+  public function SetGroup( $gid, $name, $desc )
   {
     return array(FALSE,"Function not defined");
   }
 
-  function SetPropertyDefn( $name, $newname, $prompt, $length, $type )
+  public function SetPropertyDefn( $name, $newname, $prompt, $length, $type )
   {
     return false;
   }
@@ -689,7 +689,7 @@ class UserManipulator
   //! \return An array, the first element is a boolean which indicates success or failure, the
   //!    second element (optional) contains an error message in the event of an error.
   //!
-  function SetUser( $uid, $username, $password, $expires = false )
+  public function SetUser( $uid, $username, $password, $expires = false )
   {
     return array(FALSE,"Function not defined");
   }
@@ -703,12 +703,12 @@ class UserManipulator
   //!\param grpids An array of user ids to associate with
   //!\returns true on success, false otherwise
   //!
-  function SetUserGroups( $uid, $grpids )
+  public function SetUserGroups( $uid, $grpids )
   {
     return false;
   }
 
-  function SetUserPassword( $uid, $password )
+  public function SetUserPassword( $uid, $password )
   {
     return array(FALSE,"Function not defined");
   }
@@ -722,7 +722,7 @@ class UserManipulator
   //! \param props An array of Key=Value strings consisting of the user properties.
   //! \return true on success, false otherwise
   //!
-  function SetUserProperties( $uid, $props )  
+  public function SetUserProperties( $uid, $props )  
   {
     return false;
   }
@@ -735,7 +735,7 @@ class UserManipulator
   //! \param data  The property value
   //! \returns true on success, false otherwise
   //!
-  function SetUserProperty($title,$data) 
+  public function SetUserProperty($title,$data) 
   {
     return false;
   }
@@ -749,12 +749,12 @@ class UserManipulator
   //! \param data  The property value
   //! \param userid The desired user id
   //!
-  function SetUserPropertyFull($title,$data,$userid) 
+  public function SetUserPropertyFull($title,$data,$userid) 
   {
     return false;
   }
 
-  function SetUserTempCode( $uid, $code )
+  public function SetUserTempCode( $uid, $code )
   {
     return false;
   }
@@ -766,7 +766,7 @@ class UserManipulator
   //! \param uid The userid to test
   //! \return boolean
   //!
-  function UserExistsByID( $uid )
+  public function UserExistsByID( $uid )
   {
     return false;
   }

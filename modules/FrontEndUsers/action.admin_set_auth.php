@@ -39,6 +39,21 @@ if( !isset($gCms) ) return;
 if( !$this->CheckPermission('Modify Site Preferences') ) return;
 $this->SetCurrentTab('auth');
 
+$query = 'SELECT count(id) FROM '.cms_db_prefix().'module_feusers_users';
+$nusers = $db->GetOne($query);
+if( $nusers > 0 && isset($params['pwsalt']) )
+  {
+    $oldsalt = $this->GetPreference('pwsalt');
+    if( $oldsalt != $params['pwsalt'] )
+      {
+	$this->SetError($this->Lang('error_adjustsalt'));
+	$this->RedirectToTab($id);
+	return;
+      }
+  }
+
+$this->SetPreference('pwsalt',trim($params['pwsalt']));
+
 $this->SetPreference('support_lostun',(int)$params['support_lostun']);
 $this->SetPreference('support_lostpw',(int)$params['support_lostpw']);
 $this->SetPreference('passwordfldlength',(int)$params['pwfldlen']);

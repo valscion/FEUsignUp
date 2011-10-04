@@ -50,8 +50,31 @@
 <legend>{$mod->Lang('session_settings')}:</legend>
 	<div class="pageoverflow">
 		<p class="pagetext">{$prompt_sessiontimeout}:</p>
-		<p class="pageinput">{$input_sessiontimeout}</p>
+		<p class="pageinput">{$input_sessiontimeout}
+                  <br/>{$mod->Lang('info_sessiontimeout')}
+                </p>
 	</div>
+	<div class="pageoverflow">
+		<p class="pagetext">{$mod->Lang('prompt_expireusers_interval')}:</p>
+		<p class="pageinput">
+		  <input type="text" name="{$actionid}expireusers_interval" value="{$expireusers_interval}" size="4" maxlength="4"/>
+		  <br/>{$mod->Lang('info_expireusers_interval')}
+		</p>
+	</div>
+        <div class="pageoverflow">
+   		<p class="pagetext">{$mod->Lang('prompt_forcelogout_times')}:</p>
+   		<p class="pageinput">
+                  <input type="text" name="{$actionid}forcelogout_times" size="40" maxlength="255" value="{$forcelogout_times}"/>
+		  <br/>{$mod->Lang('info_forcelogout_times')}
+                </p>
+        </div>
+        <div class="pageoverflow">
+   		<p class="pagetext">{$mod->Lang('prompt_forcelogout_sessionage')}:</p>
+   		<p class="pageinput">
+                  <input type="text" name="{$actionid}forcelogout_sessionage" size="5" maxlength="5" value="{$forcelogout_sessionage}"/>
+		  <br/>{$mod->Lang('info_forcelogout_sessionage')}
+                </p>
+        </div>
 </fieldset>
 
 <fieldset>

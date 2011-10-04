@@ -35,7 +35,7 @@
 #
 #-------------------------------------------------------------------------
 #END_LICENSE
-
+$this->SetCurrentTab('admin');
 
 // A function to read a line from the file
 // trim any newline or whitespace characters from it
@@ -92,8 +92,15 @@ function _resultout($prompt,$value)
 // 
 if( !isset( $params['input_importdestgroup'] ) )
   {
-    $this->RedirectToTab($id,'admin',array('error'=>$this->Lang('error_insufficientparams')));
+    $this->SetError($this->Lang('error_insufficientparams'));
+    $this->RedirectToTab($id);
     return;
+  }
+
+$ignore_userid = 0;
+if( isset($params['import_ignore_userid']) )
+  {
+    $ignore_userid = (int)$params['import_ignore_userid'];
   }
 
 $key = $id.'input_importusersfile';
@@ -101,8 +108,8 @@ if( (!isset( $_FILES[$key] ))
     || $_FILES[$key]['size'] <= 0 
     || $_FILES[$key]['error'] != 0 )
   {
-    $this->RedirectToTab($id,'admin',
-			 array('error'=>$this->Lang('error_missing_upload')));
+    $this->SetError($this->Lang('error_missing_upload'));
+    $this->RedirectToTab($id);
     return;
   }
 
@@ -111,6 +118,7 @@ if( !feu_utils::using_std_consumer() )
   {
     $this->SetError($this->Lang('error_notsupported'));
     $this->RedirectToTab($id,'admin');
+    return;
   }
 
 $groups = array();
@@ -118,16 +126,16 @@ $grouppropmap = $this->GetGroupPropertyRelations( $params['input_importdestgroup
 $groupinfo = $this->GetGroupInfo( $params['input_importdestgroup'] );	
 if( $grouppropmap[0] == FALSE )
 {
-		$this->RedirectToTab($id,'admin',
-				     array('error'=>$this->Lang('error_nogroupproperties')));
-		return;
+  $this->SetError($this->Lang('errornogroupproperties'));
+  $this->RedirectToTab($id);
+  return;
 }
 $propdefns = $this->GetPropertyDefns();
 if( !$propdefns )
 {
-  $this->RedirectToTab($id,'admin',
-		array('error'=>$this->Lang('error_propertydefns')));
-	return;
+  $this->SetError($this->Lang('error_propertydefns'));
+  $this->RedirectToTab($id);
+  return;
 }
 $groups[ $groupinfo['groupname'] ] =  $grouppropmap;
 $default_group = $groupinfo['groupname'];
@@ -141,44 +149,42 @@ $imageDir .= $this->GetPreference('image_destination_path', 'feusers');
 $handle = fopen($_FILES[$key]['tmp_name'], "r");
 if( !$handle )
 {
-	$this->RedirectToTab($id,'admin',
-			     array('error'=>$this->Lang('error_couldnotopenfile')));
-	return;
+  $this->SetError($this->Lang('error_couldnotopenfile'));
+  $this->RedirectToTab($id);
+  return;
 }
 
 //
 // 3.  Read the first line, validate it's syntax, and build a field map
 //
 $firstline = _getline($handle);
-if( substr($firstline,'##') != 0 )
+if( !startswith($firstline,'##') )
 {
-	# the top line doesn't have two pound chars
-	$this->RedirectToTab($id,'admin',
-			     array('error'=>$this->Lang('error_importfileformat')));
-	return;
+  $this->SetError($this->Lang('error_importfileformat'));
+  $this->RedirectToTab($id);
+  return;
 }
+
 $tmpmap = cge_array::smart_explode($firstline);
 if( count($tmpmap) < 3 )
 {
-	# insufficient fields
-	$this->RedirectToTab($id,'admin',
-			     array('error'=>$this->Lang('error_importfileformat')));
-	return;
+  $this->SetError($this->Lang('error_importfileformat'));
+  $this->RedirectToTab($id);
+  return;
 }
 $fieldmap = array();
 $i=0;
 foreach( $tmpmap as $tmp )
 {
-	  if( isset($fieldmap[$tmp]) )
-	{
-	  # duplicate field reference
-	  die('error 3');
-	  $this->RedirectToTab($id,'admin',
-			       array('error'=>$this->Lang('error_importfileformat')));
-	  return;
-	}
-$fieldmap[ trim($tmp,'\"#') ] = $i;
-$i++;
+  if( isset($fieldmap[$tmp]) )
+    {
+      // duplicate field reference
+      $this->SetError($this->Lang('error_importfileformat'));
+      $this->RedirectToTab($id);
+      return;
+    }
+  $fieldmap[ trim($tmp,'\"#') ] = $i;
+ $i++;
 }
 
 
@@ -190,6 +196,7 @@ $i++;
 // 4.1 Check for standard fields
 $have_username = FALSE;
 $have_password = FALSE;
+$have_passhash = FALSE;
 $have_expires  = FALSE;
 $have_groups  = FALSE;
 $have_userid  = FALSE;
@@ -205,6 +212,12 @@ foreach( $fieldmap as $onefieldname => $index )
 	if( $onefieldname == 'password' )
 	{
 		$have_password = TRUE;
+		continue;
+	}
+
+	if( $onefieldname == 'passwordhash' )
+	{
+		$have_passhash = TRUE;
 		continue;
 	}
 
@@ -323,12 +336,18 @@ while( !feof( $handle ) )
 	$userid = '';
 	$username = trim($fields[$fieldmap['username']],'\"');
 	$password = 'changeme';               // todo, customizable
+	$passhash = ''; 
 	$expires  = strtotime("+10 years");   // todo, customizable
 	if( $have_password )
 	{
 		// expect plaintext password
 		$password = trim($fields[$fieldmap['password']],'\"');
 	}
+	else if( $have_passhash )
+	{
+	  $passhash = trim($fields[$fieldmap['passwordhash']],'\"');
+	}
+
 	if( $have_expires )
 	{
 		// expect a string time
@@ -508,12 +527,27 @@ while( !feof( $handle ) )
 	//     and do auditing
 	if( $importerror == FALSE )
 	{
-		if ( $have_userid && $userid != "")
+		if ( $have_userid && $userid != "" && !$ignore_userid )
 		{
-			$result = $this->SetUser($userid, $username, $password, $expires );
+		  if( $have_password )
+		    {
+		      $result = $this->SetUser($userid, $username, $password, $expires );
+		    }
+		  else if( $have_passhash )
+		    {
+		      $result = $this->SetUser($userid, $username, $passhash, $expires, false );
+		    }
+
 		}else
 		{
-			$result = $this->AddUser( $username, $password, $expires );
+		  if( $have_password )
+		    {
+		      $result = $this->AddUser( $username, $password, $expires );
+		    }
+		  else if( $have_passhash )
+		    {
+		      $result = $this->AddUser( $username, $passhash, $expires, false );
+		    }
 		}
 		if( $result[0] === FALSE )
 		{

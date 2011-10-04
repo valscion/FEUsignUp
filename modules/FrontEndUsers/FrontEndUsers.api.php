@@ -44,6 +44,12 @@ class FrontEndUsersManipulator extends UserManipulator
   private $_cached_uid_map;
 	private $_encryption_key;
 
+	private function get_salt()
+  {
+		$mod = $this->GetModule();
+		return $mod->GetPreference('pwsalt','');
+  }
+
 	function SetEncryptionKey($uid = -1,$force = FALSE )
 	{
 		global $CMS_ADMIN_PAGE;
@@ -52,7 +58,7 @@ class FrontEndUsersManipulator extends UserManipulator
 		if( $CMS_ADMIN_PAGE )
 			{
 				// hack
-				$module =& $this->GetModule();
+				$module = $this->GetModule();
 				if( !$module->_HasSufficientPermissions('editusers') )
 					{
 						return FALSE;
@@ -65,7 +71,7 @@ class FrontEndUsersManipulator extends UserManipulator
 						return FALSE;
 					}
 
-				$key = md5($gCms->config['root_url'].$uid.$res[1]['createdate']);
+				$key = md5($gCms->config['root_url'].$uid.$res[1]['createdate'].$this->get_salt());
 				$this->_encryption_key = $key;
 
 				return TRUE;
@@ -84,7 +90,7 @@ class FrontEndUsersManipulator extends UserManipulator
 						return FALSE;
 					}
 
-				$key = md5($gCms->config['root_url'].$uid.$res[1]['createdate']);
+				$key = md5($gCms->config['root_url'].$uid.$res[1]['createdate'].$this->get_salt());
 				$this->_encryption_key = $key;
 				return TRUE;
 			}
@@ -138,7 +144,7 @@ class FrontEndUsersManipulator extends UserManipulator
     $dbresult = $db->Execute( $q, array( $uid ));
     if( $dbresult == FALSE || $dbresult->RecordCount() == 0 )
       {
-	return array(FALSE,$db->ErrorMsg());
+				return array(FALSE,$db->ErrorMsg());
       }
     $row = $dbresult->FetchRow();
     return array(TRUE,$row);
@@ -429,7 +435,7 @@ class FrontEndUsersManipulator extends UserManipulator
 	{
 		srand(time());
     $db = $this->GetDb();
-		$mod =& $this->GetModule();
+		$mod = $this->GetModule();
 
 		$num = rand(100,99999);
 		$count = 0;
@@ -483,6 +489,7 @@ class FrontEndUsersManipulator extends UserManipulator
 		if( !isset($this->_cached_propdefns[$name])) return FALSE;
 		return $this->_cached_propdefns[$name];
   }
+
 
   function GetPropertyDefns()
   {
@@ -564,7 +571,7 @@ class FrontEndUsersManipulator extends UserManipulator
 
       }
 
-    $ip = getenv("REMOTE_ADDR");
+    $ip = cge_utils::get_real_ip();
     if( !$error )
       {
 				$q = "INSERT INTO ".cms_db_prefix()."module_feusers_loggedin (sessionid,lastused,userid)
@@ -584,7 +591,7 @@ class FrontEndUsersManipulator extends UserManipulator
 					}
 				
 				// set the cookie
-				$module =& $this->GetModule();
+				$module = $this->GetModule();
 				if( $module->GetPreference('cookie_keepalive',0) ) {
 					$expirytime = $module->GetPreference('user_session_expires');
 					@setcookie('feu_sessionid',session_id(),time()+$expirytime,"/");
@@ -837,6 +844,23 @@ class FrontEndUsersManipulator extends UserManipulator
 	}
 
 
+	public function GetLoggedInUsers($not_active_since = '')
+	{
+		$db = $this->GetDb();
+		
+		$q = 'SELECT userid FROM '.cms_db_prefix().'module_feusers_loggedin';
+		$qparms = array();
+		if( $not_active_since )
+			{
+				$q .= " WHERE lastused < ?";
+				$qparms[] = $not_active_since;
+			}
+		
+		$res = $db->GetCol($q,$qparms);
+		return $res;
+	}
+
+
   // userid api function
   // returns an array or false
   function CountUsersInGroup( $groupid )
@@ -885,13 +909,12 @@ class FrontEndUsersManipulator extends UserManipulator
            WHERE userid IN ('.implode(',',$uids).') ORDER BY userid,title';
 		$propdata = $db->GetArray($q);
 
-		$idx = 0;
 		for( $u = 0; $u < count($data); $u++ )
 			{
 				$tmp = array();
-				for(; $idx < count($propdata); $idx++ )
+				for($idx = 0; $idx < count($propdata); $idx++ )
 					{
-						if( $propdata[$idx]['userid'] != $data[$u]['id'] ) break;
+						if( $propdata[$idx]['userid'] != $data[$u]['id'] ) continue; 
 						$tmp[$propdata[$idx]['title']] = $propdata[$idx]['data'];
 					}
 				if( count($tmp) )
@@ -971,40 +994,40 @@ class FrontEndUsersManipulator extends UserManipulator
 			$parms[] = $propregex;
 		}
 	}
-    if( $userregex != '' )
-      {
-				$where[] = " username REGEXP ?";
-				$parms[] = $userregex;
-      }
-    if( $sort != '' )
-      {
-				$ordersort .= " ORDER BY $sort";
-      }
-    if( $limit != '' && $limit != '0' )
-      {
-				$thelimit = (int)$limit;
-      }
+	if( $userregex != '' )
+		{
+			$where[] = " username REGEXP ?";
+			$parms[] = $userregex;
+		}
+	if( $sort != '' )
+		{
+			$ordersort .= " ORDER BY $sort";
+		}
+	if( $limit != '' && $limit != '0' )
+		{
+			$thelimit = (int)$limit;
+		}
 
-    // put the query together
-    if( count($where ) )
-      {
-				$q .= " WHERE " . implode(" AND ",$where);
-				$qc .= " WHERE " . implode(" AND ",$where);
-      }
-		if( count($group) )
-			{
-				$q .= " GROUP BY ". implode(" , ",$group);
-				$qc .= " GROUP BY ". implode(" , ",$group);
-			}
-    $q .= $ordersort;
-    $dbresult = $db->SelectLimit( $q, $thelimit, $start_record, $parms );
-    if( !$dbresult )
-      {
-				return false;
-      }
-
-		$result = $dbresult->GetArray();
-    return $result;
+	// put the query together
+	if( count($where ) )
+		{
+			$q .= " WHERE " . implode(" AND ",$where);
+			$qc .= " WHERE " . implode(" AND ",$where);
+		}
+	if( count($group) )
+		{
+			$q .= " GROUP BY ". implode(" , ",$group);
+			$qc .= " GROUP BY ". implode(" , ",$group);
+		}
+	$q .= $ordersort;
+	$dbresult = $db->SelectLimit( $q, $thelimit, $start_record, $parms );
+	if( !$dbresult )
+		{
+			return false;
+		}
+	
+	$result = $dbresult->GetArray();
+	return $result;
   }
 
 
@@ -1035,7 +1058,7 @@ class FrontEndUsersManipulator extends UserManipulator
 
   function GetEmail($uid)
    {
-		 $module =& $this->GetModule();
+		 $module = $this->GetModule();
 		 $db = $this->GetDb();
 		 $result = false;
 		 
@@ -1059,7 +1082,7 @@ class FrontEndUsersManipulator extends UserManipulator
 	// todo: move this to main module.
   function IsValidEmailAddress( $email, $uid = -1, $check_existing = true )
   {
-    $module =& $this->GetModule();
+    $module = $this->GetModule();
     $result = array();
 		if( !is_email($email) )
 			//if( !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $email ) )
@@ -1069,7 +1092,6 @@ class FrontEndUsersManipulator extends UserManipulator
       	return $result;
       }
 
-    $module =& $this->GetModule();
 		$db = $this->GetDb();
 
 		if( $check_existing )
@@ -1124,7 +1146,7 @@ class FrontEndUsersManipulator extends UserManipulator
     // a username is valid, if it's length is
     // within certain ranges, and it contains
     // only alphanumerics
-    $module =& $this->GetModule();
+    $module = $this->GetModule();
     $minlen = $module->GetPreference('min_usernamelength', 4 );
     $maxlen = $module->GetPreference('max_usernamelength', 20 );
     if( strlen( $username ) < $minlen || strlen( $username ) > $maxlen )
@@ -1139,7 +1161,7 @@ class FrontEndUsersManipulator extends UserManipulator
             return false;
           }
       }
-    else if( !preg_match( '/^[a-zA-Z0-9_-]*$/', $username ) )
+    else if( !preg_match( '/^[a-zA-Z0-9_-\s\.]*$/', $username ) )
       {
   	    return false;
       }
@@ -1189,7 +1211,7 @@ class FrontEndUsersManipulator extends UserManipulator
     $eid = $this->GetGroupID( $name );
     if( $eid != false && $eid != $id )
       {
-	$mod =& $this->GetModule();
+	$mod = $this->GetModule();
 	return array(FALSE,$mod->Lang('error_groupname_exists'));
       }
     
@@ -1206,12 +1228,12 @@ class FrontEndUsersManipulator extends UserManipulator
 
   function SetUserPassword( $uid, $password )
   {
-		$mod =& $this->GetModule();
+		$mod = $this->GetModule();
 		if( !$uid ) return array(FALSE,$mod->Lang('error_invalidparams'));
     $db = $this->GetDb();
     $q = "UPDATE ".cms_db_prefix()."module_feusers_users
           SET password = ? WHERE id = ?";
-    $dbresult = $db->Execute( $q, array( md5($password), $uid ));
+    $dbresult = $db->Execute( $q, array( md5($password.$this->get_salt()), $uid ));
     if( !$dbresult )
       {
 				return array(FALSE,$db->ErrorMsg());
@@ -1226,20 +1248,19 @@ class FrontEndUsersManipulator extends UserManipulator
   {
 		if( !$uid ) return array(FALSE,"");
     $db = $this->GetDb();
+		$module = $this->GetModule();
     
     // make sure that this user exists
     $ret = $this->GetUserInfo( $uid );
     if( $ret[0] == FALSE )
     {
-    	$module =& $this->GetModule();
-        return array(FALSE, $module->Lang('error_usernotfound'));	
+			return array(FALSE, $module->Lang('error_usernotfound'));	
     }
 
     // make sure that this username is not taken by some other id
     $nuid = $this->GetUserID($username);
     if( $nuid != false && $nuid != $uid )
       {
-				$module =& $this->GetModule();
 				return array(FALSE, $module->Lang('error_usernametaken',$uid));
       }
 
@@ -1254,7 +1275,7 @@ class FrontEndUsersManipulator extends UserManipulator
 				$q .= ", password = ?";
 				if( $do_md5 )
 					{
-						$parms[] = md5($password);
+						$parms[] = md5($password.$this->get_salt());
 					}
 				else
 					{
@@ -1582,7 +1603,7 @@ class FrontEndUsersManipulator extends UserManipulator
 			}
 		else
 			{
-				$p=array($username,md5(trim($password)));
+				$p=array($username,md5(trim($password).$this->get_salt()));
 			}
 		if ($groups != '')
 			{			
@@ -1611,11 +1632,10 @@ class FrontEndUsersManipulator extends UserManipulator
 
 
   // userid api function
-  function Logout($uid = '') 
+  function Logout($uid = '',$message = 'logout') 
   {
-		global $gCms;
+		$gCms = cmsms();
 		$config = $gCms->GetConfig();
-		//if( !$uid ) return;
     $db = $this->GetDb();
 		$q = '';
 		$p = '';
@@ -1625,6 +1645,10 @@ class FrontEndUsersManipulator extends UserManipulator
 				if( !$uid ) return false;
 				$q="DELETE FROM ".cms_db_prefix()."module_feusers_loggedin WHERE sessionid=?";
 				$p=array(session_id());
+
+				// delete the cookie
+				@setcookie('feu_sessionid','',time()-60000,"/");
+				@setcookie('feu_uid','',time()-60000,"/");
 			}
 		else
 			{
@@ -1634,15 +1658,15 @@ class FrontEndUsersManipulator extends UserManipulator
 		
     $result=$db->Execute($q,$p);
 
-		// delete the cookie
-		@setcookie('feu_sessionid','',time()-60000,"/");
-		@setcookie('feu_uid','',time()-60000,"/");
-
     // and add history info
-    $ip = getenv("REMOTE_ADDR");
+    $ip = cge_utils::get_real_ip();
     $q = "INSERT INTO ".cms_db_prefix()."module_feusers_history VALUES (?,?,?,?,?)";
-    $db->Execute( $q, array( $uid, session_id(), 'logout',
+    $db->Execute( $q, array( $uid, session_id(), $message,
 			     trim($db->DBTimeStamp(time()),"'"),$ip ));
+
+		// send the event.
+    $module = $this->GetModule();
+		$module->SendEvent('OnLogout',array('id'=>$uid));
   }
 
 
@@ -1655,7 +1679,7 @@ class FrontEndUsersManipulator extends UserManipulator
     $p=array($uid);
     $result=$db->Execute($q,$p);
 
-    $ip = getenv("REMOTE_ADDR");
+    $ip = cge_utils::get_real_ip();
     $q = "INSERT INTO ".cms_db_prefix()."module_feusers_history VALUES (?,?,?,?,?)";
     $db->Execute( $q, array( $uid, session_id(), $eventmsg ,
 														 trim($db->DBTimeStamp(time()),"'"),$ip) );
@@ -1665,24 +1689,31 @@ class FrontEndUsersManipulator extends UserManipulator
   // userid api function
   function ExpireUsers() 
   {
-    $module =& $this->GetModule();
-    $expirytime = $module->GetPreference('user_session_expires');
-    $db = $this->GetDb();
-    $q="SELECT * FROM ".cms_db_prefix()."module_feusers_loggedin WHERE lastused<?";
-    $p=array(time()-$expirytime);
-    $dbresult = $db->Execute( $q, $p );
-    while( $dbresult && ($row = $dbresult->FetchRow()) )
-      {
-				$q2 = "INSERT INTO ".cms_db_prefix()."module_feusers_history
+    $module = $this->GetModule();
+		$expire_interval = $module->GetPreference('expireusers_interval');
+		$expire_lastrun = $module->GetPreference('expireusers_lastrun');
+		if( time() - $expire_lastrun >= $expire_interval )
+			{
+				$expirytime = $module->GetPreference('user_session_expires');
+				$db = $this->GetDb();
+				$q="SELECT * FROM ".cms_db_prefix()."module_feusers_loggedin WHERE lastused<?";
+				$p=array(time()-$expirytime);
+				$dbresult = $db->Execute( $q, $p );
+				while( $dbresult && ($row = $dbresult->FetchRow()) )
+					{
+						$q2 = "INSERT INTO ".cms_db_prefix()."module_feusers_history
                  (userid,sessionid,action,refdate)
                  VALUES (?,?,?,?)";
-				$db->Execute( $q2, array( $row['userid'], $row['sessionid'],'expire',
-																	trim($db->DbTimeStamp(time()),"'")));
-				$module->NotifyExpiredUser( $row['userid'] );
-      }
+						$db->Execute( $q2, array( $row['userid'], $row['sessionid'],'expire',
+																			trim($db->DbTimeStamp(time()),"'")));
+						$module->NotifyExpiredUser( $row['userid'] );
+					}
 
-    $q="DELETE FROM ".cms_db_prefix()."module_feusers_loggedin WHERE lastused<?";
-    $result=$db->Execute($q,$p);
+				$q="DELETE FROM ".cms_db_prefix()."module_feusers_loggedin WHERE lastused<?";
+				$result=$db->Execute($q,$p);
+
+				$module->SetPreference('expire_lastrun',time());
+			}
   }
 
 
@@ -1690,7 +1721,7 @@ class FrontEndUsersManipulator extends UserManipulator
   function LoggedInId() 
   {
     // if the user is authenticated using the auth module
-		$module =& $this->GetModule();
+		$module = $this->GetModule();
     $auth_consumer = feu_utils::get_auth_consumer();
 		if( $auth_consumer instanceof feu_std_consumer )
 			{
@@ -1785,7 +1816,7 @@ class FrontEndUsersManipulator extends UserManipulator
 
 	private function _attempt_login_with_cookie()
 	{
-		$module =& $this->GetModule();
+		$module = $this->GetModule();
     $config = cmsms()->GetConfig();
     if( $module->GetPreference('usecookiestoremember') &&
 				($module->GetPreference('cookiename') != '') )
@@ -1800,7 +1831,7 @@ class FrontEndUsersManipulator extends UserManipulator
 				$str = $_COOKIE[$cookiename];
 				$origstr = $str;
 				$str = base64_decode($str);
-				$key = 'FEU'.md5($config['root_path']).md5($cookiename);
+				$key = 'FEU'.md5($config['root_path']).md5($cookiename.$this->get_salt());
 				$str = $module->_decrypt($key,$str);
 				if( $str === FALSE )
 					{
@@ -1834,8 +1865,11 @@ class FrontEndUsersManipulator extends UserManipulator
 			}
 
     $db = $this->GetDb();
-		$module =& $this->GetModule();
+		$module = $this->GetModule();
 		$expirytime = $module->GetPreference('user_session_expires');
+		$expireusers_interval = $module->GetPreference('expireusers_interval');
+		$interval = min($expireusers_interval,$expirytime);
+
     $q="SELECT userid FROM ".cms_db_prefix()."module_feusers_loggedin WHERE sessionid=?";
     $p=array($sessionid);
     $result = $db->GetOne($q,$p);
@@ -1850,10 +1884,15 @@ class FrontEndUsersManipulator extends UserManipulator
 				$q = "UPDATE ".cms_db_prefix()."module_feusers_loggedin SET lastused = ? where sessionid = ?";
 				$db->Execute( $q, array( time(), $sessionid ) );
 
-				// testme
+				// refresh the cookie.
 				@setcookie('feu_sessionid',$sessionid,time()+$expirytime,"/");
 				@setcookie('feu_uid',$uid,time()+$expirytime,"/");
 				cge_tmpdata::set('feu_logginid',$retval);
+
+				// set some session data to save some db queries.
+
+				// and send an event.
+			  $module->SendEvent('OnRefreshUser',array('id'=>$retval));
 				return $retval;
 			} 
 		else 
@@ -1867,22 +1906,6 @@ class FrontEndUsersManipulator extends UserManipulator
 						// and start a new record, otherwise, ignore the cookie
 						$uid = $_COOKIE['feu_uid'];
 						$sessionid = $_COOKIE['feu_sessionid'];
-						
-						/*
-						 $q = "SELECT userid FROM ".cms_db_prefix()."module_feusers_loggedin
-						 WHERE sessionid = ?";
-						 $row = $db->GetRow($q, array($sessionid) );
-						 if( !$row )
-						 {
-						 // user has a cookie, but the record has probably expired
-						 // so the cookie is not good any more.
-						 
-						 // delete the cookie
-						 @setcookie('feu_sessionid','',time()-60000,$config['root_path']);
-						 @setcookie('feu_uid','',time()-60000,$config['root_path']);
-						 return false;
-						 }
-						*/
 						
 						// delete the existing record
 						$q = "DELETE FROM ".cms_db_prefix()."module_feusers_loggedin 
@@ -1905,6 +1928,7 @@ class FrontEndUsersManipulator extends UserManipulator
 						@setcookie('feu_uid',$uid,time()+$expirytime,"/");
 						
 						cge_tmpdata::set('feu_logginid',$uid);
+						$module->SendEvent('OnRefreshUser',array('id'=>$uid));
 						return $uid;
 					}
 				else
@@ -1914,6 +1938,7 @@ class FrontEndUsersManipulator extends UserManipulator
 							{
 								return false;
 							}
+						$module->SendEvent('OnRefreshUser',array('id'=>$res[0]));
 						return $res[0];
 					}
 			}
@@ -2040,7 +2065,7 @@ class FrontEndUsersManipulator extends UserManipulator
 		$pwtxt = $password;
 		if( $do_md5 == true )
 			{
-				$pwtxt = md5($password);
+				$pwtxt = md5($password.$this->get_salt());
 			}
 
     // insert the record
@@ -2128,7 +2153,7 @@ class FrontEndUsersManipulator extends UserManipulator
     $db = $this->GetDb();
     
     $result = array();
-    $q = "SELECT * FROM ".cms_db_prefix()."module_feusers_groups";
+    $q = "SELECT * FROM ".cms_db_prefix()."module_feusers_groups ORDER BY id ASC";
     $dbresult = $db->Execute( $q );
     if( $dbresult ) {
     while( $row = $dbresult->FetchRow() )
@@ -2146,7 +2171,7 @@ class FrontEndUsersManipulator extends UserManipulator
     $db = $this->GetDb();
 	  
     $result = array();
-    $query = "SELECT * FROM ".cms_db_prefix()."module_feusers_groups";
+    $query = "SELECT * FROM ".cms_db_prefix()."module_feusers_groups ORDER BY id ASC";
     $dbresult = $db->Execute( $query );
     if( $dbresult ) {
       while( $row = $dbresult->FetchRow() )

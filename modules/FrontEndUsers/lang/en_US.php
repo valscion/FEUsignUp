@@ -1,4 +1,25 @@
 <?php
+$lang['prompt_viewprops'] = 'Select Additional Properties to View';
+$lang['view'] = 'View';
+$lang['info_ignore_userid'] = 'If checked the import routine will attempt to add users independant of the userid column.  If a user with the name specified in the import file already exists, an error will be generated';
+$lang['ignore_userid'] = 'Ignore UserID Column on Import';
+$lang['export_passhash'] = 'Export the password hash to the file';
+$lang['info_export_passhash'] = 'The password hash is only useful if the password salt on the import host is identical to that of the export host';
+$lang['error_adjustsalt'] = 'The password salt cannot be adjusted';
+$lang['prompt_pwsalt'] = 'Password Salt';
+$lang['info_pwsalt'] = 'FrontEndUsers salts all passwords with this key which is created upon install.  Once users have been added to the database the salt cannot be changed. The salt may be empty for older installs.';
+$lang['advanced_settings'] = 'Advanced Settings';
+$lang['info_sessiontimeout'] = 'Specify the number of seconds before an inactive user is automatically logged out of the website';
+$lang['prompt_expireusers_interval'] = 'User Expiry Interval';
+$lang['info_expireusers_interval'] = 'Specify a value (in seconds) that indicates how often the system should force users whos session has expired to be logged out.  T"his is an optimization to save database queries.  If left empty or set to 0 expiry will be performed on every request.';
+$lang['msg_settingschanged'] = 'Your settings were successfully updated';
+$lang['forcedlogouttask_desc'] = 'Force users to logout at regular intervals';
+$lang['prompt_forcelogout_times'] = 'Times for forced logout';
+$lang['info_forcelogout_times'] = 'Specify a comma separated list of times like HH:MM,HH:MM where users will be forcibly logged out. Note, this uses the psuedocron mechanism so you must be sure that the times entered here will coincide reasonably with your &quot;pseudocron granularity&quot; and that sufficient requests will occur to your website to ensure that pseudocron is executed.';
+$lang['prompt_forcelogout_sessionage'] = 'Exclude users that have been active in <em>(minutes)</em>';
+$lang['info_forcelogout_sessionage'] = 'If specified, any users that have been active in this number of seconds will not be forcibly logged out';
+$lang['areyousure_delete'] = 'Are you sure you want to delete the user %s';
+$lang['error_invalidfileextension'] = 'The uploaded file does not match the list of allowed file types';
 $lang['postuninstall'] = 'All data associated with the FrontEndUsers module has been deleted';
 $lang['info_ecomm_paidregistration'] = 'If enabled, this module will listen to events from the Ecommerce suite.  The following settings only have effect if this setting is enabled.';
 $lang['prompt_ecomm_paidregistration'] = 'Listen to Order Events';
@@ -170,13 +191,13 @@ $lang['info_importusersfileformat'] = '
 <li>The import process will fail if the fields in the input file does not match all of the required properties associated with the group that users are being added into</li>
 <li>The input file may contain fields representing some of the optional properties in the specified group.</li>
 <li>The import process will ignore any fields in the input file that are either not known, or map to properties that are <em>off</em> in the specified user group.</li>
-</ul>
-<h5>Columnar Data</h5>
+</ul><br/>
+<h6><strong>Columnar Data</strong></h5>
 <ul>
-<li>The <strong>userid</strong> Field - The userid for the user. A value in this field will indicate you are doing an update.</li>
+<li>The <strong>userid</strong> Field - The userid for the user. A value in this field will indicate you are doing an update.  There is a checkbox during the import process to specify that tue userid field can be ignored for the purposes of migrating users from one server to another.</li>
 <li>The <strong>username</strong> Field - The desired username.
     <p>This field must exist in the headerline, and in each and every line of the input file. The record will fail if a user with that username already exists in the database.</p></li>
-<li>The <strong>password</strong> Field - The password to set for the user</li>
+<li>The <strong>password</strong> Field - The password to set for the user.  Optionally, a <strong>passwordhash</strong> field may be included that specifies thee <em>salted</em> MD5 hash of the users password.  If the password field is empty when creating new users the password &quot;changeme&quot; is hardcoded.</li>
 <li>The <strong>createdate</strong> Field - todo</li>
 <li>The <strong>expires</strong> Field - todo</li>
 <li>The <strong>groupname</strong> Field - The groups that you want to have the user be a member of. If all required fields are not filled in the insert/update of the record will fail. See Multiselect Fields below for syntax.</li>
@@ -216,6 +237,14 @@ $lang['error_norepeatedlogins'] = 'This user is already logged in';
 $lang['error_captchamismatch'] = 'The text from the image was not entered correctly';
 $lang['prompt_allow_repeated_logins'] = 'Allow users to login more than once';
 $lang['prompt_allowed_image_extensions'] = 'Image File Extensions that Users allowed to upload';
+$lang['event_help_OnRefreshUser'] = '
+<h3>OnRefreshUser</h3>
+<p>An event generated when the user session is refreshed.</p>
+<h4>Parameters:</h4>
+<ul>
+  <li><em>id</em> - The User id</li>
+</ul>
+';
 $lang['event_help_OnDeleteUser'] = '
 <h3>OnDeleteUser<h3>
 <p>An event generated when a user is deleted</p>
@@ -277,7 +306,6 @@ $lang['event_help_OnLogout'] = '
 <p>An event generated when a user logs out</p>
 <h4>Parameters</h4>
 <ul>
-<li><em>username</em> - The name of the loggedout user</li>
 <li><em>id</em> - The user id</li>
 </ul>
 '; 
@@ -293,6 +321,7 @@ $lang['event_info_OnLogin'] = 'An event generated when a user logs in to the sys
 $lang['event_info_OnLogout'] = 'An event generated when a user logs out of the system';
 $lang['event_info_OnExpireUser'] = 'An event generated when a user session is expired';
 $lang['event_info_OnCreateUser'] = 'An event generated when a new user is created';
+$lang['event_info_OnRefreshUser'] = 'An event generated when the user session is refreshed';
 $lang['event_info_OnUpdateUser'] = 'An event generated when a user info is updated';
 $lang['event_info_OnDeleteUser'] = 'An event generated when a user account is deleted';
 $lang['event_info_OnCreateGroup'] = 'An event generated when a user group is created';
@@ -560,7 +589,7 @@ $lang['help'] = <<<EOF
 <li>
 <p>Secondly, you need to define at least one property.  Properties are essentially field definitions, here you specify the type of information you want to gather, and limits. i.e:  Name, Age, City, State, Country, etc.</p>
 <p><b>Note:</b> You do not need to define properties for username (or email address) and password, these will be provided for you</b>
-<p><b>Note:</b> New installations of the FEU module specify that the users email address is their username (this option can be changed in the preferences tab).  So if using this option you will not need to create an email address property.</p>
+<p><b>Note:</b> New installations of the FEU module specify that the users email address is their username (this option can be changed in the modules admin panel).  So if using this option you will not need to create an email address property.</p>
 </li>
 <li><p>Next you must create one or more user groups.  When you create a group, you are asked for a group name, a description and to associate properties with that group, specify the properties sort order, and wether it is an optional, required, or hidden field <i>(off is also valid)</i></p></li>
 <li><p><b>Note:</b> Before proceeding, you should ensure that the preferences are set correctly.</p></li>
@@ -602,7 +631,8 @@ $lang['help'] = <<<EOF
 <p>Example:<br/><code>{\$feu_smarty-&gt;user_expired(25,'expired')}<br/>{if \$expired}UID 25 can no longer login to the system{/if}</code></p>
 </li>
 </ul>
-
+<h3>Privacy Related Items:</h3>
+<p>This module does track the IP address of users.  And does store that information in its history.  Additionally, the administrator has the ability to configure the module so that cookies are used.  However no personal information is stored in the cookies (if enabled).  Only a system assigned unique user identifer, and a session identifier.</p>
 <h3>Support</h3>
 <p>This module does not include commercial support. However, there are a number of resources available to help you with it:</p>
 <ul>

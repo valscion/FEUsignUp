@@ -40,41 +40,53 @@ function confirm_delete()
 {/literal}
 
 {$startform}
-<fieldset>
-<legend>{$prompt_filter}:</legend>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_group}</p>
- <p class="pageinput">{$filter_group}</p>
-</div>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_userfilter}</p>
- <p class="pageinput">{$filter_regex}</p>
-</div>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_propertyfiltersel}</p>
- <p class="pageinput">{$filter_propertysel}</p>
-</div>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_propertyfilter}</p>
- <p class="pageinput">{$filter_property}</p>
-</div>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_loggedinonly}</p>
- <p class="pageinput">{$filter_loggedinonly}</p>
-</div>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_limit}</p>
- <p class="pageinput">{$filter_limit}</p>
-</div>
+<table width="100%">
+<tr><td width="50%" valign="top">
+  <fieldset>
+  <legend>{$prompt_filter}:</legend>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_group}:</p>
+   <p class="pageinput">{$filter_group}</p>
+  </div>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_userfilter}:</p>
+   <p class="pageinput">{$filter_regex}</p>
+  </div>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_propertyfiltersel}:</p>
+   <p class="pageinput">{$filter_propertysel}</p>
+  </div>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_propertyfilter}:</p>
+   <p class="pageinput">{$filter_property}</p>
+  </div>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_loggedinonly}:</p>
+   <p class="pageinput">{$filter_loggedinonly}</p>
+  </div>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_limit}:</p>
+   <p class="pageinput">{$filter_limit}</p>
+  </div>
+  </fieldset>
+</td><td valign="top">
+  <fieldset>
+  <legend>{$mod->Lang('view')}:</legend>
+  <div class="pageoverflow">
+   <p class="pagetext">{$mod->Lang('prompt_viewprops')}:</p>
+   <p class="pageinput">
+     <select name="{$actionid}filter_viewprops[]" multiple="multiple" size="5">
+       {html_options options=$alldefns selected=$viewprops}
+     </select>
+   </p>
+  </div>
+  <div class="pageoverflow">
+   <p class="pagetext">{$prompt_sortby}:</p>
+   <p class="pageinput">{$filter_sortby}</p>
+  </div>
 </fieldset>
-
-<fieldset>
-<legend>{$prompt_sort}:</legend>
-<div class="pageoverflow">
- <p class="pagetext">{$prompt_sortby}</p>
- <p class="pageinput">{$filter_sortby}</p>
-</div>
-</fieldset>
+</td></tr>
+</table>
 
 <div class="pageoverflow">
  <p class="pagetext">&nbsp;</p>
@@ -92,6 +104,11 @@ function confirm_delete()
 			<th>{$usernametext}</th>
 			<th>{$createdtext}</th>
 			<th>{$expirestext}</th>
+                        {if isset($viewprops)}
+                        {foreach from=$viewprops item='one'}
+                        <th>{$alldefns.$one}</th>
+                        {/foreach}
+                        {/if}
 			<th class="pageicon {literal}{sorter: false}{/literal}">&nbsp;</th>
 			<th class="pageicon {literal}{sorter: false}{/literal}">&nbsp;</th>
 			<th class="pageicon {literal}{sorter: false}{/literal}">&nbsp;</th>
@@ -105,6 +122,11 @@ function confirm_delete()
 			<td>{$entry->username}</td>
 			<td>{$entry->created}</td>
 			<td>{$entry->expires}</td>
+                        {if isset($viewprops)}
+                        {foreach from=$viewprops item='one'}
+                        <td>{$entry->extra.$one}</td>
+                        {/foreach}
+                        {/if}
 			<td>{if isset($entry->logoutlink)}{$entry->logoutlink}{/if}</td>
 			<td>{$entry->historylink}</td>
 			<td>{$entry->editlink}</td>

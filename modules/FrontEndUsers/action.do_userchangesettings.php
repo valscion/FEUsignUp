@@ -351,10 +351,16 @@ if( !empty($page) )
     $pageid = ContentManager::GetPageIDFromAlias( $page );
     if( $pageid )
       {
-	$returnid = $pageid;
+	$this->RedirectContent( $pageid );
+	return;
       }
   }
 
-// and redirect back to destination page
-$this->RedirectContent( $returnid );
+// old behavior
+// $this->RedirectContent( $returnid );
+
+// new behavior
+$parms = array('message'=>$this->Lang('msg_settingschanged'));
+$this->_DoUserAction( $id, $parms, $returnid );
+
 ?>
