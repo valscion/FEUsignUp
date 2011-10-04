@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will handle the front end request to Team Sport Scores
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-$db =& $this->GetDb();
+$db = cmsms()->GetDb();
 
 $detailpage = '';
 if (isset($params['detailpage']))
@@ -196,9 +196,7 @@ while ($dbresult && $row = $dbresult->FetchRow())
 	$onerow->visitorteam = substr($row['visitorteam'], 0, $teamlength);
 	$onerow->hometeamscore = $row['hometeam_score'];
 	$onerow->visitorteamscore = $row['visitorteam_score'];
-  $match_date = date($dateformat, $db->UnixTimeStamp($row['date']));
-  $match_date = str_ireplace( array("monday","tuesday","wednesday","thursday","friday","saturday","sunday"), array("maanantai","tiistai","keskiviikko","torstai","perjantai","lauantai","sunnuntaina"), $match_date );
-	$onerow->match_date = str_ireplace( array("mon","tue","wed","thu","fri","sat","sun"), array("ma","ti","ke","to","pe","la","su"), $match_date );
+	$onerow->match_date = date($dateformat, $db->UnixTimeStamp($row['date']));
 	$testmatch_time = date('Hi', $db->UnixTimeStamp($row['date']));
 	if ($testmatch_time == '0000') {
 		if (!$displaytime_when_0000) {
@@ -211,7 +209,6 @@ while ($dbresult && $row = $dbresult->FetchRow())
 	if ($showlocation == '1') {
 		$onerow->location = $row['location'];
 	}
-  
 	
 	if ($row['hometeam_score'] != NULL) {
 		if ($row['hometeam_score'] != 'C') {

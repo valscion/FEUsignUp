@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will upgrade the module Team Sport Scores
 #
@@ -27,10 +27,10 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
+$db = cmsms()->GetDb();
 
 $current_version = $oldversion;
-$db =& $this->GetDb();
 
 // mysql-specific, but ignored by other database
 $taboptarray = array('mysql' => 'TYPE=MyISAM');
@@ -336,6 +336,8 @@ switch($current_version)
 		$current_version = '1.1.7';
 
 	case '1.1.7':
+
+		$current_version = '1.1.8';
 }
 
 // Insert an audit trail in the admin log

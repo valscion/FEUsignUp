@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will save the database templates for Team Sport Scores
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 if (! $this->CheckPermission('modify TeamSportScores'))
 	{

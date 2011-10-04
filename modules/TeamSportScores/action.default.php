@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will handle the front end request to Team Sport Scores
 #
@@ -26,8 +26,8 @@
 # Or read it online: http://www.gnu.org/licenses/licenses.html#GPL
 #
 #-------------------------------------------------------------------------
- 
-if (!isset($gCms)) exit;
+
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 if (isset($params['display'])) {
 	$display = $params['display'];

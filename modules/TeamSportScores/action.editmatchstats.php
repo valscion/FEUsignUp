@@ -1,7 +1,7 @@
 <?php
 #-------------------------------------------------------------------------
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #-------------------------------------------------------------------------
 # CMS - CMS Made Simple is (c) 2005 by Ted Kulp (wishy@cmsmadesimple.org)
 # This project's homepage is: http://www.cmsmadesimple.org
@@ -25,7 +25,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 $detailpage = '';
 if (isset($params['detailpage']))

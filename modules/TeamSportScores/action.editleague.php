@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function allows the administrator to change league information
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 $detailpage = '';
 if (isset($params['detailpage']))
@@ -117,13 +117,7 @@ if (isset($params['name']))
 
 // Prepare dropdown values for seasons
 $seasonlist = array();
-$query = 'SELECT * FROM '.cms_db_prefix().'module_tss_season WHERE status = \'A\' and season_id != \'0\' ORDER BY start_date desc';
-$dbresult = $db->Execute($query);
-
-while ($dbresult && $row = $dbresult->FetchRow())
-{
-	$seasonlist[$row['season_desc']] = $row['season_id'];
-}
+$seasonlist = $this->GetListSeasons('A');
 
 $statusdropdown = array();
 $statusdropdown[$this->Lang('status_active')] = 'A';

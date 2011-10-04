@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function allows the administrator to change team information
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 $detailpage = '';
 if (isset($params['detailpage']))
@@ -146,25 +146,10 @@ $statusdropdown[$this->Lang('status_active')] = 'A';
 $statusdropdown[$this->Lang('status_inactive')] = 'I';
 
 $clublist = array();
-$query = "SELECT * FROM ".cms_db_prefix()."module_tss_club ORDER BY description";
-$dbresult = $db->Execute($query);
-
-while ($dbresult && $row = $dbresult->FetchRow())
-{
-$clublist[$row['description']] = $row['club_id'];
-}
+$clublist = $this->GetListClubs('A');
 
 $seasonlist = array();
-$query = "SELECT * FROM ".cms_db_prefix()."module_tss_season ORDER BY start_date desc";
-$dbresult = $db->Execute($query);
-
-while ($dbresult && $row = $dbresult->FetchRow())
-{
-$seasonlist[$row['season_desc']] = $row['season_id'];
-}
-// Add a none existing season if the team should not be connected to a season
-$NotApplicable=$this->Lang('*None');
-$seasonlist[$NotApplicable] = 0;
+$seasonlist = $this->GetListSeasons('%');
 
 $sexedropdown = array();
 $sexedropdown['Male'] = 'MALE';

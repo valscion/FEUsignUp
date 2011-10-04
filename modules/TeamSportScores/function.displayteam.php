@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will handle the front end request to Team Sport Scores
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-$db =& $this->GetDb();
+$db = cmsms()->GetDb();
 
 // Prepare the basic part of the query
 // Check the preferences which table to use

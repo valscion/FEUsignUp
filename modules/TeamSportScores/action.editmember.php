@@ -1,6 +1,6 @@
 <?php
 # Sport Coach Manager. A plugin for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function allows the aministrator to change member information
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 $detailpage = '';
 if (isset($params['detailpage']))
@@ -190,7 +190,11 @@ switch ($prefusertable) {
 		$dbresult = $db->Execute($query);
 
 		while ($dbresult && $row = $dbresult->FetchRow()) 	{
-			$userlist[$row['first_name'].' '.$row['last_name']] = $row['user_id'];
+			$fullname = $row['first_name'].' '.$row['last_name'];
+			if ($fullname == ' ') {
+				$fullname = $row['username'];
+			}
+			$userlist[$fullname] = $row['user_id'];
 		}
 	break;
 	case "FEU_USR":

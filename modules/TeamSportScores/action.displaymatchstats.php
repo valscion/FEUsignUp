@@ -211,7 +211,7 @@ while ($dbresult && $row = $dbresult->FetchRow())
 	if ($row['hplayer_id'] > 0) {
 		$onerow->hplayer = $homeplayernames[$row['hplayer_id']];
 	}
-	if ($row['hplayer_goal'] == 1) {
+	if ($row['hplayer_goal'] > 0) {
 		$onerow->hplayer_goal = $row['hplayer_goal'];
 	}
 	$onerow->hplayer_pc = '&nbsp;';
@@ -236,7 +236,7 @@ while ($dbresult && $row = $dbresult->FetchRow())
 	if ($row['vplayer_id'] > 0) {
 		$onerow->vplayer = $visitorplayernames[$row['vplayer_id']];
 	}
-	if ($row['vplayer_goal'] == 1) {
+	if ($row['vplayer_goal'] > 0) {
 		$onerow->vplayer_goal = $row['vplayer_goal'];
 	}
 	$onerow->vplayer_pc = '&nbsp;';

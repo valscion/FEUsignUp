@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will edit existing match information
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 $detailpage = '';
 if (isset($params['detailpage']))
@@ -116,6 +116,13 @@ $location = '';
 if (isset($params['location']))
 {
 	$location = $params['location'];
+}
+
+// Fix of bug# 6469 (solution by Jeremy)
+if($params['match_date_Meridian']=='pm'){
+	if(!$this->GetPreference('use_24hour_clock', true)){
+		$params['match_date_Hour']=$params['match_date_Hour']+12;
+	}
 }
 
 $match_date = time();

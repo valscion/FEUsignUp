@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will install the module Team Sport Scores
 #
@@ -42,7 +42,7 @@ class TeamSportScores extends CMSModule
 
 	function GetVersion()
 	{
-		return '1.1.7';
+		return '1.1.8';
 	}
 
 	function GetHelp()
@@ -104,6 +104,7 @@ class TeamSportScores extends CMSModule
 	{
 		# The top most parameter will be shown in the bottom and vice versa
 		$this->CreateParameter('timeformat', 'g:i a', $this->Lang('helptimeformat'));
+		$this->CreateParameter('templatestats', '', $this->Lang('helptemplatestats'));
 		$this->CreateParameter('templatereport', '', $this->Lang('helptemplatereport'));
 		$this->CreateParameter('template', '', $this->Lang('helptemplate'));
 		$this->CreateParameter('teamlength', '50', $this->Lang('helpteamlength'));
@@ -160,14 +161,59 @@ class TeamSportScores extends CMSModule
 	    echo $this->ProcessTemplate('error.tpl');
 	}
 
-	function DisplayAdminNav($id, &$params, $returnid)
-		{
-			$this->smarty->assign('admin_nav',
-				$this->CreateLink($id, 'defaultadmin', $returnid, $this->Lang('title_mod_admin'), array()) .
-				' : ' .
-				$this->CreateLink($id, 'admin_prefs', $returnid, $this->Lang('title_mod_prefs'), array()));
-	    }
+	function DisplayAdminNav($id, &$params, $returnid) {
+		$this->smarty->assign('admin_nav',
+			$this->CreateLink($id, 'defaultadmin', $returnid, $this->Lang('title_mod_admin'), array()) .
+			' : ' .
+			$this->CreateLink($id, 'admin_prefs', $returnid, $this->Lang('title_mod_prefs'), array()));
+	}
 
+	/* --------------------------------------------------------
+		GetListClubs($status = 'A')
+		A function to return all clubs in an array
+		A status of '%' means all clubs will be listed
+		--------------------------------------------------------*/	
+	function GetListClubs($status = 'A')
+	{
+		// Initialize the Database
+		$db = cmsms()->GetDb();
+
+		$clublist = array();
+		$query = 'SELECT * FROM '.cms_db_prefix().'module_tss_club';
+		$query .= ' WHERE status = ?';
+		$query .= ' ORDER BY description';
+		$dbresult = $db->Execute($query, array($status));
+		
+		while ($dbresult && $row = $dbresult->FetchRow())
+		{
+			$clublist[$row['description']] = $row['club_id'];
+		}
+		return $clublist;
+	}		
+
+	/* --------------------------------------------------------
+		GetListSeasons($status = 'A')
+		A function to return all seasons in an array
+		A status of '%' means all seasons will be listed
+		--------------------------------------------------------*/	
+	function GetListSeasons($status = 'A')
+	{
+		// Initialize the Database
+		$db = cmsms()->GetDb();
+		
+		$seasonlist = array();
+		$query = 'SELECT * FROM '.cms_db_prefix().'module_tss_season';
+		$query .= ' WHERE status LIKE ?';
+		$query .= ' ORDER BY start_date desc';
+		$dbresult = $db->Execute($query, array($status));
+		
+		while ($dbresult && $row = $dbresult->FetchRow())
+		{
+			$seasonlist[$row['season_desc']] = $row['season_id'];
+		}
+		
+		return $seasonlist;
+	}
 }
 
 ?>

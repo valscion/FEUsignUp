@@ -60,12 +60,13 @@ else {
 
 // If a template has been mentioned, use it
 $row= '';
-if (isset($params['template'])) {
+if (isset($params['templatereport'])) {
 	$templatequery = 'SELECT * FROM '.cms_db_prefix().'module_tss_template WHERE title = ?';
-	$row = $db->GetRow($templatequery, array($params['template']));
+	$row = $db->GetRow($templatequery, array($params['templatereport']));
 }
 else {
 	// Select first template that can be found from templates table
+	// Type 4 is a template that starts with stats_
 	$templatequery = 'SELECT * FROM '.cms_db_prefix().'module_tss_template WHERE type_id = 4 ORDER BY title';
 	$row = $db->GetRow($templatequery);
 }

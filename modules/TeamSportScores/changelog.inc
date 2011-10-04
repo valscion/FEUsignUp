@@ -1,9 +1,19 @@
 <ul>
+<li>Version 1.1.8 - June 8th, 2011
+	<ul>
+		<li>Update to database references;</li>
+		<li>Described the parameter of for statistics;</li>
+		<li>Centralize a number of lookups so they work in a similar way (bug#: 2690);</li>
+		<li>No name shown if first/last name was not filled on user information (bug#: 4092);</li>
+		<li>12 Hour clock not handled well when editing a match (bug# 6469).</li>
+	</ul>
 <li>Version 1.1.7 - January 31st, 2010
 	<ul>
 		<li>Included match report per match;</li>
+		<li>Entering more then one point at same minute in match statistics is possible (will be shown in front end);</li>
 		<li>New link per match to show report upon request of visitor using $entry->matchreport. 
 		Column title is in variable: $titlematchreport;</li>
+		<li>New template parameters templatestats and templatereport, so these can be passed via tss tag on page;</li>
 		<li>New page with match report. It has the heading of a match as well</li>
 		<li>Match stats can show the report. Use $matchreporttitle and $matchreport as smarty variables;</li>
 		<li>Define a couple of arrays so they are not shown as errors in the backend.</li>

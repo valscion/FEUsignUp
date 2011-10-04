@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will handle and add team information
 #
@@ -26,10 +26,9 @@
 # Or read it online: http://www.gnu.org/licenses/licenses.html#GPL
 #
 #-------------------------------------------------------------------------
-if (!isset($gCms)) exit;
 
-		global $gCms;
-		$db =& $gCms->GetDb();
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
+$db = cmsms()->GetDb();
 
 if (!$this->CheckPermission('Modify TeamSportScores'))
 {
@@ -119,26 +118,11 @@ $statusdropdown[$this->Lang('status_inactive')] = 'I';
 
 // Prepare dropdown values for clubs
 $clublist = array();
-$query = "SELECT * FROM ".cms_db_prefix()."module_tss_club ORDER BY description and status='A'";
-$dbresult = $db->Execute($query);
-
-while ($dbresult && $row = $dbresult->FetchRow())
-{
-	$clublist[$row['description']] = $row['club_id'];
-}
+$clublist = $this->GetListClubs('A');
 
 // Prepare dropdown values for seasons
 $seasonlist = array();
-$query = "SELECT * FROM ".cms_db_prefix()."module_tss_season ORDER BY start_date desc";
-$dbresult = $db->Execute($query);
-
-while ($dbresult && $row = $dbresult->FetchRow())
-{
-	$seasonlist[$row['season_desc']] = $row['season_id'];
-}
-// Add a none existing season if the team should not be connected to a season
-$NotApplicable=$this->Lang('*None');
-$seasonlist[$NotApplicable] = 0;
+$seasonlist = $this->GetListSeasons('%');
 
 // Prepare list of possible sexes
 $sexedropdown = array();

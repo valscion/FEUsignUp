@@ -1,6 +1,6 @@
 <?php
 # Sport Coach Manager. A plugin for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will add information of a member
 #
@@ -26,10 +26,9 @@
 # Or read it online: http://www.gnu.org/licenses/licenses.html#GPL
 #
 #-------------------------------------------------------------------------
-if (!isset($gCms)) exit;
 
-global $gCms;
-$db =& $gCms->GetDb();
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
+$db = cmsms()->GetDb();
 
 if (!$this->CheckPermission('Modify TeamSportScores')) {
 	echo $this->ShowErrors($this->Lang('accessdenied', array('Modify TeamSportScores')));
@@ -155,11 +154,15 @@ $userlist = array();
 // Build a list of users based upon the table defined in the preferences
 switch ($prefusertable) {
 	case 'CMSMS_USR':
-		$query = "SELECT * FROM ".cms_db_prefix()."users ORDER BY first_name";
+		$query = 'SELECT * FROM '.cms_db_prefix().'users ORDER BY first_name';
 		$dbresult = $db->Execute($query);
 
 		while ($dbresult && $row = $dbresult->FetchRow()) {
-			$userlist[$row['first_name'].' '.$row['last_name']] = $row['user_id'];
+			$fullname = $row['first_name'].' '.$row['last_name'];
+			if ($fullname == ' ') {
+				$fullname = $row['username'];
+			}
+			$userlist[$fullname] = $row['user_id'];
 		}
 		break;
 	case 'FEU_USR':

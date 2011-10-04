@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will add match information
 #
@@ -27,10 +27,8 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
-
-global $gCms;
-$db =& $gCms->GetDb();
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
+$db = cmsms()->GetDb();
 
 if (!$this->CheckPermission('Use TeamSportScores'))
 {
@@ -50,7 +48,7 @@ if (isset($params['name']))
 	$name = $params['name'];
 }
 
-$usedseason_id = $this->GetPreference('default_season_id', '');
+$usedseason_id = $this->GetPreference('default_season_id', 0);
 if (isset($params['season_id']))
 {
 	$usedseason_id = $params['season_id'];
@@ -86,13 +84,7 @@ if (isset($params['name']))
 
 // Prepare dropdown values for seasons
 $seasonlist = array();
-$query = 'SELECT * FROM '.cms_db_prefix().'module_tss_season WHERE status = \'A\' and season_id != \'0\' ORDER BY start_date desc';
-$dbresult = $db->Execute($query);
-
-while ($dbresult && $row = $dbresult->FetchRow())
-{
-	$seasonlist[$row['season_desc']] = $row['season_id'];
-}
+$seasonlist = $this->GetListSeasons('A');
 
 $statusdropdown = array();
 $statusdropdown[$this->Lang('status_active')] = 'A';

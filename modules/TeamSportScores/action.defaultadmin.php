@@ -1,6 +1,6 @@
 <?php
 # Team Sport Scores. A module for CMS - CMS Made Simple
-# Copyright (c) 2008 by Duketown <duketown@mantox.nl>
+# Copyright (c) 2008 by Duketown
 #
 # This function will handle the back end information for Team Sport Scores
 #
@@ -27,7 +27,7 @@
 #
 #-------------------------------------------------------------------------
 
-if (!isset($gCms)) exit;
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
 
 #The tabs
 echo $this->StartTabHeaders();
@@ -646,7 +646,9 @@ if ($this->CheckPermission('Modify TeamSportScores'))
 	$prefusertable = $this->GetPreference('user_table', '');
 	switch ($prefusertable) 	{
 		case 'CMSMS_USR':
-			$query = "SELECT m.*, t.team_name AS team_name, CONCAT(u.first_name, ' ', u.last_name) AS member_name
+			$query = "SELECT m.*, t.team_name AS team_name, 
+				CONCAT(u.first_name, ' ', u.last_name) AS member_name,
+				username
 			FROM "
 				.cms_db_prefix(). "module_tss_member m, "
 				.cms_db_prefix(). "module_tss_team t, "
@@ -694,6 +696,9 @@ if ($this->CheckPermission('Modify TeamSportScores'))
 		$onerow = new stdClass();
 
 		$onerow->id = $row['member_id'];
+		if ($row['member_name'] == ' ') {
+			$row['member_name'] = $row['username'];
+		}
 		$onerow->membername = $this->CreateLink($id, 'editmember', $returnid, $row['member_name'], array('member_id'=>$row['member_id']));
 		$onerow->team = $row['team_name'];
 

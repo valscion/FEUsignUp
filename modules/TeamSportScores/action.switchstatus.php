@@ -1,10 +1,7 @@
 <?php
 
-// No direct access
-if (!isset($gCms)) 
-{
-	exit(); 
-}
+$gCms = cmsms(); if( !is_object($gCms) ) exit;
+
 // Check permission
 if (! $this->CheckPermission('Modify TeamSportScores'))
 {
