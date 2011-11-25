@@ -393,6 +393,10 @@ class FEUsignUp extends CGExtensions
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
   $this->RegisterRoute(
+        '/feusignup\/view-fullpage\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)(|\/(?P<template>[a-zA-Z\-_]+))$/',
+        array('action'=>'displayevent', 'inline'=>'true')
+    );
+  $this->RegisterRoute(
         '/feusignup\/update\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)$/',
         array('action'=>'update', 'showtemplate'=>'false')
     );
