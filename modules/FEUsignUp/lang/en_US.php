@@ -117,7 +117,7 @@ $lang['user_not_found_by_id'] = 'Username with ID %s was not found from the data
 $lang['signup_updated'] = 'Signup updated!';
 
 ## Editing a signup
-$lang['areyousure_delsignup'] = 'Are you sure you want to delete this signup?';
+$lang['areyousure_delsignup'] = 'Are you sure you want to delete this signup for user %s?';
 $lang['signup_deleted'] = 'Signup deleted successfully.';
 
 ## Other
