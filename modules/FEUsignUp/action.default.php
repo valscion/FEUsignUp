@@ -47,7 +47,7 @@ if( isset( $params['cal_id'] ) && !empty( $params['cal_id'] ) ) {
   if( $cgcal === null ) die('CGCalendar module is not installed!');
   
   $linkId = (int)$params['cal_id'];
-	$event = $cgcal->GetEvent( $linkId );
+  $event = $cgcal->GetEvent( $linkId );
   $this->smarty->assign('from', 'cgcal');
   $this->smarty->assign('event', $event);
   $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $linkId, 'cgcalendar' ) );
@@ -63,14 +63,14 @@ else {
   if( $tss === null ) die('TeamSportScores module is not installed!');
   
   $linkId = (int)$params['tss_id'];
-	$db =& $this->GetDb(); /* @var $db ADOConnection */
+  $db =& $this->GetDb(); /* @var $db ADOConnection */
   $q = 'SELECT * FROM '.cms_db_prefix().'module_tss_gameschedule_score WHERE gss_id = ?';
-	$dbresult = $db->Execute( $q, array($linkId) );
-	if( $dbresult && $matchInfo = $dbresult->FetchRow() ) {
-		// All OK
-	} else {
-		echo '<p class="error">' . $this->Lang('db_error') . '</p>';
-	}
+  $dbresult = $db->Execute( $q, array($linkId) );
+  if( $dbresult && $matchInfo = $dbresult->FetchRow() ) {
+    // All OK
+  } else {
+    echo '<p class="error">' . $this->Lang('db_error') . '</p>';
+  }
   $this->smarty->assign('from', 'tss');
   $this->smarty->assign('match',$matchInfo);
   $this->smarty->assign('signups_amount', $this->GetSignupsAmountForEvent( $linkId, 'tss' ) );
