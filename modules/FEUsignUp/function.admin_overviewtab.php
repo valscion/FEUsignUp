@@ -130,9 +130,15 @@ foreach( $fetchedSignups as $signup ) {
     $onerow->event_id = $signup['cgcal_event_id'];
   } elseif( $signup['tss_game_id'] != -1 ) {
     $onerow->event_type = 'tss';
-    $onerow->event_info = $this->Lang('from_tss', $signup['tss_game_id'] );
-    $onerow->event_date = '???';
-    $onerow->event_date_ut = 0;
+    $q = "SELECT * FROM cms_module_tss_gameschedule_score WHERE gss_id = ? LIMIT 1";
+    $data = $db->GetArray($q,array($signup['tss_game_id']));
+    $tss_match = $data[0];
+    $onerow->event_info = 
+        $this->Lang('from_tss', $signup['tss_game_id'] ) . 
+        $tss_match['hometeam'] . ' - ' . $tss_match['visitorteam'];
+    $onerow->event_date_ut = $db->UnixTimeStamp($tss_match['date']);
+    $onerow->event_date = 
+        strftime( $this->Lang('event_time_format'), $onerow->event_date_ut );
     $onerow->event_id = $signup['tss_game_id'];
   } else {
     // What, we had both tss and cgcal id's as -1?! ERROR!
@@ -154,7 +160,7 @@ foreach( $fetchedSignups as $signup ) {
                 $gCms->variables['admintheme']->DisplayImage('icons/system/delete.gif',
                         $this->Lang('delete'), '', '', 'systemicon'),
                 array ('signup_id' => $signup['id'], 'delete' => 1),
-                $this->Lang ('areyousure_delsignup') );
+                $this->Lang ('areyousure_delsignup', $onerow->feu) );
   
   
   array_push( $signups, $onerow );

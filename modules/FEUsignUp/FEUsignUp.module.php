@@ -40,7 +40,7 @@
 #-------------------------------------------------------------------------
 
 $cgextensions = cms_join_path($gCms->config['root_path'],'modules',
-			      'CGExtensions','CGExtensions.module.php');
+            'CGExtensions','CGExtensions.module.php');
 if( !is_readable( $cgextensions ) )
 {
   echo '<h1><font color="red">ERROR: The CGExtensions module could not be found.</font></h1>';
@@ -375,7 +375,7 @@ class FEUsignUp extends CGExtensions
 
     For example:
     $this->RegisterRoute('/skeleton\/add\/(?P<skeleton_id>[0-9]+)\/(?P<returnid>[0-9]+)$/',
-		 array('action'=>'default'));
+     array('action'=>'default'));
 
     now, any url that looks like:
     /skeleton/view/3/5
@@ -383,43 +383,47 @@ class FEUsignUp extends CGExtensions
     $params['skeleton_id'] set to 3
     and $returnid set to 5
 
-	Be sure to take a look in action.default.php, where the links are created for viewing, editing, and adding
-	records. You'll see that the CreateFrontendLink takes all the parameters to create a link for non-pretty
-	URLs, but also takes a string parameter which is a fully-assembled Pretty URL. Just registering the routes
-	is not enough; you module's links need to create the URLs on their side as well.
+  Be sure to take a look in action.default.php, where the links are created for viewing, editing, and adding
+  records. You'll see that the CreateFrontendLink takes all the parameters to create a link for non-pretty
+  URLs, but also takes a string parameter which is a fully-assembled Pretty URL. Just registering the routes
+  is not enough; you module's links need to create the URLs on their side as well.
     */
-	$this->RegisterRoute(
+  $this->RegisterRoute(
         '/feusignup\/view\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)(|\/(?P<template>[a-zA-Z\-_]+))$/',
         array('action'=>'displayevent', 'showtemplate'=>'false')
     );
-	$this->RegisterRoute(
+  $this->RegisterRoute(
+        '/feusignup\/view-fullpage\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)(|\/(?P<template>[a-zA-Z\-_]+))$/',
+        array('action'=>'displayevent', 'inline'=>'true')
+    );
+  $this->RegisterRoute(
         '/feusignup\/update\/(?P<from>(cgcal)|(tss))\/(?P<from_id>[0-9]+)$/',
         array('action'=>'update', 'showtemplate'=>'false')
     );
 
    /*
-	* 2a. Custom URLs for Specific Content
-	*
+  * 2a. Custom URLs for Specific Content
+  *
 
-	As of CMSMS 1.9, you can create a specific URL and map it to whatever you want. Say you knew that the
-	record with skeleton_id = 1 was going to be a special record, and you wanted to associate it with the URL:
+  As of CMSMS 1.9, you can create a specific URL and map it to whatever you want. Say you knew that the
+  record with skeleton_id = 1 was going to be a special record, and you wanted to associate it with the URL:
 
-	http://yoursite.com/this/is/insanely/great/stuff 
+  http://yoursite.com/this/is/insanely/great/stuff 
 
-	To do this, you'd register a route with the correct paramters using the CMS Route Manager:
-	
-	
-	$gCms = cmsms();
-	$contentops = $gCms->GetContentOperations();
-	$returnid = $contentops->GetDefaultContent();
-	// The previous three lines are to get a returnid; many modules, like News, have a default
-	// page in which to display detail views. In that case, the page_id would be used for returnid.
-	
-	// The next three lines are where we map the URL to our detail page.
-	$parms = array('action'=>'default','skeleton_id'=>1,'returnid'=>$returnid);
-	$route = new CmsRoute('this/is/insanely/great/stuff',$this->GetName(),$parms,TRUE);
-	cms_route_manager::register($route);
-	*/
+  To do this, you'd register a route with the correct paramters using the CMS Route Manager:
+  
+  
+  $gCms = cmsms();
+  $contentops = $gCms->GetContentOperations();
+  $returnid = $contentops->GetDefaultContent();
+  // The previous three lines are to get a returnid; many modules, like News, have a default
+  // page in which to display detail views. In that case, the page_id would be used for returnid.
+  
+  // The next three lines are where we map the URL to our detail page.
+  $parms = array('action'=>'default','skeleton_id'=>1,'returnid'=>$returnid);
+  $route = new CmsRoute('this/is/insanely/great/stuff',$this->GetName(),$parms,TRUE);
+  cms_route_manager::register($route);
+  */
    /*
     * 3. Security
     *
@@ -484,13 +488,13 @@ class FEUsignUp extends CGExtensions
    * @param mixed params the parameters passed by the event initiator
    
     function DoEvent( $originator, $eventname, &$params )
-	{
-	if ($originator == 'FrontEndUsers' && $eventname == 'OnDeleteUser')
-		{
+  {
+  if ($originator == 'FrontEndUsers' && $eventname == 'OnDeleteUser')
+    {
             $userId = $params['id'];
             // Doing something to the user who was deleted?
-		}
-	}
+    }
+  }
     */
    
     /*---------------------------------------------------------

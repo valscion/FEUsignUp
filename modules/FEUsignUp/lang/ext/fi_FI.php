@@ -117,7 +117,7 @@ $lang['user_not_found_by_id'] = 'Käyttäjää ID:llä %s ei löydy tietokannast
 $lang['signup_updated'] = 'Ilmoittautuminen päivitetty onnistuneesti!';
 
 ## Editing a signup
-$lang['areyousure_delsignup'] = 'Haluatko varmasti poistaa tämän ilmoittautumisen?';
+$lang['areyousure_delsignup'] = 'Haluatko varmasti poistaa henkilön %s ilmoittautumisen?';
 $lang['signup_deleted'] = 'Ilmoittautuminen poistettu onnistuneesti.';
 
 ## Other
