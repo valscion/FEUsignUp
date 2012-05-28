@@ -112,7 +112,11 @@ if( ( isset($params['input_from']) && $params['input_from'] != 'both' ) ||
 }
 
 // Fetch all signups into an array containing objects
-$fetchedSignups = $this->GetSignups((int)$params['page']-1, $filterSql);
+if (!array_key_exists('page', $params)) {
+  $fetchedSignups = $this->GetSignups(0, $filterSql);
+} else {
+  $fetchedSignups = $this->GetSignups((int)$params['page']-1, $filterSql);
+}
 $signups = array();
 
 foreach( $fetchedSignups as $signup ) {
@@ -196,7 +200,7 @@ $smarty->assign( 'select_page', $this->Lang('select_page') );
 $smarty->assign_by_ref( 'pages', $pageLinks );
 
 // Make $pageLinks contain links to all pages
-$currentPage = ( $params['page'] < 1 ) ? 1 : $params['page'];
+$currentPage = ( ( !array_key_exists('page', $params) || $params['page'] < 1 ) ) ? 1 : $params['page'];
 for( $i=1; $i <= $signupPages; $i++ ) {
   $params['page'] = $i;
   if( $i == $currentPage ) {

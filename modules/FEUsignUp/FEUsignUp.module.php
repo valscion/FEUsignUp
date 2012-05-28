@@ -313,7 +313,7 @@ class FEUsignUp extends CGExtensions
        ---------------------------------------------------------*/
     function MaximumCMSVersion()
     {
-        return "1.9.4.2";
+        return "1.10.3";
     }
 
     /**
